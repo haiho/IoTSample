@@ -1,5 +1,5 @@
 //
-//  com_iso_IoTSynHealthAppApp.swift
+//  IoTSynHealthAppApp.swift
 //  com.iso.IoTSynHealthApp
 //
 //  Created by PTV on 25/07/2025.
@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct IoTSynHealthAppApp: App {
+struct IoTSynHealthApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
         }
     }
 }
