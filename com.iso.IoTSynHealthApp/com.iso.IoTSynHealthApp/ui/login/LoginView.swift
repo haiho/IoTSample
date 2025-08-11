@@ -10,6 +10,7 @@ import SwiftUI
 struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
+    @EnvironmentObject var navManager: NavigationManager
 
     var body: some View {
         NavigationView {
@@ -33,32 +34,34 @@ struct LoginView: View {
                         icon: "lock",
                         isSecure: true
                     )
-                    
+
                     CustomButton(title: "Đăng nhập") {
                         //action
                         print("Email: \(email), Password: \(password)")
                     }
-                      
+
                     Button("Đăng nhập 2") {
                         // Xử lý login
+                        navManager.resetToRoot()
+                        navManager.push(.main)
                     }
                     .buttonStyle(PrimaryButtonStyle())
-               
+
+                    //                    ProgressView()
                 }
                 .padding()
             }
             .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Text("Login screen")
-                            .font(.system(size: 34, weight: .bold))
-                            .foregroundColor(.black)
-                        
-                    }
+                ToolbarItem(placement: .principal) {
+                    Text("Login screen")
+                        .font(.system(size: 34, weight: .bold))
+                        .foregroundColor(.black)
+
                 }
-            
-            
-//            .navigationTitle("Login screen")// ko dùng cái này, vì ko căn giữa screen dc
-            
+            }
+
+            //            .navigationTitle("Login screen")// ko dùng cái này, vì ko căn giữa screen dc
+
         }
     }
 }
@@ -66,4 +69,3 @@ struct LoginView: View {
 #Preview {
     LoginView()
 }
-

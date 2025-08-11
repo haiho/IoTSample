@@ -11,7 +11,7 @@ import SwiftUI
 struct IoTSynHealthApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            SplashScreenView()
         }
     }
 }
