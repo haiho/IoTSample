@@ -8,21 +8,13 @@
 import SwiftUI
 
 struct CustomButton: View {
-    var title: String
+    var title: LocalizedStringKey
     var action: () -> Void
-    var colorBG  = Color.blue
-    var colorForeground = Color.white
-    
-
     var body: some View {
         Button(action: action) {
             Text(title)
                 .frame(maxWidth: .infinity)
-                .padding()
-                .background(colorBG)
-                .foregroundColor(colorForeground)
-                .cornerRadius(8)
-        }
+        }.buttonStyle(PrimaryButtonStyle())
     }
 }
 

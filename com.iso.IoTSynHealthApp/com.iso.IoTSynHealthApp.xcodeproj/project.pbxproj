@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		391013252E4B3445005DDD2C /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391013242E4B343B005DDD2C /* ColorUtil.swift */; };
+		391013272E4B36F4005DDD2C /* BackgroundUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391013262E4B36DA005DDD2C /* BackgroundUtil.swift */; };
+		391013302E4B465E005DDD2C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3910132F2E4B465E005DDD2C /* Localizable.xcstrings */; };
+		391013322E4B5139005DDD2C /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391013312E4B5136005DDD2C /* ErrorView.swift */; };
 		39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39169EF92E4A042800BB44B5 /* LandingView.swift */; };
 		396B639C2E337D66007E4014 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396B639B2E337D66007E4014 /* RootView.swift */; };
 		396B639E2E337D67007E4014 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 396B639D2E337D67007E4014 /* Assets.xcassets */; };
@@ -22,6 +26,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		391013242E4B343B005DDD2C /* ColorUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
+		391013262E4B36DA005DDD2C /* BackgroundUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundUtil.swift; sourceTree = "<group>"; };
+		3910132F2E4B465E005DDD2C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		391013312E4B5136005DDD2C /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		39169EF92E4A042800BB44B5 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
 		396B63962E337D66007E4014 /* com.iso.IoTSynHealthApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = com.iso.IoTSynHealthApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		396B639B2E337D66007E4014 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -48,6 +56,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		391013282E4B3F7C005DDD2C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				396B639D2E337D67007E4014 /* Assets.xcassets */,
+				3910132F2E4B465E005DDD2C /* Localizable.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		396B638D2E337D66007E4014 = {
 			isa = PBXGroup;
 			children = (
@@ -67,14 +84,14 @@
 		396B63982E337D66007E4014 /* com.iso.IoTSynHealthApp */ = {
 			isa = PBXGroup;
 			children = (
-				39EB5DAD2E4607D200D8E02A /* Util */,
 				396B63B82E3390E6007E4014 /* app */,
 				396B63B72E3390BC007E4014 /* services */,
 				396B63B62E3390A6007E4014 /* networking */,
 				396B63B52E339096007E4014 /* models */,
 				396B63AF2E338DA5007E4014 /* ui */,
-				396B63AA2E338BE5007E4014 /* common */,
-				396B639D2E337D67007E4014 /* Assets.xcassets */,
+				396B63AA2E338BE5007E4014 /* Common */,
+				39EB5DAD2E4607D200D8E02A /* Util */,
+				391013282E4B3F7C005DDD2C /* Resources */,
 				396B639F2E337D67007E4014 /* Preview Content */,
 			);
 			path = com.iso.IoTSynHealthApp;
@@ -88,19 +105,20 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		396B63AA2E338BE5007E4014 /* common */ = {
+		396B63AA2E338BE5007E4014 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				391013312E4B5136005DDD2C /* ErrorView.swift */,
 				396B63B32E33905C007E4014 /* Components */,
 			);
-			path = common;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		396B63AF2E338DA5007E4014 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				39EB5DB02E46085000D8E02A /* main */,
 				39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */,
+				39EB5DB02E46085000D8E02A /* main */,
 				396B63B02E338DB3007E4014 /* login */,
 			);
 			path = ui;
@@ -158,6 +176,8 @@
 		39EB5DAD2E4607D200D8E02A /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				391013262E4B36DA005DDD2C /* BackgroundUtil.swift */,
+				391013242E4B343B005DDD2C /* ColorUtil.swift */,
 				39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */,
 			);
 			path = Util;
@@ -213,6 +233,7 @@
 			knownRegions = (
 				en,
 				Base,
+				vi,
 			);
 			mainGroup = 396B638D2E337D66007E4014;
 			productRefGroup = 396B63972E337D66007E4014 /* Products */;
@@ -231,6 +252,7 @@
 			files = (
 				396B63A12E337D67007E4014 /* Preview Assets.xcassets in Resources */,
 				396B639E2E337D67007E4014 /* Assets.xcassets in Resources */,
+				391013302E4B465E005DDD2C /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,14 +264,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */,
+				391013272E4B36F4005DDD2C /* BackgroundUtil.swift in Sources */,
 				39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */,
 				39EEB9512E378DEA00AD2F26 /* PrimaryButtonStyle.swift in Sources */,
 				396B63B22E338DC1007E4014 /* LoginView.swift in Sources */,
+				391013252E4B3445005DDD2C /* ColorUtil.swift in Sources */,
 				396B639C2E337D66007E4014 /* RootView.swift in Sources */,
 				396B63AE2E338C85007E4014 /* IoTSynHealthApp.swift in Sources */,
 				39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */,
 				39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */,
 				396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */,
+				391013322E4B5139005DDD2C /* ErrorView.swift in Sources */,
 				39EEB94F2E378B5A00AD2F26 /* CustomButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +287,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -316,6 +342,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -325,6 +352,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -372,6 +400,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

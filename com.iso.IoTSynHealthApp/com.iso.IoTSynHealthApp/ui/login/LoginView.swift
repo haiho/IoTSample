@@ -16,51 +16,52 @@ struct LoginView: View {
         NavigationView {
             ZStack {
                 // Nền màn hình
-                Color.black
-                    .opacity(0.2)
-                    .ignoresSafeArea()
+                OverlayBackground()
 
                 VStack(spacing: 16) {
                     CustomTextField(
-                        placeholder: "Email",
+                        placeholder: "lbl_email",
                         text: $email,
                         icon: "envelope",
                         keyboardType: .emailAddress
-                    )
+                    ).padding(.bottom, 8)
 
                     CustomTextField(
-                        placeholder: "Password",
+                        placeholder: "lbl_password",
                         text: $password,
                         icon: "lock",
                         isSecure: true
-                    )
+                    ).padding(.bottom, 8)
 
-                    CustomButton(title: "Đăng nhập") {
-                        //action
-                        print("Email: \(email), Password: \(password)")
-                    }
+                    Spacer().frame(height: 16)
 
-                    Button("Đăng nhập 2") {
+                    CustomButton(title: "lbl_login") {
                         // Xử lý login
                         navManager.resetToRoot()
                         navManager.push(.main)
                     }
-                    .buttonStyle(PrimaryButtonStyle())
+                    .padding(.leading, 16)
+                    .padding(.trailing, 16)
 
-                    //                    ProgressView()
+                    CustomButton(title: "lbl_register") {
+                        // Xử lý login
+                        navManager.resetToRoot()
+                        navManager.push(.main)
+                    }
+                    .padding(.leading, 16)
+                    .padding(.trailing, 16)
+                    .padding(.top, 8)
                 }
                 .padding()
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Login screen")
+                    Text("title_login_screen")
                         .font(.system(size: 34, weight: .bold))
                         .foregroundColor(.black)
 
                 }
             }
-
-            //            .navigationTitle("Login screen")// ko dùng cái này, vì ko căn giữa screen dc
 
         }
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomTextField: View {
-    var placeholder: String
+    var placeholder: LocalizedStringKey
     @Binding var text: String
     var icon: String? = nil // SF Symbol
     var isSecure: Bool = false
