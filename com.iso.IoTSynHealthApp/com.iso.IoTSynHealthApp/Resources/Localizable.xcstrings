@@ -1,7 +1,13 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "ForgotPasswordView" : {
+
+    },
     "HELLLO" : {
+
+    },
+    "Hello, World!" : {
 
     },
     "lbl_email" : {
@@ -74,6 +80,26 @@
     },
     "Main App View" : {
 
+    },
+    "RegisterScreen" : {
+
+    },
+    "str_forgot_pw" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot password"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quên mật khẩu"
+          }
+        }
+      }
     },
     "title_login_screen" : {
       "extractionState" : "manual",

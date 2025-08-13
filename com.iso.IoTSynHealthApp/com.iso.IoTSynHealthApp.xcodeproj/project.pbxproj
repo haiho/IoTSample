@@ -18,11 +18,14 @@
 		396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396B63A82E338BAE007E4014 /* CustomTextField.swift */; };
 		396B63AE2E338C85007E4014 /* IoTSynHealthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396B63AD2E338C85007E4014 /* IoTSynHealthApp.swift */; };
 		396B63B22E338DC1007E4014 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396B63B12E338DC1007E4014 /* LoginView.swift */; };
+		39B8CB782E4C8066005F030A /* CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB772E4C8057005F030A /* CustomText.swift */; };
+		39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB7A2E4C830B005F030A /* Toolbar.swift */; };
+		39B8CB7E2E4C8C53005F030A /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB7D2E4C8C46005F030A /* ForgotPasswordView.swift */; };
+		39B8CB812E4C99B8005F030A /* RegisterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB802E4C99B8005F030A /* RegisterScreen.swift */; };
 		39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */; };
 		39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */; };
 		39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DB12E46087D00D8E02A /* MainView.swift */; };
 		39EEB94F2E378B5A00AD2F26 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEB94E2E378B5A00AD2F26 /* CustomButton.swift */; };
-		39EEB9512E378DEA00AD2F26 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEB9502E378DEA00AD2F26 /* PrimaryButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,11 +41,14 @@
 		396B63A82E338BAE007E4014 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		396B63AD2E338C85007E4014 /* IoTSynHealthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoTSynHealthApp.swift; sourceTree = "<group>"; };
 		396B63B12E338DC1007E4014 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		39B8CB772E4C8057005F030A /* CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomText.swift; sourceTree = "<group>"; };
+		39B8CB7A2E4C830B005F030A /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
+		39B8CB7D2E4C8C46005F030A /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		39B8CB802E4C99B8005F030A /* RegisterScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreen.swift; sourceTree = "<group>"; };
 		39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		39EB5DB12E46087D00D8E02A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		39EEB94E2E378B5A00AD2F26 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		39EEB9502E378DEA00AD2F26 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,28 +123,31 @@
 		396B63AF2E338DA5007E4014 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */,
 				39EB5DB02E46085000D8E02A /* main */,
-				396B63B02E338DB3007E4014 /* login */,
+				396B63B02E338DB3007E4014 /* landing */,
 			);
 			path = ui;
 			sourceTree = "<group>";
 		};
-		396B63B02E338DB3007E4014 /* login */ = {
+		396B63B02E338DB3007E4014 /* landing */ = {
 			isa = PBXGroup;
 			children = (
+				39B8CB7D2E4C8C46005F030A /* ForgotPasswordView.swift */,
+				39B8CB802E4C99B8005F030A /* RegisterScreen.swift */,
 				39169EF92E4A042800BB44B5 /* LandingView.swift */,
 				396B63B12E338DC1007E4014 /* LoginView.swift */,
+				39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */,
 			);
-			path = login;
+			path = landing;
 			sourceTree = "<group>";
 		};
 		396B63B32E33905C007E4014 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				39B8CB7A2E4C830B005F030A /* Toolbar.swift */,
+				39B8CB772E4C8057005F030A /* CustomText.swift */,
 				396B63A82E338BAE007E4014 /* CustomTextField.swift */,
 				39EEB94E2E378B5A00AD2F26 /* CustomButton.swift */,
-				39EEB9502E378DEA00AD2F26 /* PrimaryButtonStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -263,18 +272,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39B8CB782E4C8066005F030A /* CustomText.swift in Sources */,
 				39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */,
 				391013272E4B36F4005DDD2C /* BackgroundUtil.swift in Sources */,
 				39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */,
-				39EEB9512E378DEA00AD2F26 /* PrimaryButtonStyle.swift in Sources */,
 				396B63B22E338DC1007E4014 /* LoginView.swift in Sources */,
 				391013252E4B3445005DDD2C /* ColorUtil.swift in Sources */,
+				39B8CB812E4C99B8005F030A /* RegisterScreen.swift in Sources */,
 				396B639C2E337D66007E4014 /* RootView.swift in Sources */,
+				39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */,
 				396B63AE2E338C85007E4014 /* IoTSynHealthApp.swift in Sources */,
 				39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */,
 				39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */,
 				396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */,
 				391013322E4B5139005DDD2C /* ErrorView.swift in Sources */,
+				39B8CB7E2E4C8C53005F030A /* ForgotPasswordView.swift in Sources */,
 				39EEB94F2E378B5A00AD2F26 /* CustomButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

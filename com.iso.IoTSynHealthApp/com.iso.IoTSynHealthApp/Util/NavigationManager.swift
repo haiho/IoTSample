@@ -10,6 +10,8 @@ import SwiftUI
 enum Screen: Hashable {
     case login
     case main
+    case forgotPW
+    case register
 }
 
 class NavigationManager: ObservableObject {

@@ -13,13 +13,18 @@ struct LandingView: View {
     var body: some View {
         NavigationStack(path: $navManager.path) {
             LoginView().navigationDestination(for: Screen.self) { screen in
-                    switch screen {
-                    case .login:
-                        LoginView()
-                    case .main:
-                        MainView()
-                    }
+                switch screen {
+                case .login:
+                    LoginView()
+                case .main:
+                    MainView()
+                case .forgotPW:
+                    ForgotPasswordView()
+                case .register:
+                    RegisterScreen()
                 }
+
+            }
         }
         .environmentObject(navManager)
     }

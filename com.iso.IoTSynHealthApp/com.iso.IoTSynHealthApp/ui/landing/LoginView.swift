@@ -37,30 +37,29 @@ struct LoginView: View {
 
                     CustomButton(title: "lbl_login") {
                         // Xử lý login
-                        navManager.resetToRoot()
+                        navManager.resetToRoot()  // cần khi xoá hết cách stack
                         navManager.push(.main)
                     }
                     .padding(.leading, 16)
                     .padding(.trailing, 16)
 
-                    CustomButton(title: "lbl_register") {
-                        // Xử lý login
-                        navManager.resetToRoot()
-                        navManager.push(.main)
-                    }
-                    .padding(.leading, 16)
-                    .padding(.trailing, 16)
-                    .padding(.top, 8)
+                    HStack {
+                        ClickableTextLink(
+                            strText: "lbl_register",
+                            screen: .register
+                        )
+                        Spacer().frame(width: 20)
+
+                        ClickableTextLink(
+                            strText: "str_forgot_pw",
+                            screen: .forgotPW
+                        )
+                    }.padding(.top, 40)
                 }
                 .padding()
             }
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("title_login_screen")
-                        .font(.system(size: 34, weight: .bold))
-                        .foregroundColor(.black)
-
-                }
+                ToolbarCenter(title: "title_login_screen")
             }
 
         }
