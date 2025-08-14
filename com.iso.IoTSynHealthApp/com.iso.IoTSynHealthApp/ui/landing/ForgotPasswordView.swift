@@ -7,10 +7,17 @@
 
 import SwiftUI
 
-
 struct ForgotPasswordView: View {
+    @EnvironmentObject var navManager: NavigationManager
     var body: some View {
-        Text("ForgotPasswordView")
+        CenteredScrollVStack {
+            Text("ForgotPasswordView")
+        }.customNavigationBar(
+            title: "lbl_forgot_pw",
+            backAction: {
+                navManager.pop()
+            }
+        )
     }
 }
 

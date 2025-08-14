@@ -27,6 +27,23 @@
         }
       }
     },
+    "lbl_forgot_pw" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot password"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quên mật khẩu"
+          }
+        }
+      }
+    },
     "lbl_login" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -78,28 +95,28 @@
         }
       }
     },
-    "Main App View" : {
-
-    },
-    "RegisterScreen" : {
-
-    },
-    "str_forgot_pw" : {
+    "lbl_signup" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Forgot password"
+            "value" : "Sign Up"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Quên mật khẩu"
+            "state" : "translated",
+            "value" : "Đăng ký"
           }
         }
       }
+    },
+    "Main App View" : {
+
+    },
+    "RegisterScreen" : {
+
     },
     "title_login_screen" : {
       "extractionState" : "manual",

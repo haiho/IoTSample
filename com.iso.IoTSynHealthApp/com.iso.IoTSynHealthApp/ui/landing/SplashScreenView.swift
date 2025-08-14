@@ -24,9 +24,10 @@ struct SplashScreenView: View {
 
                 VStack {
                     VStack {
-                        Image( "logo_healthapp"
-//                            colorScheme == .light
-//                                ? "splash-light" : "splash-dark"
+                        Image(
+                            "test_logo"
+                            //                            colorScheme == .light
+                            //                                ? "splash-light" : "splash-dark"
 
                         )
                         .resizable()

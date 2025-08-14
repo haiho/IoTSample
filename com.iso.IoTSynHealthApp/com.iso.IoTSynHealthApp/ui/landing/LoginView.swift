@@ -13,57 +13,49 @@ struct LoginView: View {
     @EnvironmentObject var navManager: NavigationManager
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                // Nền màn hình
-                OverlayBackground()
+        
+        CenteredScrollVStack {
+            CustomTextField(
+                placeholder: "lbl_email",
+                text: $email,
+                icon: "envelope",
+                keyboardType: .emailAddress
+            ).padding(.bottom, 8)
 
-                VStack(spacing: 16) {
-                    CustomTextField(
-                        placeholder: "lbl_email",
-                        text: $email,
-                        icon: "envelope",
-                        keyboardType: .emailAddress
-                    ).padding(.bottom, 8)
+            CustomTextField(
+                placeholder: "lbl_password",
+                text: $password,
+                icon: "lock",
+                isSecure: true
+            ).padding(.bottom, 8)
 
-                    CustomTextField(
-                        placeholder: "lbl_password",
-                        text: $password,
-                        icon: "lock",
-                        isSecure: true
-                    ).padding(.bottom, 8)
+            Spacer().frame(height: 16)
 
-                    Spacer().frame(height: 16)
-
-                    CustomButton(title: "lbl_login") {
-                        // Xử lý login
-                        navManager.resetToRoot()  // cần khi xoá hết cách stack
-                        navManager.push(.main)
-                    }
-                    .padding(.leading, 16)
-                    .padding(.trailing, 16)
-
-                    HStack {
-                        ClickableTextLink(
-                            strText: "lbl_register",
-                            screen: .register
-                        )
-                        Spacer().frame(width: 20)
-
-                        ClickableTextLink(
-                            strText: "str_forgot_pw",
-                            screen: .forgotPW
-                        )
-                    }.padding(.top, 40)
-                }
-                .padding()
+            CustomButton(title: "lbl_login") {
+                // Xử lý login
+                navManager.resetToRoot()  // cần khi xoá hết cách stack
+                navManager.push(.main)
             }
-            .toolbar {
-                ToolbarCenter(title: "title_login_screen")
-            }
+            .padding(.leading, 16)
+            .padding(.trailing, 16)
 
-        }
+            HStack {
+                ClickableTextLink(
+                    strText: "lbl_signup",
+                    screen: .register
+                )
+                Spacer().frame(width: 20)
+
+                ClickableTextLink(
+                    strText: "lbl_forgot_pw",
+                    screen: .forgotPW
+                )
+            }.padding(.top, 40)
+
+        }.customNavigationBar(title: "title_login_screen")
+
     }
+
 }
 
 #Preview {

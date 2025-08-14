@@ -13,6 +13,7 @@ struct CustomButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
+                .bold()
                 .frame(maxWidth: .infinity)
         }.buttonStyle(PrimaryButtonStyle())
     }
