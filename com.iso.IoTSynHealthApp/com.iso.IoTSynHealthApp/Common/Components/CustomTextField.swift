@@ -42,12 +42,11 @@ struct CustomTextField: View {
                 }
             }
         }
-        .padding()
+        .appInputFieldSpacing()
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.gray.opacity(0.5), lineWidth: 1)
         )
-        .padding(.horizontal)
     }
 }
 

@@ -1,6 +1,17 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "btn_send" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send"
+          }
+        }
+      }
+    },
     "ForgotPasswordView" : {
 
     },
@@ -27,6 +38,17 @@
         }
       }
     },
+    "lbl_first_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First name"
+          }
+        }
+      }
+    },
     "lbl_forgot_pw" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -40,6 +62,17 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Quên mật khẩu"
+          }
+        }
+      }
+    },
+    "lbl_last_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last name"
           }
         }
       }
@@ -115,8 +148,27 @@
     "Main App View" : {
 
     },
-    "RegisterScreen" : {
-
+    "str_confirm_pw" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm your password"
+          }
+        }
+      }
+    },
+    "str_enter_your_email" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your email address"
+          }
+        }
+      }
     },
     "title_login_screen" : {
       "extractionState" : "manual",

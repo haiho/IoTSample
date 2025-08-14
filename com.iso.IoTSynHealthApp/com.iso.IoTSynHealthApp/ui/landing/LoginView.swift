@@ -13,21 +13,25 @@ struct LoginView: View {
     @EnvironmentObject var navManager: NavigationManager
 
     var body: some View {
-        
+
         CenteredScrollVStack {
             CustomTextField(
                 placeholder: "lbl_email",
                 text: $email,
                 icon: "envelope",
                 keyboardType: .emailAddress
-            ).padding(.bottom, 8)
+            )
+            .padding(.bottom, 8)
+            .padding(.horizontal)
 
             CustomTextField(
                 placeholder: "lbl_password",
                 text: $password,
                 icon: "lock",
                 isSecure: true
-            ).padding(.bottom, 8)
+            )
+            .padding(.bottom, 8)
+            .padding(.horizontal)
 
             Spacer().frame(height: 16)
 
@@ -36,8 +40,7 @@ struct LoginView: View {
                 navManager.resetToRoot()  // cần khi xoá hết cách stack
                 navManager.push(.main)
             }
-            .padding(.leading, 16)
-            .padding(.trailing, 16)
+            .padding(.horizontal)
 
             HStack {
                 ClickableTextLink(

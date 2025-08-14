@@ -1,12 +1,39 @@
 //
-//  CenteredScrollVStack.swift
+//  BaseScrollVStrack.swift
 //  com.iso.IoTSynHealthApp
 //
 //  Created by PTV on 14/8/25.
 //
-
 import SwiftUI
 
+// MARK : BaseScrollVStrack
+
+struct BaseScrollVStrack<Content: View>: View {
+    let spacing: CGFloat
+    let content: () -> Content
+
+    init(
+        spacing: CGFloat = 16,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.spacing = spacing
+        self.content = content
+    }
+
+    var body: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: spacing) {
+                content()
+            }
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .padding(.horizontal, 16)
+            .padding(.top, 16)  // hoặc dùng .safeAreaInset nếu muốn tự động
+        }
+        .background(Color(.systemBackground))
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+    }
+}
+ // MARK : CenteredScrollVStack
 struct CenteredScrollVStack<Content: View>: View {
     let spacing: CGFloat
     let content: () -> Content
@@ -37,7 +64,7 @@ struct CenteredScrollVStack<Content: View>: View {
             }
             .frame(width: geo.size.width, height: geo.size.height)
             .background(Color(.systemBackground))
-            .ignoresSafeArea(.keyboard, edges: .bottom) // push view on keyboard
+            .ignoresSafeArea(.keyboard, edges: .bottom)  // push view on keyboard
         }
     }
 }
