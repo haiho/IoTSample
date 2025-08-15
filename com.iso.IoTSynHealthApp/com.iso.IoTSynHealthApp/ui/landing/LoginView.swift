@@ -22,7 +22,6 @@ struct LoginView: View {
                 keyboardType: .emailAddress
             )
             .padding(.bottom, 8)
-            .padding(.horizontal)
 
             CustomTextField(
                 placeholder: "lbl_password",
@@ -31,7 +30,6 @@ struct LoginView: View {
                 isSecure: true
             )
             .padding(.bottom, 8)
-            .padding(.horizontal)
 
             Spacer().frame(height: 16)
 
@@ -40,7 +38,6 @@ struct LoginView: View {
                 navManager.resetToRoot()  // cần khi xoá hết cách stack
                 navManager.push(.main)
             }
-            .padding(.horizontal)
 
             HStack {
                 ClickableTextLink(
@@ -55,7 +52,9 @@ struct LoginView: View {
                 )
             }.padding(.top, 40)
 
-        }.customNavigationBar(title: "title_login_screen")
+        }
+        .customNavigationBar(title: "title_login_screen")
+        .appScreenPadding()
 
     }
 

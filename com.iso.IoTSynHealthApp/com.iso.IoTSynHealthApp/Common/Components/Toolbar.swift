@@ -30,7 +30,7 @@ struct CustomNavigationBarModifier: ViewModifier {
                 // set title ở giữa màn hình
                 ToolbarItem(placement: .principal) {
                     Text(title)
-                        .font(.system(size: 24, weight: .bold))
+                        .font(.fontTitle)
                         .foregroundColor(.black)
                 }
                 // Nút back bên trái

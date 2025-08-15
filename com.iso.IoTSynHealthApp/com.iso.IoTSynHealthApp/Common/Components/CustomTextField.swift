@@ -26,9 +26,11 @@ struct CustomTextField: View {
             if isSecure && !isSecureVisible {
                 SecureField(placeholder, text: $text)
                     .keyboardType(keyboardType)
+                    .font(.fontTextNormal)
             } else {
                 TextField(placeholder, text: $text)
                     .keyboardType(keyboardType)
+                    .font(.fontTextNormal)
             }
 
             // Toggle eye icon for password fields

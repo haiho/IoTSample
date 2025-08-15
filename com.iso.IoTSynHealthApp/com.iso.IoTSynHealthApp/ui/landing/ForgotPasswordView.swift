@@ -9,15 +9,26 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     @EnvironmentObject var navManager: NavigationManager
+    @State var email: String = ""
+
     var body: some View {
         CenteredScrollVStack {
-            Text("ForgotPasswordView")
+            CustomText("Hello")
+            CustomTextFieldWithLabel(
+                label: "lbl_email",
+                placeholder: "lbl_email",
+                text: $email
+            ).padding(.bottom, AppPadding.btnSpacing)
+
+            CustomButton(title: "btn_send") {
+            }
+
         }.customNavigationBar(
             title: "lbl_forgot_pw",
             backAction: {
                 navManager.pop()
             }
-        )
+        ).appScreenPadding()
     }
 }
 

@@ -22,6 +22,7 @@ struct CustomTextFieldWithLabel: View {
             Text(label)
                 .font(.subheadline)
                 .foregroundColor(.gray)
+                .font(.fontTextNormal)
 
             HStack {
                 if let icon = icon {
@@ -32,9 +33,11 @@ struct CustomTextFieldWithLabel: View {
                 if isSecure && !isSecureVisible {
                     SecureField(placeholder, text: $text)
                         .keyboardType(keyboardType)
+                        .font(.fontTextNormal)
                 } else {
                     TextField(placeholder, text: $text)
                         .keyboardType(keyboardType)
+                        .font(.fontTextNormal)
                 }
 
                 if isSecure {

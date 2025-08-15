@@ -65,7 +65,7 @@ struct RegisterScreen: View {
             backAction: {
                 navManager.pop()
             }
-        ).padding(.horizontal)
+        ).appScreenPadding()
     }
 }
 
