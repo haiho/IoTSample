@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct RootView: View {
+    @EnvironmentObject var appSession: AppSession
 
     var body: some View {
-        Text("HELLLO")
-    }
-}
-
-struct RootView_Previews: PreviewProvider {
-    static var previews: some View {
-        RootView()  // ✅ Preview từ gốc
+        if appSession.isLoggedIn {
+            ContentView()
+        } else {
+            SplashScreenView()
+        }
     }
 }

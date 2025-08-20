@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SideMenuContent: View {
     @Binding var isShowing: Bool
-    @AppStorage("isLoggedIn") var isLoggedIn = false
+    @EnvironmentObject var appSession: AppSession
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
 
@@ -72,7 +72,7 @@ struct SideMenuContent: View {
                     print("Đăng xuất tapped")
                     withAnimation {
                         isShowing = false
-                        isLoggedIn = false
+                        appSession.logout()
                     }
                 }
             }

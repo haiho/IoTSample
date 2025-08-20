@@ -32,6 +32,7 @@
 		39FF9B642E55C07F00EC0EE8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF9B632E55C07A00EC0EE8 /* ContentView.swift */; };
 		39FF9B672E55D00800EC0EE8 /* SideMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF9B662E55CFF800EC0EE8 /* SideMenuItem.swift */; };
 		39FF9B692E55D26C00EC0EE8 /* SideMenuContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF9B682E55D26400EC0EE8 /* SideMenuContent.swift */; };
+		39FF9B6B2E55D9EC00EC0EE8 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF9B6A2E55D9EA00EC0EE8 /* AppSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		39FF9B632E55C07A00EC0EE8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		39FF9B662E55CFF800EC0EE8 /* SideMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuItem.swift; sourceTree = "<group>"; };
 		39FF9B682E55D26400EC0EE8 /* SideMenuContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuContent.swift; sourceTree = "<group>"; };
+		39FF9B6A2E55D9EA00EC0EE8 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +202,7 @@
 		39EB5DAD2E4607D200D8E02A /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				39FF9B6A2E55D9EA00EC0EE8 /* AppSession.swift */,
 				39555BAE2E4F336E00710F1C /* AppUtils.swift */,
 				39CF53932E4DF38300B45BEE /* DimenUtil.swift */,
 				39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */,
@@ -304,6 +307,7 @@
 				396B63B22E338DC1007E4014 /* LoginView.swift in Sources */,
 				39B8CB812E4C99B8005F030A /* RegisterScreen.swift in Sources */,
 				396B639C2E337D66007E4014 /* RootView.swift in Sources */,
+				39FF9B6B2E55D9EC00EC0EE8 /* AppSession.swift in Sources */,
 				39FF9B642E55C07F00EC0EE8 /* ContentView.swift in Sources */,
 				39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */,
 				396B63AE2E338C85007E4014 /* IoTSynHealthApp.swift in Sources */,
