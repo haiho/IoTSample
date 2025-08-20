@@ -12,7 +12,16 @@
         }
       }
     },
+    "Dashboard" : {
+
+    },
+    "email@example.com" : {
+
+    },
     "HELLLO" : {
+
+    },
+    "Item %lld" : {
 
     },
     "lbl_email" : {
@@ -140,6 +149,9 @@
       }
     },
     "Main App View" : {
+
+    },
+    "Nguyễn Văn A" : {
 
     },
     "str_confirm_pw" : {

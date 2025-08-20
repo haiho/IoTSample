@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct IoTSynHealthApp: App {
+    @AppStorage("isLoggedIn") var isLoggedIn = false
+
     var body: some Scene {
         WindowGroup {
-            SplashScreenView()
+            if isLoggedIn {
+                ContentView()
+            } else {
+                SplashScreenView()
+            }
         }
     }
 }

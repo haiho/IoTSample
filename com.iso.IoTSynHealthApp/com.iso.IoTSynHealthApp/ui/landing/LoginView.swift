@@ -11,7 +11,7 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var navManager: NavigationManager
-
+    @AppStorage("isLoggedIn") var isLoggedIn = false
     var body: some View {
 
         CenteredScrollVStack {
@@ -36,7 +36,8 @@ struct LoginView: View {
             CustomButton(title: "lbl_login") {
                 // Xử lý login
                 navManager.resetToRoot()  // cần khi xoá hết cách stack
-                navManager.push(.main)
+//                navManager.push(.main)
+                isLoggedIn = true
             }
 
             HStack {
