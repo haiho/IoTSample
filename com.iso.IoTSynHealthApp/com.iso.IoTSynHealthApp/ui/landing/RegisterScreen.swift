@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RegisterScreen: View {
-    @EnvironmentObject var navManager: NavigationManager
+    @EnvironmentObject var navManager: AuthNavigationManager
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var email = ""

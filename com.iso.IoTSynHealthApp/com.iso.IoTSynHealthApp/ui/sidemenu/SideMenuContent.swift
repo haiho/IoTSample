@@ -50,22 +50,22 @@ struct SideMenuContent: View {
 
             // 📄 Menu Items
             VStack(alignment: .leading, spacing: 15) {
-                SideMenuItem(title: "Trang chủ", systemImage: "house") {
+                MenuItem(title: "Trang chủ", systemImage: "house") {
                     print("Trang chủ tapped")
                     withAnimation { isShowing = false }
                 }
 
-                SideMenuItem(title: "Tài khoản", systemImage: "person") {
+                MenuItem(title: "Tài khoản", systemImage: "person") {
                     print("Tài khoản tapped")
                     withAnimation { isShowing = false }
                 }
 
-                SideMenuItem(title: "Cài đặt", systemImage: "gear") {
+                MenuItem(title: "Cài đặt", systemImage: "gear") {
                     print("Cài đặt tapped")
                     withAnimation { isShowing = false }
                 }
 
-                SideMenuItem(
+                MenuItem(
                     title: "Đăng xuất",
                     systemImage: "arrow.right.square"
                 ) {

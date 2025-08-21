@@ -37,8 +37,8 @@ private struct PrimaryButtonStyle: ButtonStyle {
 // MARK:  click on textview
 struct ClickableTextLink: View {
     let strText: LocalizedStringKey
-    let screen: Screen
-    @EnvironmentObject var navigationManager: NavigationManager
+    let screen: AuthScreen
+    @EnvironmentObject var navigationManager: AuthNavigationManager
 
     var body: some View {
         Button(action: {

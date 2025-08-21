@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct ContentView: View {
+struct HomeView: View {
     @State private var showSideMenu = false
 
     var body: some View {

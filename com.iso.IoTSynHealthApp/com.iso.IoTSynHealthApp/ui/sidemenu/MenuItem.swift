@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SideMenuItem: View {
+struct MenuItem: View {
     let title: String
     let systemImage: String
     let action: () -> Void

@@ -12,7 +12,7 @@ struct RootView: View {
 
     var body: some View {
         if appSession.isLoggedIn {
-            ContentView()
+            MainView()
         } else {
             SplashScreenView()
         }

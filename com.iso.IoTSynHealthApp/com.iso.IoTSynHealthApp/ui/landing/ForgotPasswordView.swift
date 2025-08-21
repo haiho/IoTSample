@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ForgotPasswordView: View {
-    @EnvironmentObject var navManager: NavigationManager
+    @EnvironmentObject var navManager: AuthNavigationManager
     @State var email: String = ""
 
     var body: some View {

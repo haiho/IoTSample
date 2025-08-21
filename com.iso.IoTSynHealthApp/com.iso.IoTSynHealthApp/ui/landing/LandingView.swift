@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct LandingView: View {
-    @StateObject var navManager = NavigationManager()
+    @StateObject var navManager = AuthNavigationManager()
 
     var body: some View {
         NavigationStack(path: $navManager.path) {
-            LoginView().navigationDestination(for: Screen.self) { screen in
+            LoginView().navigationDestination(for: AuthScreen.self) { screen in
                 switch screen {
                 case .login:
                     LoginView()
-                case .main:
-                    MainView()
                 case .forgotPW:
                     ForgotPasswordView()
                 case .register:
