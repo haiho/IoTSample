@@ -12,9 +12,6 @@
         }
       }
     },
-    "Dashboard" : {
-
-    },
     "email@example.com" : {
 
     },
@@ -148,6 +145,9 @@
     "Nguyễn Văn A" : {
 
     },
+    "SettingView" : {
+
+    },
     "str_confirm_pw" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -170,6 +170,20 @@
         }
       }
     },
+    "Tài khoản" : {
+
+    },
+    "title_home_screen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
+    },
     "title_login_screen" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -183,6 +197,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Đăng Nhập"
+          }
+        }
+      }
+    },
+    "title_settings_screen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
           }
         }
       }

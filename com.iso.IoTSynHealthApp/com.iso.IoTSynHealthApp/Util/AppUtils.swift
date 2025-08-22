@@ -15,7 +15,6 @@ struct OverlayBackground: View {
     }
 }
 
-
 //2. MARK : Color
 extension Color {
     struct Background {
@@ -31,3 +30,9 @@ extension Color {
     static let overlayBackground = Color.black.opacity(0.2)
 }
 
+// MARK : string
+extension String {
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+}

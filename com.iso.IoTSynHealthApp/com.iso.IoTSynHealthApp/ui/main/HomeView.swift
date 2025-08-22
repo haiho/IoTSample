@@ -7,26 +7,19 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var showSideMenu = false
-
     var body: some View {
-        NavigationView {
-            List(1..<6) { index in
+        BaseScrollVStrack(backgroundColor: Color.red.opacity(0.2)) {
+            ForEach(1..<6) { index in
                 Text("Item \(index)")
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
             }
-            .navigationBarTitle("Dashboard", displayMode: .inline)
-            .navigationBarItems(
-                leading: (Button(action: {
-                    withAnimation {
-                        self.showSideMenu.toggle()
-                    }
-                }) {
-                    Image(systemName: "line.horizontal.3")
-                        .imageScale(.large)
-                })
-            )
-        }.sideMenu(isShowing: $showSideMenu) {
-            SideMenuContent(isShowing: $showSideMenu)
         }
     }
+}
+
+#Preview {
+    HomeView()
 }

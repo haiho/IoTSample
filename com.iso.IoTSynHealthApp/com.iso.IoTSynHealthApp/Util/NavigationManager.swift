@@ -38,3 +38,11 @@ class BaseNavigationManager<Screen: AppScreen>: ObservableObject {
 
 typealias AuthNavigationManager = BaseNavigationManager<AuthScreen>
 typealias MainNavigationManager = BaseNavigationManager<MainScreen>
+
+// MARK: mainview
+
+enum MenuScreen {
+    case home
+    case account
+    case settings
+}

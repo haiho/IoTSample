@@ -20,7 +20,7 @@ struct AppPadding {
 }
 
 extension View {
-
+    
     func appHorizontalPadding() -> some View {
         self.padding(.horizontal, 16)
     }

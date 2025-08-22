@@ -10,14 +10,17 @@ import SwiftUI
 
 struct BaseScrollVStrack<Content: View>: View {
     let spacing: CGFloat
+    let backgroundColor: Color?
     let content: () -> Content
 
     init(
         spacing: CGFloat = 16,
+        backgroundColor: Color? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.spacing = spacing
         self.content = content
+        self.backgroundColor = backgroundColor
     }
 
     var body: some View {
@@ -29,11 +32,11 @@ struct BaseScrollVStrack<Content: View>: View {
             .padding(.horizontal, 16)
             .padding(.top, 16)  // hoặc dùng .safeAreaInset nếu muốn tự động
         }
-        .background(Color(.systemBackground))
+        .background(backgroundColor ?? Color(.systemBackground))
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
- // MARK : CenteredScrollVStack
+// MARK : CenteredScrollVStack
 struct CenteredScrollVStack<Content: View>: View {
     let spacing: CGFloat
     let content: () -> Content

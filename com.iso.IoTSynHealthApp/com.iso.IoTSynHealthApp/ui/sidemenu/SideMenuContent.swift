@@ -9,7 +9,9 @@ import SwiftUI
 
 struct SideMenuContent: View {
     @Binding var isShowing: Bool
+    var onSelect: (MenuScreen) -> Void
     @EnvironmentObject var appSession: AppSession
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
 
@@ -52,17 +54,26 @@ struct SideMenuContent: View {
             VStack(alignment: .leading, spacing: 15) {
                 MenuItem(title: "Trang chủ", systemImage: "house") {
                     print("Trang chủ tapped")
-                    withAnimation { isShowing = false }
+                    withAnimation {
+                        isShowing = false
+                        onSelect(.home)
+                    }
                 }
 
                 MenuItem(title: "Tài khoản", systemImage: "person") {
                     print("Tài khoản tapped")
-                    withAnimation { isShowing = false }
+                    withAnimation {
+                        isShowing = false
+                        onSelect(.account)
+                    }
                 }
 
                 MenuItem(title: "Cài đặt", systemImage: "gear") {
                     print("Cài đặt tapped")
-                    withAnimation { isShowing = false }
+                    withAnimation {
+                        isShowing = false
+                        onSelect(.settings)
+                    }
                 }
 
                 MenuItem(

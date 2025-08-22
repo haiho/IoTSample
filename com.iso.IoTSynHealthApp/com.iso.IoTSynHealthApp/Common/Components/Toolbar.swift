@@ -19,7 +19,25 @@ import SwiftUI
 //    }
 //}
 
-struct CustomNavigationBarModifier: ViewModifier {
+
+extension View {
+    func customNavigationBar(
+        title: LocalizedStringKey,
+        showBackButton: Bool = true,
+        backAction: (() -> Void)? = nil
+    ) -> some View {
+        self.modifier(
+            CustomNavigationBarModifier(
+                title: title,
+                showBackButton: showBackButton,
+                backAction: backAction
+
+            )
+        )
+    }
+}
+
+private struct CustomNavigationBarModifier: ViewModifier {
     var title: LocalizedStringKey
     var showBackButton: Bool
     var backAction: (() -> Void)?
@@ -50,22 +68,3 @@ struct CustomNavigationBarModifier: ViewModifier {
 
     }
 }
-
-extension View {
-    func customNavigationBar(
-        title: LocalizedStringKey,
-        showBackButton: Bool = true,
-        backAction: (() -> Void)? = nil
-    ) -> some View {
-        self.modifier(
-            CustomNavigationBarModifier(
-                title: title,
-                showBackButton: showBackButton,
-                backAction: backAction
-
-            )
-        )
-    }
-}
-// MARK : Vstack to base
-

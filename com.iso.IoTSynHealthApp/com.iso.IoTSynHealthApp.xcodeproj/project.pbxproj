@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		390660582E5865DD0068157E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390660572E5865D80068157E /* SettingsView.swift */; };
 		391013302E4B465E005DDD2C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3910132F2E4B465E005DDD2C /* Localizable.xcstrings */; };
 		391013322E4B5139005DDD2C /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391013312E4B5136005DDD2C /* ErrorView.swift */; };
 		39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39169EF92E4A042800BB44B5 /* LandingView.swift */; };
@@ -25,7 +26,7 @@
 		39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */; };
 		39CF53942E4DF39C00B45BEE /* DimenUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF53932E4DF38300B45BEE /* DimenUtil.swift */; };
 		39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */; };
-		39EB5DAF2E4607E400D8E02A /* AuthNavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAE2E4607E200D8E02A /* AuthNavigationManager.swift */; };
+		39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */; };
 		39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DB12E46087D00D8E02A /* MainView.swift */; };
 		39EEB94F2E378B5A00AD2F26 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EEB94E2E378B5A00AD2F26 /* CustomButton.swift */; };
 		39FF9B622E55BFA900EC0EE8 /* SideMenuUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF9B612E55BFA900EC0EE8 /* SideMenuUtil.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		390660572E5865D80068157E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3910132F2E4B465E005DDD2C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		391013312E4B5136005DDD2C /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		39169EF92E4A042800BB44B5 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
@@ -55,7 +57,7 @@
 		39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVStrack.swift; sourceTree = "<group>"; };
 		39CF53932E4DF38300B45BEE /* DimenUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimenUtil.swift; sourceTree = "<group>"; };
 		39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
-		39EB5DAE2E4607E200D8E02A /* AuthNavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNavigationManager.swift; sourceTree = "<group>"; };
+		39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		39EB5DB12E46087D00D8E02A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		39EEB94E2E378B5A00AD2F26 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		39FF9B612E55BFA900EC0EE8 /* SideMenuUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuUtil.swift; sourceTree = "<group>"; };
@@ -76,6 +78,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		390660562E5865BE0068157E /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				390660572E5865D80068157E /* SettingsView.swift */,
+			);
+			path = settings;
+			sourceTree = "<group>";
+		};
 		391013282E4B3F7C005DDD2C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +147,7 @@
 		396B63AF2E338DA5007E4014 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				390660562E5865BE0068157E /* settings */,
 				39FF9B652E55CFC100EC0EE8 /* sidemenu */,
 				39EB5DB02E46085000D8E02A /* main */,
 				396B63B02E338DB3007E4014 /* landing */,
@@ -159,7 +170,6 @@
 		396B63B32E33905C007E4014 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */,
 				39B8CB7A2E4C830B005F030A /* Toolbar.swift */,
 				39B8CB772E4C8057005F030A /* CustomText.swift */,
 				396B63A82E338BAE007E4014 /* CustomTextField.swift */,
@@ -206,7 +216,8 @@
 				39FF9B6A2E55D9EA00EC0EE8 /* AppSession.swift */,
 				39555BAE2E4F336E00710F1C /* AppUtils.swift */,
 				39CF53932E4DF38300B45BEE /* DimenUtil.swift */,
-				39EB5DAE2E4607E200D8E02A /* AuthNavigationManager.swift */,
+				39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */,
+				39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -312,7 +323,7 @@
 				39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */,
 				396B63AE2E338C85007E4014 /* IoTSynHealthApp.swift in Sources */,
 				39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */,
-				39EB5DAF2E4607E400D8E02A /* AuthNavigationManager.swift in Sources */,
+				39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */,
 				39FF9B622E55BFA900EC0EE8 /* SideMenuUtil.swift in Sources */,
 				39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */,
 				396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */,
@@ -322,6 +333,7 @@
 				39FF9B692E55D26C00EC0EE8 /* SideMenuContent.swift in Sources */,
 				39FF9B672E55D00800EC0EE8 /* MenuItem.swift in Sources */,
 				39CF53942E4DF39C00B45BEE /* DimenUtil.swift in Sources */,
+				390660582E5865DD0068157E /* SettingsView.swift in Sources */,
 				39CF53902E4DE18300B45BEE /* CustomTextFieldWithLabel.swift in Sources */,
 				39EEB94F2E378B5A00AD2F26 /* CustomButton.swift in Sources */,
 			);
