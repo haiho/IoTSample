@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-struct Activity {
-    let id: Int
-    let title: String
-    let subTitle: String
-    let image: String
-    let tintColor: Color
-    let amount: String
-}
-
 struct ActivityCard: View {
     @State var activity: Activity
 
@@ -25,7 +16,7 @@ struct ActivityCard: View {
             VStack {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 8) {
-                        CustomText(activity.title)
+                        CustomText(activity.title).fontNormalBold
                         CustomText(activity.amount)
                     }
                     Spacer()
@@ -34,11 +25,11 @@ struct ActivityCard: View {
                     )
                 }
 
-                CustomText("621")
+                CustomText("621").title.centerAligned.padding(10)
 
-            }
+            }.padding(.all)
 
-        }.padding()
+        }
     }
 }
 

@@ -68,7 +68,10 @@ extension View {
 extension Font {
     static var fontTextNormal: Font {
         .system(size: 16)
-    }  
+    }
+    static var fontTextNormalBold: Font {
+        .system(size: 16).bold()
+    }
     static var fontTextNormal10: Font {
         .system(size: 10)
     }

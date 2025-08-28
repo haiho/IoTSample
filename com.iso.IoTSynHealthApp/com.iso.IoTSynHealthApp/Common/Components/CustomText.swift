@@ -77,6 +77,11 @@ struct CustomText: View {
 }
 
 extension CustomText {
+
+    var fontNormalBold: CustomText {
+        self.font(.fontTextNormalBold)
+
+    }
     var smallText10: CustomText {
         self.font(.fontTextNormal10)
     }

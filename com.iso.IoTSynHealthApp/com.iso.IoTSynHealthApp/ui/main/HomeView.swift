@@ -7,7 +7,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject var homeViewModel = HomeViewModel()
     var body: some View {
+
         BaseScrollVStrack {
             VStack {
                 //MARK:  info and circle chart
@@ -17,19 +19,20 @@ struct HomeView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             VStack {
                                 CustomText("Calories").color(.red)
-                                CustomText("123")
+                                CustomText("\(homeViewModel.calories)")
+
                             }
                             VStack {
                                 CustomText("Activity").color(.green)
-                                CustomText("123")
+                                CustomText("\(homeViewModel.activity)")
                             }
                             VStack {
                                 CustomText("Steps").color(.blue)
-                                CustomText("123")
+                                CustomText("\(homeViewModel.steps)")
                             }
                             VStack {
                                 CustomText("Stand").color(.orange)
-                                CustomText("123")
+                                CustomText("\(homeViewModel.stand)")
                             }
                         }
                         .gridCellColumns(1)
@@ -66,10 +69,19 @@ struct HomeView: View {
                 }
                 .gridColumnAlignment(.leading)
 
-            }
+            }  //close Grid
             .frame(maxWidth: .infinity, maxHeight: 200)
+            .padding(.bottom, 20)
 
             //MARK:  2 card activity
+
+            LazyVGrid(
+                columns: Array(repeating: GridItem(spacing: 20), count: 2)
+            ) {
+                ForEach(homeViewModel.mockActivity, id: \.id) { activity in
+                    ActivityCard(activity: activity)
+                }
+            }
 
         }
     }
