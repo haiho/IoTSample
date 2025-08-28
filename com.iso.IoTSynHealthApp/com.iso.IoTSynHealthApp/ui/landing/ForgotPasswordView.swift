@@ -13,7 +13,7 @@ struct ForgotPasswordView: View {
 
     var body: some View {
         CenteredScrollVStack {
-            CustomText("Please enter yuor email address").padding(.bottom, 20)
+            CustomText("Please enter yuor email address")
             CustomTextFieldWithLabel(
                 label: "lbl_email",
                 placeholder: "lbl_email",

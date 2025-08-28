@@ -15,9 +15,6 @@
     "email@example.com" : {
 
     },
-    "Item %lld" : {
-
-    },
     "lbl_email" : {
       "extractionState" : "manual",
       "localizations" : {

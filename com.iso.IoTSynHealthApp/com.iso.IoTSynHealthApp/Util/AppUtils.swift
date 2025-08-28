@@ -30,7 +30,63 @@ extension Color {
     static let overlayBackground = Color.black.opacity(0.2)
 }
 
-// MARK : string
+struct AppPadding {
+    static let horizontal: CGFloat = 16
+    static let vertical: CGFloat = 20
+    static let screenTop: CGFloat = 24
+    static let screenBottom: CGFloat = 32
+
+    static let fieldSpacing: CGFloat = 20
+    static let sectionSpacing: CGFloat = 40
+    static let withProgress: CGFloat = 18
+
+    static let btnSpacing: CGFloat = 40
+    static let sp12: CGFloat = 12
+}
+
+extension View {
+    func appHorizontalPadding() -> some View {
+        self.padding(.horizontal, 16)
+    }
+
+    func appVerticalPadding() -> some View {
+        self.padding(.vertical, 16)
+    }
+
+    func appScreenPadding() -> some View {
+        self.padding(16)
+    }
+    func appInputFieldSpacing() -> some View {
+        self.padding(AppPadding.sp12)
+    }
+    func appFieldSpacing() -> some View {
+        self.padding(.bottom, 16)
+    }
+}
+
+// MARK: for fontsize
+extension Font {
+    static var fontTextNormal: Font {
+        .system(size: 16)
+    }  
+    static var fontTextNormal10: Font {
+        .system(size: 10)
+    }
+    static var fontLabelBtn: Font {
+        .system(size: 18)
+            .bold()
+    }
+    static var fontTitle: Font {
+        .system(size: 18)
+            .bold()
+    }
+    //    static var fontTextNormal: Font {
+    //        .custom("YourFontName-Regular", size: 16)
+    //    }
+
+}
+
+// MARK: string
 extension String {
     var localized: String {
         return NSLocalizedString(self, comment: "")

@@ -11,6 +11,8 @@
 		391013302E4B465E005DDD2C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3910132F2E4B465E005DDD2C /* Localizable.xcstrings */; };
 		391013322E4B5139005DDD2C /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391013312E4B5136005DDD2C /* ErrorView.swift */; };
 		39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39169EF92E4A042800BB44B5 /* LandingView.swift */; };
+		392A62BE2E5EC1E1002DE1B0 /* ProgressCircleview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392A62BD2E5EC1B4002DE1B0 /* ProgressCircleview.swift */; };
+		392A62C02E5F1461002DE1B0 /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392A62BF2E5F1459002DE1B0 /* ActivityCard.swift */; };
 		39555BAF2E4F337600710F1C /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39555BAE2E4F336E00710F1C /* AppUtils.swift */; };
 		396B639C2E337D66007E4014 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396B639B2E337D66007E4014 /* RootView.swift */; };
 		396B639E2E337D67007E4014 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 396B639D2E337D67007E4014 /* Assets.xcassets */; };
@@ -24,7 +26,6 @@
 		39B8CB812E4C99B8005F030A /* RegisterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB802E4C99B8005F030A /* RegisterScreen.swift */; };
 		39CF53902E4DE18300B45BEE /* CustomTextFieldWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF538F2E4DE18300B45BEE /* CustomTextFieldWithLabel.swift */; };
 		39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */; };
-		39CF53942E4DF39C00B45BEE /* DimenUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF53932E4DF38300B45BEE /* DimenUtil.swift */; };
 		39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */; };
 		39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */; };
 		39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DB12E46087D00D8E02A /* MainView.swift */; };
@@ -41,6 +42,8 @@
 		3910132F2E4B465E005DDD2C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		391013312E4B5136005DDD2C /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		39169EF92E4A042800BB44B5 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
+		392A62BD2E5EC1B4002DE1B0 /* ProgressCircleview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCircleview.swift; sourceTree = "<group>"; };
+		392A62BF2E5F1459002DE1B0 /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		39555BAE2E4F336E00710F1C /* AppUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
 		396B63962E337D66007E4014 /* com.iso.IoTSynHealthApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = com.iso.IoTSynHealthApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		396B639B2E337D66007E4014 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -55,7 +58,6 @@
 		39B8CB802E4C99B8005F030A /* RegisterScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreen.swift; sourceTree = "<group>"; };
 		39CF538F2E4DE18300B45BEE /* CustomTextFieldWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldWithLabel.swift; sourceTree = "<group>"; };
 		39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVStrack.swift; sourceTree = "<group>"; };
-		39CF53932E4DF38300B45BEE /* DimenUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimenUtil.swift; sourceTree = "<group>"; };
 		39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		39EB5DB12E46087D00D8E02A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 		396B63AA2E338BE5007E4014 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				392A62BD2E5EC1B4002DE1B0 /* ProgressCircleview.swift */,
 				391013312E4B5136005DDD2C /* ErrorView.swift */,
 				396B63B32E33905C007E4014 /* Components */,
 			);
@@ -182,6 +185,7 @@
 		396B63B52E339096007E4014 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				392A62BF2E5F1459002DE1B0 /* ActivityCard.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -215,7 +219,6 @@
 				39FF9B612E55BFA900EC0EE8 /* SideMenuUtil.swift */,
 				39FF9B6A2E55D9EA00EC0EE8 /* AppSession.swift */,
 				39555BAE2E4F336E00710F1C /* AppUtils.swift */,
-				39CF53932E4DF38300B45BEE /* DimenUtil.swift */,
 				39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */,
 				39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */,
 			);
@@ -312,6 +315,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				392A62C02E5F1461002DE1B0 /* ActivityCard.swift in Sources */,
 				39B8CB782E4C8066005F030A /* CustomText.swift in Sources */,
 				39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */,
 				39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */,
@@ -328,11 +332,11 @@
 				39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */,
 				396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */,
 				391013322E4B5139005DDD2C /* ErrorView.swift in Sources */,
+				392A62BE2E5EC1E1002DE1B0 /* ProgressCircleview.swift in Sources */,
 				39555BAF2E4F337600710F1C /* AppUtils.swift in Sources */,
 				39B8CB7E2E4C8C53005F030A /* ForgotPasswordView.swift in Sources */,
 				39FF9B692E55D26C00EC0EE8 /* SideMenuContent.swift in Sources */,
 				39FF9B672E55D00800EC0EE8 /* MenuItem.swift in Sources */,
-				39CF53942E4DF39C00B45BEE /* DimenUtil.swift in Sources */,
 				390660582E5865DD0068157E /* SettingsView.swift in Sources */,
 				39CF53902E4DE18300B45BEE /* CustomTextFieldWithLabel.swift in Sources */,
 				39EEB94F2E378B5A00AD2F26 /* CustomButton.swift in Sources */,
