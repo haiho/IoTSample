@@ -32,9 +32,8 @@ struct HomeView: View {
                                 CustomText("123")
                             }
                         }
-                        .frame(alignment: .leading)
                         .gridCellColumns(1)
-
+                        Spacer()
 
                         // Phần 2: ZStack (2/3)
                         ZStack(alignment: .trailing) {
@@ -61,14 +60,14 @@ struct HomeView: View {
                                 color: .orange
                             ).padding(3 * AppPadding.withProgress)
                         }
-                        .frame(maxHeight: 200, alignment: .trailing)
-                        .gridCellColumns(2)  // tổng cộng 3 phần
+                        .gridCellColumns(2)
 
                     }
                 }
                 .gridColumnAlignment(.leading)
 
-            }.padding(.horizontal)
+            }
+            .frame(maxWidth: .infinity, maxHeight: 200)
 
             //MARK:  2 card activity
 
