@@ -48,4 +48,25 @@ class HomeViewModel: ObservableObject {
             amount: "9800"
         ),
     ]
+
+    init() {
+        Task {
+            do {
+                try await healthManager.requestHealthkitAccess()
+                healthManager.fetchTodayCaloriesBurned {
+                    Result in
+                    switch Result {
+                    case .success(let data):
+                        print("Result calories Success : \(data)")
+//                        self.calories = data
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+
+            } catch {
+
+            }
+        }
+    }
 }

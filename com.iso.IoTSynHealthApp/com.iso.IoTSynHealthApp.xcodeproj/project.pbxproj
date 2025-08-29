@@ -27,6 +27,7 @@
 		39BDC9102E6053DA001FC793 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BDC90F2E6053D8001FC793 /* Activity.swift */; };
 		39BDC9122E6055F8001FC793 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BDC9112E6055E7001FC793 /* HomeViewModel.swift */; };
 		39BDC9152E605813001FC793 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BDC9142E605806001FC793 /* HealthManager.swift */; };
+		39BDC9182E606C37001FC793 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BDC9172E606C31001FC793 /* DateUtil.swift */; };
 		39CF53902E4DE18300B45BEE /* CustomTextFieldWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF538F2E4DE18300B45BEE /* CustomTextFieldWithLabel.swift */; };
 		39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */; };
 		39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */; };
@@ -55,6 +56,7 @@
 		396B63A82E338BAE007E4014 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		396B63AD2E338C85007E4014 /* IoTSynHealthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoTSynHealthApp.swift; sourceTree = "<group>"; };
 		396B63B12E338DC1007E4014 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		3981AB942E616638001082F6 /* com.iso.IoTSynHealthApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = com.iso.IoTSynHealthApp.entitlements; sourceTree = "<group>"; };
 		39B8CB772E4C8057005F030A /* CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomText.swift; sourceTree = "<group>"; };
 		39B8CB7A2E4C830B005F030A /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		39B8CB7D2E4C8C46005F030A /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 		39BDC9112E6055E7001FC793 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		39BDC9142E605806001FC793 /* HealthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
 		39BDC9162E605E59001FC793 /* com-iso-IoTSynHealthApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "com-iso-IoTSynHealthApp-Info.plist"; sourceTree = SOURCE_ROOT; };
+		39BDC9172E606C31001FC793 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		39CF538F2E4DE18300B45BEE /* CustomTextFieldWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldWithLabel.swift; sourceTree = "<group>"; };
 		39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVStrack.swift; sourceTree = "<group>"; };
 		39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
@@ -123,6 +126,7 @@
 		396B63982E337D66007E4014 /* com.iso.IoTSynHealthApp */ = {
 			isa = PBXGroup;
 			children = (
+				3981AB942E616638001082F6 /* com.iso.IoTSynHealthApp.entitlements */,
 				39BDC9162E605E59001FC793 /* com-iso-IoTSynHealthApp-Info.plist */,
 				396B63B82E3390E6007E4014 /* app */,
 				396B63B72E3390BC007E4014 /* services */,
@@ -251,6 +255,7 @@
 		39EB5DAD2E4607D200D8E02A /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				39BDC9172E606C31001FC793 /* DateUtil.swift */,
 				39FF9B612E55BFA900EC0EE8 /* SideMenuUtil.swift */,
 				39FF9B6A2E55D9EA00EC0EE8 /* AppSession.swift */,
 				39555BAE2E4F336E00710F1C /* AppUtils.swift */,
@@ -306,7 +311,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1510;
-				LastUpgradeCheck = 1510;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					396B63952E337D66007E4014 = {
 						CreatedOnToolsVersion = 15.1;
@@ -351,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				392A62C02E5F1461002DE1B0 /* ActivityCard.swift in Sources */,
+				39BDC9182E606C37001FC793 /* DateUtil.swift in Sources */,
 				39B8CB782E4C8066005F030A /* CustomText.swift in Sources */,
 				39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */,
 				39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */,
@@ -420,6 +426,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = ACAF56Z8D4;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -485,6 +492,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = ACAF56Z8D4;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -512,13 +520,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = com.iso.IoTSynHealthApp/com.iso.IoTSynHealthApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"com.iso.IoTSynHealthApp/Preview Content\"";
-				DEVELOPMENT_TEAM = ACAF56Z8D4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "com-iso-IoTSynHealthApp-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = MyHealthApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Please allow access to enjoy all features of the app";
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "Please allow access to enjoy all features of the app";
@@ -532,7 +541,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.iso.IoTSynHealthApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pvt.IoTSynHealthApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -545,13 +554,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_ENTITLEMENTS = com.iso.IoTSynHealthApp/com.iso.IoTSynHealthApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"com.iso.IoTSynHealthApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "com-iso-IoTSynHealthApp-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = MyHealthApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Please allow access to enjoy all features of the app";
 				INFOPLIST_KEY_NSHomeKitUsageDescription = "Please allow access to enjoy all features of the app";
@@ -565,7 +576,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.iso.IoTSynHealthApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pvt.IoTSynHealthApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
