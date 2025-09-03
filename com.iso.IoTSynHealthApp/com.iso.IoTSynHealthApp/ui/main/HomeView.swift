@@ -9,10 +9,34 @@ import SwiftUI
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
     var body: some View {
+        BaseScrollVStrack(backgroundColor: Color.orange) {
+            VStack(spacing: 20) {
+                //1. MARK:  notifi syndata health app
+                HStack {
+                    CustomText("per_request_syn_health_app", isLocalized: true)
+                        .color(Color.blue)
 
-        BaseScrollVStrack {
-            VStack {
-                //MARK:  info and circle chart
+                    Image(
+                        systemName:
+                            "arrow.trianglehead.2.clockwise.rotate.90.icloud"
+                    ).resizable()
+                        .frame(width: 40, height: 36)
+                        .padding(.trailing, 20)
+                        .foregroundColor(Color.blue)
+
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(20)
+                .border(Color.blue, width: 1)
+                .onTapGesture {
+                    // request permission for read data from health app
+                    Task {
+                        await homeViewModel.fetchHealthData()
+                    }
+
+                }
+
+                //2. MARK:  info and circle chart
                 Grid {
                     GridRow {
                         // Phần 1: VStack (1/3)
@@ -71,9 +95,8 @@ struct HomeView: View {
 
             }  //close Grid
             .frame(maxWidth: .infinity, maxHeight: 200)
-            .padding(.bottom, 20)
 
-            //MARK:  2 card activity
+            //3. MARK:  card activity
 
             LazyVGrid(
                 columns: Array(repeating: GridItem(spacing: 20), count: 2)
@@ -81,10 +104,11 @@ struct HomeView: View {
                 ForEach(homeViewModel.mockActivity, id: \.id) { activity in
                     ActivityCard(activity: activity)
                 }
-            }
+            }.padding(.top, 40)
 
-        }
-    }
+        }.padding(.top, 0)  // for view parent : VStack
+
+    }  //BaseScrollVStrack
 }
 
 #Preview {

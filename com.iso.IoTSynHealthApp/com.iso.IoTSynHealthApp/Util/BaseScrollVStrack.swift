@@ -30,10 +30,10 @@ struct BaseScrollVStrack<Content: View>: View {
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(.horizontal, 16)
-            .padding(.top, 16)  // hoặc dùng .safeAreaInset nếu muốn tự động
         }
         .background(backgroundColor ?? Color(.systemBackground))
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        //// hoặc dùng .safeAreaInset nếu muốn tự động
     }
 }
 // MARK : CenteredScrollVStack

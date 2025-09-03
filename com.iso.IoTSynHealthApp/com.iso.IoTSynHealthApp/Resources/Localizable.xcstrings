@@ -142,6 +142,17 @@
     "Nguyễn Văn A" : {
 
     },
+    "per_request_syn_health_app" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please sync data from the Health app."
+          }
+        }
+      }
+    },
     "SettingView" : {
 
     },
