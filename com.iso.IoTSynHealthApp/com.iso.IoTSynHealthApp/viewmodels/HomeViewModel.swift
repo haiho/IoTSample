@@ -49,23 +49,23 @@ class HomeViewModel: ObservableObject {
         ),
     ]
 
-    init() {
-        Task {
-            do {
-                try await healthManager.requestHealthkitAccess()
-                healthManager.fetchTodayCaloriesBurned {
-                    Result in
-                    switch Result {
-                    case .success(let data):
-                        print("Result calories Success : \(data)")
-//                        self.calories = data
+    func checkPer() {
+        healthManager.requestAuthorization { success, error in
+            if success {
+                self.healthManager.fetchStepCount { result in
+                    switch result {
+                    case .success(let calories):
+                        print("Calories burned today: \(calories)")
                     case .failure(let error):
-                        print(error)
+                        print(
+                            "Error fetching calories: \(error.localizedDescription)"
+                        )
                     }
                 }
-
-            } catch {
-
+            } else {
+                print(
+                    "HealthKit authorization failed: \(error.localizedDescription)"
+                )
             }
         }
     }

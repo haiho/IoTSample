@@ -30,9 +30,7 @@ struct HomeView: View {
                 .border(Color.blue, width: 1)
                 .onTapGesture {
                     // request permission for read data from health app
-                    Task {
-                        await homeViewModel.fetchHealthData()
-                    }
+                    homeViewModel.checkPer()
 
                 }
 
