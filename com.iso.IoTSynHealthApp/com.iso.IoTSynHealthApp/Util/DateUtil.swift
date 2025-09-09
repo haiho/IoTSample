@@ -13,7 +13,7 @@ extension Date {
         let calendar = Calendar.current
         return calendar.startOfDay(for: Date())
     }
-    static func now() -> Date {
+    static func nowDate() -> Date {
         return Date()
     }
 }

@@ -54,12 +54,10 @@ class HomeViewModel: ObservableObject {
             if success {
                 self.healthManager.fetchStepCount { result in
                     switch result {
-                    case .success(let calories):
-                        print("Calories burned today: \(calories)")
+                    case .success(let steps):
+                        print("Số bước hôm nay: \(steps)")
                     case .failure(let error):
-                        print(
-                            "Error fetching calories: \(error.localizedDescription)"
-                        )
+                        print("Lỗi: \(error.localizedDescription)")
                     }
                 }
             } else {
