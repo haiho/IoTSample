@@ -49,21 +49,35 @@ class HomeViewModel: ObservableObject {
         ),
     ]
 
+    init() {
+        Task {
+            do {
+                try await healthManager.requestHealthKitAccess()
+                checkPer()
+            } catch {
+                print("Error requestHealthKitAccess : \(error)")
+            }
+        }
+    }
+
     func checkPer() {
-        healthManager.requestAuthorization { success, error in
-            if success {
-                self.healthManager.fetchStepCount { result in
-                    switch result {
-                    case .success(let steps):
-                        print("Số bước hôm nay: \(steps)")
-                    case .failure(let error):
-                        print("Lỗi: \(error.localizedDescription)")
-                    }
-                }
-            } else {
+        healthManager.fetchTodayCalories {
+            result in
+            switch result {
+            case .success(let calories):
+                print("Success Caloires: \(calories)")
+            case .failure(let error):
                 print(
-                    "HealthKit authorization failed: \(error.localizedDescription)"
+                    "Lỗi fetchTodayCaloriesBurned: \(error.localizedDescription)"
                 )
+            }
+        }
+        healthManager.fetchTodaySteps { result in
+            switch result {
+            case .success(let steps):
+                print("Số bước hôm nay: \(steps)")
+            case .failure(let error):
+                print("Lỗi fetchStepCount: \(error.localizedDescription)")
             }
         }
     }

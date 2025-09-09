@@ -8,104 +8,75 @@
 import HealthKit
 import SwiftUI
 
+enum HealthDataType {
+    case stepCount
+    case activeEnergyBurned
+    var quantityType: HKQuantityType {
+        switch self {
+        case .stepCount:
+            return HKQuantityType.quantityType(forIdentifier: .stepCount)!
+        case .activeEnergyBurned:
+            return HKQuantityType.quantityType(
+                forIdentifier: .activeEnergyBurned
+            )!
+        }
+    }
+
+    var unit: HKUnit {
+        switch self {
+        case .stepCount:
+            return .count()
+        case .activeEnergyBurned:
+            return .kilocalorie()
+        }
+    }
+    var displayName: String {
+        switch self {
+        case .stepCount:
+            return "Steps"
+        case .activeEnergyBurned:
+            return "Calories"
+        }
+    }
+}
+
 class HealthManager {
 
     static let shared = HealthManager()
     let healthStore = HKHealthStore()
 
     private init() {
+
     }
 
-    func requestAuthorization(
-        completion: @escaping (Bool, Error) -> Void
+    func requestHealthKitAccess() async throws {
+        let healthTypesToRead: Set<HKObjectType> = [
+            HealthDataType.stepCount.quantityType,
+            HealthDataType.activeEnergyBurned.quantityType,
+        ]
+
+        try await healthStore.requestAuthorization(
+            toShare: [],
+            read: healthTypesToRead
+        )
+    }
+    // MARK: - Public Fetch Methods
+    func fetchTodaySteps(completion: @escaping (Result<Double, Error>) -> Void)
+    {
+        fetchQuantitySum(for: .stepCount, completion: completion)
+    }
+
+    func fetchTodayCalories(
+        completion: @escaping (Result<Double, Error>) -> Void
     ) {
-        guard
-            let stepType = HKQuantityType.quantityType(
-                forIdentifier: .stepCount
-
-            )
-        else {
-            print("Không thể tạo stepCount type.")
-            return
-        }
-        let status = healthStore.authorizationStatus(for: stepType)
-
-        switch status {
-        case .notDetermined:
-            // Chưa xin quyền, tiến hành xin
-            healthStore.requestAuthorization(toShare: nil, read: [stepType]) {
-                success,
-                error in
-                DispatchQueue.main.async {
-                    completion(
-                        success,  // need to show msg don't allow permission
-                        error
-                            ?? NSError(
-                                domain: "HealthAuth",
-                                code: 1,
-                                userInfo: [
-                                    NSLocalizedDescriptionKey:
-                                        "Không được cấp quyền HealthKit."
-                                ]
-                            )
-                    )
-
-                }
-            }
-
-        case .sharingDenied:
-            // Người dùng đã từ chối quyền → hiển thị cảnh báo và hướng dẫn mở Settings
-            DispatchQueue.main.async {
-                //                      showHealthPermissionAlert()
-                let error = NSError(
-                    domain: "HealthAuth",
-                    code: 2,
-                    userInfo: [
-                        NSLocalizedDescriptionKey:
-                            "Người dùng đã từ chối quyền Health."
-                    ]
-                )
-                completion(true, error)
-            }
-
-        case .sharingAuthorized:
-            // Có quyền → truy vấn
-            completion(true, NSError())
-
-        @unknown default:
-            let error = NSError(
-                domain: "HealthAuth",
-                code: 5,
-                userInfo: [
-                    NSLocalizedDescriptionKey:
-                        "Trạng thái quyền không xác định."
-                ]
-            )
-            completion(false, error)
-        }
+        fetchQuantitySum(for: .activeEnergyBurned, completion: completion)
     }
-    // MARK: - Public: Fetch Step Count
-    func fetchStepCount(completion: @escaping (Result<Double, Error>) -> Void) {
-        guard
-            let stepType = HKQuantityType.quantityType(
-                forIdentifier: .stepCount
-            )
-        else {
-            completion(
-                .failure(
-                    NSError(
-                        domain: "HealthQuery",
-                        code: 0,
-                        userInfo: [
-                            NSLocalizedDescriptionKey:
-                                "Không thể tạo stepCount type."
-                        ]
-                    )
-                )
-            )
-            return
-        }
 
+    // MARK: - Private: Shared Fetch Logic
+    private func fetchQuantitySum(
+        for dataType: HealthDataType,
+        completion: @escaping (Result<Double, Error>) -> Void
+    ) {
         let predicate = HKQuery.predicateForSamples(
             withStart: .startOfDay(),
             end: .nowDate(),
@@ -113,91 +84,102 @@ class HealthManager {
         )
 
         let query = HKStatisticsQuery(
-            quantityType: stepType,
+            quantityType: dataType.quantityType,
             quantitySamplePredicate: predicate,
             options: .cumulativeSum
         ) { [weak self] _, result, error in
-            guard let self = self else { return }
+            guard let self else { return }
 
-            if let error = error {
-                self.checkPermissionForHealth(for: stepType) { permissionResult in
-                    DispatchQueue.main.async {
-                        switch permissionResult {
-                        case .failure(let permissionError):
-                            completion(.failure(permissionError))
-                        case .success:
-                            completion(.failure(error))
-                        }
-                    }
-                }
-                return
-            }
-
-            if let sum = result?.sumQuantity() {
-                let steps = sum.doubleValue(for: HKUnit.count())
+            if let quantity = result?.sumQuantity(), error == nil {
+                let value = quantity.doubleValue(for: dataType.unit)
                 DispatchQueue.main.async {
-                    completion(.success(steps))
+                    completion(.success(value))
                 }
             } else {
-                let noDataError = NSError(
-                    domain: "HealthQuery",
-                    code: 1,
-                    userInfo: [
-                        NSLocalizedDescriptionKey: "Không có dữ liệu bước chân."
-                    ]
+                self.handleHealthError(
+                    for: dataType,
+                    fallbackError: error,
+                    completion: completion
                 )
-                DispatchQueue.main.async {
-                    completion(.failure(noDataError))
-                }
             }
         }
 
         healthStore.execute(query)
     }
 
-    // MARK: - Private: Check Permission
-    private func checkPermissionForHealth(
-        for healthDataType: HKObjectType,
-        completion: @escaping (Result<Void, Error>) -> Void
+    // MARK: - Private: Permission & Error Handling
+    private func handleHealthError(
+        for healthDataType: HealthDataType,
+        fallbackError: Error?,
+        completion: @escaping (Result<Double, Error>) -> Void
     ) {
-        let status = healthStore.authorizationStatus(for: healthDataType)
-
-        switch status {
-        case .notDetermined:
-            let error = NSError(
+        let defaultError =
+            fallbackError
+            ?? NSError(
                 domain: "HealthQuery",
-                code: 2,
-                userInfo: [
-                    NSLocalizedDescriptionKey:
-                        "Quyền truy cập HealthKit chưa được yêu cầu."
-                ]
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "Không thể lấy dữ liệu."]
             )
-            completion(.failure(error))
 
-        case .sharingDenied:
-            let error = NSError(
-                domain: "HealthQuery",
-                code: 3,
-                userInfo: [
-                    NSLocalizedDescriptionKey:
-                        "Người dùng đã từ chối quyền truy cập bước chân."
-                ]
-            )
-            completion(.failure(error))
-
-        case .sharingAuthorized:
-            completion(.success(()))
-
-        @unknown default:
-            let error = NSError(
-                domain: "HealthQuery",
-                code: 4,
-                userInfo: [
-                    NSLocalizedDescriptionKey:
-                        "Trạng thái quyền truy cập không xác định."
-                ]
-            )
-            completion(.failure(error))
+        checkPermission(for: healthDataType) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let permissionError):
+                    completion(.failure(permissionError))
+                case .success:
+                    completion(.failure(defaultError))
+                }
+            }
         }
     }
+
+    private func checkPermission(
+        for healthDataType: HealthDataType,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        switch healthStore.authorizationStatus(for: healthDataType.quantityType) {
+        case .notDetermined:
+            completion(
+                .failure(
+                    NSError(
+                        domain: "HealthQuery",
+                        code: 2,
+                        userInfo: [
+                            NSLocalizedDescriptionKey:
+                                "Quyền truy cập HealthKit chưa được yêu cầu."
+                        ]
+                    )
+                )
+            )
+        case .sharingDenied:
+            completion(
+                .failure(
+                    NSError(
+                        domain: "HealthQuery",
+                        code: 3,
+                        userInfo: [
+                            NSLocalizedDescriptionKey:
+                                "Người dùng đã từ chối quyền truy cập \(healthDataType.displayName)"
+                        ]
+                    )
+                )
+            )
+        case .sharingAuthorized:
+            completion(.success(()))
+        @unknown default:
+            completion(
+                .failure(
+                    NSError(
+                        domain: "HealthQuery",
+                        code: 4,
+                        userInfo: [
+                            NSLocalizedDescriptionKey:
+                                "Trạng thái quyền truy cập không xác định."
+                        ]
+                    )
+                )
+            )
+        }
+    }
+
 }
