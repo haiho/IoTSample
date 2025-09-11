@@ -49,7 +49,7 @@ class HealthManager {
     let healthStore = HKHealthStore()
 
     private init() {
-        
+
     }
 
     func requestHealthKitAccess() async throws {
@@ -80,63 +80,37 @@ class HealthManager {
         fetchQuantitySum(for: .activeEnergyBurned, completion: completion)
     }
 
-    // MARK: - Private: Shared Fetch Logic
     private func fetchQuantitySum(
         for dataType: HealthDataType,
         completion: @escaping (Result<Double, Error>) -> Void
     ) {
-        let predicate = HKQuery.predicateForSamples(
-            withStart: .startOfDay(),
-            end: .nowDate(),
-            options: .strictStartDate
-        )
-
-        let query = HKStatisticsQuery(
-            quantityType: dataType.quantityType,
-            quantitySamplePredicate: predicate,
-            options: .cumulativeSum
-        ) { [weak self] _, result, error in
-            guard let self else { return }
-
-            if let quantity = result?.sumQuantity(), error == nil {
-                let value = quantity.doubleValue(for: dataType.unit)
+        checkPermission(for: dataType) { permissionResult in
+            switch permissionResult {
+            case .failure(let permissionError):
                 DispatchQueue.main.async {
-                    completion(.success(value))
-                }
-            } else {
-                self.handleHealthError(
-                    for: dataType,
-                    fallbackError: error,
-                    completion: completion
-                )
-            }
-        }
-
-        healthStore.execute(query)
-    }
-
-    // MARK: - Private: Permission & Error Handling
-    private func handleHealthError(
-        for healthDataType: HealthDataType,
-        fallbackError: Error?,
-        completion: @escaping (Result<Double, Error>) -> Void
-    ) {
-        let defaultError =
-            fallbackError
-            ?? NSError(
-                domain: "HealthQuery",
-                code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "msg_no_retrieve_data".localized]
-            )
-
-        checkPermission(for: healthDataType) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let permissionError):
                     completion(.failure(permissionError))
-                case .success:
-                    completion(.failure(defaultError))
                 }
+            case .success:
+                let predicate = HKQuery.predicateForSamples(
+                    withStart: .startOfDay(),
+                    end: .nowDate(),
+                    options: .strictStartDate
+                )
+
+                let query = HKStatisticsQuery(
+                    quantityType: dataType.quantityType,
+                    quantitySamplePredicate: predicate,
+                    options: .cumulativeSum
+                ) { _, result, _ in
+                    let value =
+                        result?.sumQuantity()?.doubleValue(for: dataType.unit)
+                        ?? 0
+                    DispatchQueue.main.async {
+                        completion(.success(value))
+                    }
+                }
+
+                self.healthStore.execute(query)
             }
         }
     }
@@ -145,18 +119,19 @@ class HealthManager {
         for healthDataType: HealthDataType,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
-    
+
         switch healthStore.authorizationStatus(for: healthDataType.quantityType)
         {
         case .notDetermined:
-         
+
             completion(
                 .failure(
                     NSError(
                         domain: "HealthQuery",
                         code: 2,
                         userInfo: [
-                            NSLocalizedDescriptionKey: "msg_per_request_health_app".localized
+                            NSLocalizedDescriptionKey:
+                                "msg_per_request_health_app".localized
 
                         ]
                     )
@@ -170,7 +145,9 @@ class HealthManager {
                         code: 3,
                         userInfo: [
                             NSLocalizedDescriptionKey:
-                                "msg_user_denied_health_app".localizedFormat(healthDataType.displayName)
+                                "msg_user_denied_health_app".localizedFormat(
+                                    healthDataType.displayName
+                                )
                         ]
                     )
                 )
