@@ -92,6 +92,16 @@ extension Font {
 // MARK: string
 extension String {
     var localized: String {
-        return NSLocalizedString(self, comment: "")
+        return NSLocalizedString(
+            self,
+            tableName: nil,
+            bundle: .main,
+            comment: ""
+        )
+    }
+
+    func localizedFormat(_ args: CVarArg...) -> String {
+        let localizedString = self.localized
+        return String(format: localizedString, arguments: args)
     }
 }

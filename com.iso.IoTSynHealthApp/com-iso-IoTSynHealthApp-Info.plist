@@ -4,5 +4,9 @@
 <dict>
     <key>NSHealthShareUsageDescription</key>
     <string>Please allow access to enjoy all features of the app</string>
+    
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>Ứng dụng cần ghi dữ liệu sức khỏe như bước chân để đồng bộ với thiết bị.</string>
+
 </dict>
 </plist>

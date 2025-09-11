@@ -8,6 +8,9 @@
 import HealthKit
 import SwiftUI
 
+// Note: You need to enable both read & write permissions; otherwise, you won't be able to distinguish error code 11
+// when the health type is either not authorized or has no data
+
 enum HealthDataType {
     case stepCount
     case activeEnergyBurned
@@ -46,7 +49,7 @@ class HealthManager {
     let healthStore = HKHealthStore()
 
     private init() {
-
+        
     }
 
     func requestHealthKitAccess() async throws {
@@ -55,8 +58,13 @@ class HealthManager {
             HealthDataType.activeEnergyBurned.quantityType,
         ]
 
+        let typesToWrite: Set<HKSampleType> = [
+            HealthDataType.stepCount.quantityType,
+            HealthDataType.activeEnergyBurned.quantityType,
+        ]
+
         try await healthStore.requestAuthorization(
-            toShare: [],
+            toShare: typesToWrite,
             read: healthTypesToRead
         )
     }
@@ -118,7 +126,7 @@ class HealthManager {
             ?? NSError(
                 domain: "HealthQuery",
                 code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "Không thể lấy dữ liệu."]
+                userInfo: [NSLocalizedDescriptionKey: "msg_no_retrieve_data".localized]
             )
 
         checkPermission(for: healthDataType) { result in
@@ -137,16 +145,19 @@ class HealthManager {
         for healthDataType: HealthDataType,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
-        switch healthStore.authorizationStatus(for: healthDataType.quantityType) {
+    
+        switch healthStore.authorizationStatus(for: healthDataType.quantityType)
+        {
         case .notDetermined:
+         
             completion(
                 .failure(
                     NSError(
                         domain: "HealthQuery",
                         code: 2,
                         userInfo: [
-                            NSLocalizedDescriptionKey:
-                                "Quyền truy cập HealthKit chưa được yêu cầu."
+                            NSLocalizedDescriptionKey: "msg_per_request_health_app".localized
+
                         ]
                     )
                 )
@@ -159,7 +170,7 @@ class HealthManager {
                         code: 3,
                         userInfo: [
                             NSLocalizedDescriptionKey:
-                                "Người dùng đã từ chối quyền truy cập \(healthDataType.displayName)"
+                                "msg_user_denied_health_app".localizedFormat(healthDataType.displayName)
                         ]
                     )
                 )
@@ -174,7 +185,7 @@ class HealthManager {
                         code: 4,
                         userInfo: [
                             NSLocalizedDescriptionKey:
-                                "Trạng thái quyền truy cập không xác định."
+                                "msg_health_app_unknow_status".localized
                         ]
                     )
                 )

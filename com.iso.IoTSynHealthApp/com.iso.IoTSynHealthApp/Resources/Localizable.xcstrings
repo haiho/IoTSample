@@ -139,6 +139,68 @@
         }
       }
     },
+    "msg_health_app_unknow_status" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown authorization status."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trạng thái quyền truy cập không xác định."
+          }
+        }
+      }
+    },
+    "msg_no_retrieve_data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to retrieve data."
+          }
+        }
+      }
+    },
+    "msg_per_request_health_app" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit access has not been requested."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quyền truy cập HealthKit chưa được yêu cầu."
+          }
+        }
+      }
+    },
+    "msg_user_denied_health_app" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized to access %@ data in the Health app."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bạn không có quyền truy cập dữ liệu %@ trong Health app. "
+          }
+        }
+      }
+    },
     "Nguyễn Văn A" : {
 
     },

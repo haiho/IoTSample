@@ -53,14 +53,14 @@ class HomeViewModel: ObservableObject {
         Task {
             do {
                 try await healthManager.requestHealthKitAccess()
-                checkPer()
+                requestSynHealthDataToday()
             } catch {
                 print("Error requestHealthKitAccess : \(error)")
             }
         }
     }
 
-    func checkPer() {
+    func requestSynHealthDataToday() {
         healthManager.fetchTodayCalories {
             result in
             switch result {
