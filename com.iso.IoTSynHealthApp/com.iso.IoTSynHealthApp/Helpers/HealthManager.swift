@@ -14,6 +14,10 @@ import SwiftUI
 enum HealthDataType {
     case stepCount
     case activeEnergyBurned
+    case heartRate
+    case oxygenSaturation
+    case excerciseTime
+
     var quantityType: HKQuantityType {
         switch self {
         case .stepCount:
@@ -22,7 +26,18 @@ enum HealthDataType {
             return HKQuantityType.quantityType(
                 forIdentifier: .activeEnergyBurned
             )!
+        case .heartRate:
+            return HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        case .oxygenSaturation:
+            return HKQuantityType.quantityType(
+                forIdentifier: .oxygenSaturation
+            )!
+        case .excerciseTime:
+            return HKQuantityType.quantityType(
+                forIdentifier: .appleExerciseTime
+            )!
         }
+
     }
 
     var unit: HKUnit {
@@ -31,6 +46,12 @@ enum HealthDataType {
             return .count()
         case .activeEnergyBurned:
             return .kilocalorie()
+        case .heartRate:
+            return HKUnit.count().unitDivided(by: .minute())  // bpm
+        case .oxygenSaturation:
+            return .percent()
+        case .excerciseTime:
+            return .minute()
         }
     }
     var displayName: String {
@@ -39,8 +60,15 @@ enum HealthDataType {
             return "Steps"
         case .activeEnergyBurned:
             return "Calories"
+        case .heartRate:
+            return "Heart Rate"
+        case .oxygenSaturation:
+            return "Oxygen Saturation"
+        case .excerciseTime:
+            return "Excercise Time"
         }
     }
+
 }
 
 class HealthManager {
@@ -56,11 +84,17 @@ class HealthManager {
         let healthTypesToRead: Set<HKObjectType> = [
             HealthDataType.stepCount.quantityType,
             HealthDataType.activeEnergyBurned.quantityType,
+            HealthDataType.heartRate.quantityType,
+            HealthDataType.oxygenSaturation.quantityType,
+            HealthDataType.excerciseTime.quantityType,
         ]
 
         let typesToWrite: Set<HKSampleType> = [
             HealthDataType.stepCount.quantityType,
             HealthDataType.activeEnergyBurned.quantityType,
+            HealthDataType.heartRate.quantityType,
+            HealthDataType.oxygenSaturation.quantityType,
+            HealthDataType.excerciseTime.quantityType,
         ]
 
         try await healthStore.requestAuthorization(
@@ -80,6 +114,23 @@ class HealthManager {
         fetchQuantitySum(for: .activeEnergyBurned, completion: completion)
     }
 
+    func fetchTodayHeartRate(
+        completion: @escaping (Result<Double, Error>) -> Void
+    ) {
+        fetchQuantitySum(for: .heartRate, completion: completion)
+    }
+    func fetTodayOxygenSaturation(
+        completion: @escaping (Result<Double, Error>) -> Void
+    ) {
+        fetchQuantitySum(for: .oxygenSaturation, completion: completion)
+    }
+    func fetTodayExcerciseTime(
+        completion: @escaping (Result<Double, Error>) -> Void
+    ) {
+        fetchQuantitySum(for: .excerciseTime, completion: completion)
+    }
+
+    // MARK: - fetchQuantitySum
     private func fetchQuantitySum(
         for dataType: HealthDataType,
         completion: @escaping (Result<Double, Error>) -> Void
