@@ -1,6 +1,40 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "btn_cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huỷ"
+          }
+        }
+      }
+    },
+    "btn_open_setting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mở cài đặt"
+          }
+        }
+      }
+    },
     "btn_send" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -184,6 +218,23 @@
         }
       }
     },
+    "msg_pls_acept_per_health_app" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app needs permission to access your health data"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ứng dụng này cần được cấp quyền để truy cập dữ liệu sức khỏe của bạn"
+          }
+        }
+      }
+    },
     "msg_user_denied_health_app" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -267,6 +318,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Đăng Nhập"
+          }
+        }
+      }
+    },
+    "title_per_health_app" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Access Required"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quyền truy cập Health"
           }
         }
       }

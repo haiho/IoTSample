@@ -7,11 +7,13 @@
 import SwiftUI
 
 class HomeViewModel: ObservableObject {
-    @State var calories: Int = 222
-    @State var steps: Int = 888999
-    @State var activity: Int = 52
-    @State var stand: Int = 8
+    @Published var calories: Int = 0
+    @Published var steps: Int = 0
+    @Published var activity: Int = 0
+    @Published var oxySaturation: Int = 0
+    @Published var showPermissionAlert = false
 
+    private var hasShownPermissionAlert = false  // <- Biến cờ nội bộ
     let healthManager = HealthManager.shared
 
     let mockActivity = [
@@ -61,24 +63,46 @@ class HomeViewModel: ObservableObject {
     }
 
     func requestSynHealthDataToday() {
-        healthManager.fetchTodayCalories {
-            result in
-            switch result {
-            case .success(let calories):
-                print("Success Caloires: \(calories)")
-            case .failure(let error):
-                print(
-                    "Lỗi fetchTodayCaloriesBurned: \(error.localizedDescription)"
-                )
-            }
-        }
-        healthManager.fetchTodaySteps { result in
-            switch result {
-            case .success(let steps):
-                print("Số bước hôm nay: \(steps)")
-            case .failure(let error):
-                print("Lỗi fetchStepCount: \(error.localizedDescription)")
+        hasShownPermissionAlert = false
+
+        for type in HealthDataType.allCases {
+            healthManager.fetchQuantitySum(for: type) { result in
+                switch result {
+                case .success(let value):
+                    self.updateValuesFromHealthKit(for: type, value: value)
+                    print("\(type.displayName): \(value)")
+                case .failure(let error):
+                    let nsError = error as NSError
+                    switch nsError.code {
+                    case 2, 3:  // bị từ chối quyền truy cập => open setting
+                        print("Health data not available.")
+                        if !self.hasShownPermissionAlert {
+                            self.hasShownPermissionAlert = true
+                            DispatchQueue.main.async {
+                                print(" ===showPermissionAlert")
+                                self.showPermissionAlert = true
+                            }
+                        }
+
+                    default:
+                        print(
+                            "\(type.displayName): lỗi - \(error.localizedDescription)"
+                        )
+                    }
+                }
             }
         }
     }
+
+    func updateValuesFromHealthKit(for type: HealthDataType, value: Double) {
+        switch type {
+        case .stepCount:
+            self.steps = Int(value)
+        case .activeEnergyBurned:
+            self.calories = Int(value)
+        case .oxygenSaturation:
+            self.oxySaturation = Int(value)
+        }
+    }
+
 }

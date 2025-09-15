@@ -54,7 +54,7 @@ struct HomeView: View {
                             }
                             VStack {
                                 CustomText("Stand").color(.orange)
-                                CustomText("\(homeViewModel.stand)")
+                                CustomText("\(homeViewModel.oxySaturation)")
                             }
                         }
                         .gridCellColumns(1)
@@ -104,7 +104,23 @@ struct HomeView: View {
                 }
             }.padding(.top, 40)
 
-        }.padding(.top, 0)  // for view parent : VStack
+        }  // for view parent : VStack
+        .padding(.top, 0)
+        .alert(
+            "title_per_health_app".localized,
+            isPresented: $homeViewModel.showPermissionAlert
+        ) {
+            Button("btn_open_setting".localized) {
+                if let url = URL(
+                    string: UIApplication.openSettingsURLString
+                ) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("btn_cancel".localized, role: .cancel) {}
+        } message: {
+            Text("msg_pls_acept_per_health_app".localized)
+        }
 
     }  //BaseScrollVStrack
 }

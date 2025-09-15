@@ -11,12 +11,10 @@ import SwiftUI
 // Note: You need to enable both read & write permissions; otherwise, you won't be able to distinguish error code 11
 // when the health type is either not authorized or has no data
 
-enum HealthDataType {
+enum HealthDataType: CaseIterable {
     case stepCount
     case activeEnergyBurned
-    case heartRate
     case oxygenSaturation
-    case excerciseTime
 
     var quantityType: HKQuantityType {
         switch self {
@@ -26,16 +24,11 @@ enum HealthDataType {
             return HKQuantityType.quantityType(
                 forIdentifier: .activeEnergyBurned
             )!
-        case .heartRate:
-            return HKQuantityType.quantityType(forIdentifier: .heartRate)!
         case .oxygenSaturation:
             return HKQuantityType.quantityType(
                 forIdentifier: .oxygenSaturation
             )!
-        case .excerciseTime:
-            return HKQuantityType.quantityType(
-                forIdentifier: .appleExerciseTime
-            )!
+
         }
 
     }
@@ -46,12 +39,9 @@ enum HealthDataType {
             return .count()
         case .activeEnergyBurned:
             return .kilocalorie()
-        case .heartRate:
-            return HKUnit.count().unitDivided(by: .minute())  // bpm
         case .oxygenSaturation:
             return .percent()
-        case .excerciseTime:
-            return .minute()
+
         }
     }
     var displayName: String {
@@ -60,12 +50,9 @@ enum HealthDataType {
             return "Steps"
         case .activeEnergyBurned:
             return "Calories"
-        case .heartRate:
-            return "Heart Rate"
         case .oxygenSaturation:
             return "Oxygen Saturation"
-        case .excerciseTime:
-            return "Excercise Time"
+
         }
     }
 
@@ -81,20 +68,19 @@ class HealthManager {
     }
 
     func requestHealthKitAccess() async throws {
+
         let healthTypesToRead: Set<HKObjectType> = [
             HealthDataType.stepCount.quantityType,
             HealthDataType.activeEnergyBurned.quantityType,
-            HealthDataType.heartRate.quantityType,
             HealthDataType.oxygenSaturation.quantityType,
-            HealthDataType.excerciseTime.quantityType,
+
         ]
 
         let typesToWrite: Set<HKSampleType> = [
             HealthDataType.stepCount.quantityType,
             HealthDataType.activeEnergyBurned.quantityType,
-            HealthDataType.heartRate.quantityType,
             HealthDataType.oxygenSaturation.quantityType,
-            HealthDataType.excerciseTime.quantityType,
+
         ]
 
         try await healthStore.requestAuthorization(
@@ -103,35 +89,7 @@ class HealthManager {
         )
     }
     // MARK: - Public Fetch Methods
-    func fetchTodaySteps(completion: @escaping (Result<Double, Error>) -> Void)
-    {
-        fetchQuantitySum(for: .stepCount, completion: completion)
-    }
-
-    func fetchTodayCalories(
-        completion: @escaping (Result<Double, Error>) -> Void
-    ) {
-        fetchQuantitySum(for: .activeEnergyBurned, completion: completion)
-    }
-
-    func fetchTodayHeartRate(
-        completion: @escaping (Result<Double, Error>) -> Void
-    ) {
-        fetchQuantitySum(for: .heartRate, completion: completion)
-    }
-    func fetTodayOxygenSaturation(
-        completion: @escaping (Result<Double, Error>) -> Void
-    ) {
-        fetchQuantitySum(for: .oxygenSaturation, completion: completion)
-    }
-    func fetTodayExcerciseTime(
-        completion: @escaping (Result<Double, Error>) -> Void
-    ) {
-        fetchQuantitySum(for: .excerciseTime, completion: completion)
-    }
-
-    // MARK: - fetchQuantitySum
-    private func fetchQuantitySum(
+    func fetchQuantitySum(
         for dataType: HealthDataType,
         completion: @escaping (Result<Double, Error>) -> Void
     ) {
@@ -147,14 +105,21 @@ class HealthManager {
                     end: .nowDate(),
                     options: .strictStartDate
                 )
+                let optionsHK: HKStatisticsOptions =
+                    (dataType == HealthDataType.oxygenSaturation)
+                    ? .discreteAverage : .cumulativeSum
 
                 let query = HKStatisticsQuery(
                     quantityType: dataType.quantityType,
                     quantitySamplePredicate: predicate,
-                    options: .cumulativeSum
+                    options: optionsHK
                 ) { _, result, _ in
+                    
+                    
                     let value =
-                        result?.sumQuantity()?.doubleValue(for: dataType.unit)
+                        result?.sumQuantity()?.doubleValue(
+                            for: dataType.unit
+                        )
                         ?? 0
                     DispatchQueue.main.async {
                         completion(.success(value))
@@ -171,10 +136,11 @@ class HealthManager {
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
 
-        switch healthStore.authorizationStatus(for: healthDataType.quantityType)
+        switch healthStore.authorizationStatus(
+            for: healthDataType.quantityType
+        )
         {
         case .notDetermined:
-
             completion(
                 .failure(
                     NSError(
@@ -196,7 +162,8 @@ class HealthManager {
                         code: 3,
                         userInfo: [
                             NSLocalizedDescriptionKey:
-                                "msg_user_denied_health_app".localizedFormat(
+                                "msg_user_denied_health_app"
+                                .localizedFormat(
                                     healthDataType.displayName
                                 )
                         ]
@@ -220,5 +187,4 @@ class HealthManager {
             )
         }
     }
-
 }
