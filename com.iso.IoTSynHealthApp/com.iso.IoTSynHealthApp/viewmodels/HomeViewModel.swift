@@ -11,6 +11,8 @@ class HomeViewModel: ObservableObject {
     @Published var steps: Int = 0
     @Published var activity: Int = 0
     @Published var oxySaturation: Int = 0
+    @Published var heartRate: Int = 0
+
     @Published var showPermissionAlert = false
 
     private var hasShownPermissionAlert = false  // <- Biến cờ nội bộ
@@ -66,30 +68,44 @@ class HomeViewModel: ObservableObject {
         hasShownPermissionAlert = false
 
         for type in HealthDataType.allCases {
-            healthManager.fetchQuantitySum(for: type) { result in
-                switch result {
-                case .success(let value):
-                    self.updateValuesFromHealthKit(for: type, value: value)
-                    print("\(type.displayName): \(value)")
-                case .failure(let error):
-                    let nsError = error as NSError
-                    switch nsError.code {
-                    case 2, 3:  // bị từ chối quyền truy cập => open setting
-                        print("Health data not available.")
-                        if !self.hasShownPermissionAlert {
-                            self.hasShownPermissionAlert = true
-                            DispatchQueue.main.async {
-                                print(" ===showPermissionAlert")
-                                self.showPermissionAlert = true
-                            }
-                        }
+            if type == .heartRate {
+                healthManager.fetchLatestHeartRateForToday { result in
+                    self.handleHealthResult(result, for: type)
+                }
+            } else {
+                healthManager.fetchQuantitySum(for: type) { result in
+                    self.handleHealthResult(result, for: type)
+                }
+            }
+        }
+    }
 
-                    default:
-                        print(
-                            "\(type.displayName): lỗi - \(error.localizedDescription)"
-                        )
+    private func handleHealthResult(
+        _ result: Result<Double, Error>,
+        for type: HealthDataType
+    ) {
+        switch result {
+        case .success(let value):
+            self.updateValuesFromHealthKit(for: type, value: value)
+            print("\(type.displayName): \(value)")
+
+        case .failure(let error):
+            let nsError = error as NSError
+            switch nsError.code {
+            case 2, 3:  // bị từ chối quyền truy cập => open setting
+                print("Health data not available for \(type.displayName).")
+                if !self.hasShownPermissionAlert {
+                    self.hasShownPermissionAlert = true
+                    DispatchQueue.main.async {
+                        print(" ===showPermissionAlert")
+                        self.showPermissionAlert = true
                     }
                 }
+
+            default:
+                print(
+                    "\(type.displayName): lỗi - \(error.localizedDescription)"
+                )
             }
         }
     }
@@ -102,6 +118,9 @@ class HomeViewModel: ObservableObject {
             self.calories = Int(value)
         case .oxygenSaturation:
             self.oxySaturation = Int(value)
+        case .heartRate:
+            self.heartRate = Int(value)
+
         }
     }
 

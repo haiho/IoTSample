@@ -49,6 +49,23 @@
     "email@example.com" : {
 
     },
+    "health_sampe_no_data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No %@ data available"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không có dữ liệu %@"
+          }
+        }
+      }
+    },
     "lbl_email" : {
       "extractionState" : "manual",
       "localizations" : {

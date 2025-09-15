@@ -52,9 +52,10 @@ struct HomeView: View {
                                 CustomText("Steps").color(.blue)
                                 CustomText("\(homeViewModel.steps)")
                             }
+
                             VStack {
-                                CustomText("Stand").color(.orange)
-                                CustomText("\(homeViewModel.oxySaturation)")
+                                CustomText("Heart Rate").color(.orange)
+                                CustomText("\(homeViewModel.heartRate)")
                             }
                         }
                         .gridCellColumns(1)
