@@ -10,11 +10,12 @@ import SwiftUI
 struct MainView: View {
     @State private var showSideMenu = false
     @State private var selectedScreen: MenuScreen = .home
+    @StateObject var navManager = MainNavigationManager()
 
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navManager.path) {
             ZStack {
-                // Màn hình chính tương ứng
+                // Nội dung chính của màn hình
                 Group {
                     switch selectedScreen {
                     case .home:
@@ -39,12 +40,20 @@ struct MainView: View {
                     }
                 )
             }
+            .navigationDestination(for: MainScreen.self) { route in
+                switch route {
+                case .carDetail:
+                    ActivityCardDetail()
+                }
+            }
         }
+        .environmentObject(navManager)
         .sideMenu(isShowing: $showSideMenu) {
             SideMenuContent(isShowing: $showSideMenu) { screen in
                 self.selectedScreen = screen
             }
         }
+
     }
 
     private func titleForScreen(_ screen: MenuScreen) -> LocalizedStringKey {

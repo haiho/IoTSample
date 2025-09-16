@@ -14,7 +14,7 @@ enum AuthScreen: AppScreen {
 }
 
 enum MainScreen: AppScreen {
-    case home, profile, settings
+    case carDetail
 }
 
 class BaseNavigationManager<Screen: AppScreen>: ObservableObject {

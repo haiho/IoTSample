@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var navManager: MainNavigationManager
     @StateObject var homeViewModel = HomeViewModel()
     var body: some View {
         BaseScrollVStrack(backgroundColor: Color.orange) {
@@ -79,12 +80,12 @@ struct HomeView: View {
             CustomText("Fitness Activity")
                 .fontNormalBold
             //3. MARK:  card activity
-
-            LazyVGrid(
-                columns: Array(repeating: GridItem(spacing: 20), count: 2)
-            ) {
+            LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
                 ForEach(homeViewModel.activities, id: \.id) { activity in
-                    ActivityCard(activity: activity)
+                    ActivityCard(activity: activity) {
+                        navManager.push(.carDetail)
+//                        homeViewModel.handleActivityTapped(activity)
+                    }
                 }
             }.padding(.top, 20)
 

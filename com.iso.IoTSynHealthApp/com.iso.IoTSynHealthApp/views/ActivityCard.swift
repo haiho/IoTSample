@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ActivityCard: View {
-    @State var activity: Activity
+    @ObservedObject var activity: Activity
+    var onTap: (() -> Void)?  // Optional closure
 
     var body: some View {
         ZStack {
@@ -29,6 +30,8 @@ struct ActivityCard: View {
 
             }.padding(.all)
 
+        }.onTapGesture {
+            onTap?()
         }
     }
 }
@@ -42,6 +45,9 @@ struct ActivityCard: View {
             image: "lungs.fill",
             tintColor: .purple,
             amount: "292"
-        )
+        ),
+        onTap: {
+            print("🧪 Preview tap action")
+        }
     )
 }
