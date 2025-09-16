@@ -9,49 +9,48 @@ import SwiftUI
 class HomeViewModel: ObservableObject {
     @Published var calories: Int = 0
     @Published var excersiceTime: Int = 0
-    @Published var steps: Int = 0
-    @Published var oxySaturation: Int = 0
-    @Published var heartRate: Int = 0
-
     @Published var showPermissionAlert = false
+
+    @Published var activities: [Activity] = [
+        //        Activity(
+        //            type: .activeEnergyBurned,
+        //            title: "Calories",
+        //            subTitle: "This Week",
+        //            image: "flame.fill",
+        //            tintColor: .red
+        //        ),
+        //        Activity(
+        //            type: .excerciseTime,
+        //            title: "Exercise Time",
+        //            subTitle: "This Week",
+        //            image: "figure.run",
+        //            tintColor: .green
+        //        ),
+        Activity(
+            type: .stepCount,
+            title: "Steps",
+            subTitle: "This Week",
+            image: "figure.walk",
+            tintColor: .blue
+        ),
+        Activity(
+            type: .heartRate,
+            title: "Heart Rate",
+            subTitle: "This Week",
+            image: "heart.fill",
+            tintColor: .pink
+        ),
+        Activity(
+            type: .oxygenSaturation,
+            title: "Oxygen",
+            subTitle: "This Week",
+            image: "lungs.fill",
+            tintColor: .purple
+        ),
+    ]
 
     private var hasShownPermissionAlert = false  // <- Biến cờ nội bộ
     let healthManager = HealthManager.shared
-
-    let mockActivity = [
-        Activity(
-            id: 0,
-            title: "Today Calories",
-            subTitle: "Goal 12000",
-            image: "figure.walk",
-            tintColor: .green,
-            amount: "9800"
-        ),
-        Activity(
-            id: 1,
-            title: "Today Activity",
-            subTitle: "Goal 12000",
-            image: "figure.run",
-            tintColor: .purple,
-            amount: "9800"
-        ),
-        Activity(
-            id: 2,
-            title: "Today Steps",
-            subTitle: "Goal 12000",
-            image: "figure.walk",
-            tintColor: .blue,
-            amount: "9800"
-        ),
-        Activity(
-            id: 3,
-            title: "Today Stand",
-            subTitle: "Goal 12000",
-            image: "figure.walk",
-            tintColor: .red,
-            amount: "9800"
-        ),
-    ]
 
     init() {
         Task {
@@ -66,7 +65,6 @@ class HomeViewModel: ObservableObject {
 
     func requestSynHealthDataToday() {
         hasShownPermissionAlert = false
-
         for type in HealthDataType.allCases {
             if type == .heartRate {
                 healthManager.fetchLatestHeartRateForToday { result in
@@ -88,7 +86,6 @@ class HomeViewModel: ObservableObject {
         case .success(let value):
             self.updateValuesFromHealthKit(for: type, value: value)
             print("\(type.displayName): \(value)")
-
         case .failure(let error):
             if type == HealthDataType.excerciseTime {
                 print(
@@ -121,15 +118,18 @@ class HomeViewModel: ObservableObject {
         switch type {
         case .excerciseTime:
             self.excersiceTime = Int(value)
-        case .stepCount:
-            self.steps = Int(value)
         case .activeEnergyBurned:
             self.calories = Int(value)
-        case .oxygenSaturation:
-            self.oxySaturation = Int(value)
-        case .heartRate:
-            self.heartRate = Int(value)
+        case .stepCount,
+            .oxygenSaturation,
+            .heartRate:
+            updateActivityAmount(for: type, with: value)
+        }
+    }
 
+    func updateActivityAmount(for type: HealthDataType, with value: Double) {
+        if let activity = activities.first(where: { $0.type == type }) {
+            activity.amount = "\(Int(value))"
         }
     }
 

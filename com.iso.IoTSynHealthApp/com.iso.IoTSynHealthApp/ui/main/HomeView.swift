@@ -48,7 +48,7 @@ struct HomeView: View {
                                 CustomText("Activity").color(.green)
                                 CustomText("\(homeViewModel.excersiceTime)")
                             }
-                    
+
                         }
                         .gridCellColumns(1)
                         Spacer()
@@ -76,15 +76,17 @@ struct HomeView: View {
             }  //close Grid
             .frame(maxWidth: .infinity, maxHeight: 200)
 
+            CustomText("Fitness Activity")
+                .fontNormalBold
             //3. MARK:  card activity
 
             LazyVGrid(
                 columns: Array(repeating: GridItem(spacing: 20), count: 2)
             ) {
-                ForEach(homeViewModel.mockActivity, id: \.id) { activity in
+                ForEach(homeViewModel.activities, id: \.id) { activity in
                     ActivityCard(activity: activity)
                 }
-            }.padding(.top, 40)
+            }.padding(.top, 20)
 
         }  // for view parent : VStack
         .padding(.top, 0)

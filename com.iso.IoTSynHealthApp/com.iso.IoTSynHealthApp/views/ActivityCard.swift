@@ -36,11 +36,11 @@ struct ActivityCard: View {
 #Preview {
     ActivityCard(
         activity: Activity(
-            id: 1,
-            title: "title",
-            subTitle: "subTitle",
-            image: "figure.walk",
-            tintColor: .blue,
+            type: .oxygenSaturation,
+            title: "Oxygen",
+            subTitle: "This Week",
+            image: "lungs.fill",
+            tintColor: .purple,
             amount: "292"
         )
     )
