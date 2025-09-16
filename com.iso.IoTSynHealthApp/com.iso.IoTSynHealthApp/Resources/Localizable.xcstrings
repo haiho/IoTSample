@@ -190,6 +190,23 @@
         }
       }
     },
+    "lbl_this_week" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This week"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trong tuần"
+          }
+        }
+      }
+    },
     "msg_health_app_unknow_status" : {
       "extractionState" : "manual",
       "localizations" : {

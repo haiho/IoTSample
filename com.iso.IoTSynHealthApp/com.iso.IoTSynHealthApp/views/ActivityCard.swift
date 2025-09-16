@@ -17,7 +17,7 @@ struct ActivityCard: View {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 8) {
                         CustomText(activity.title).fontNormalBold
-                        CustomText(activity.amount)
+                        CustomText("lbl_this_week".localized)
                     }
                     Spacer()
                     Image(systemName: activity.image).foregroundColor(
@@ -25,7 +25,7 @@ struct ActivityCard: View {
                     )
                 }
 
-                CustomText("621").title.centerAligned.padding(10)
+                CustomText(activity.amount).title.centerAligned.padding(10)
 
             }.padding(.all)
 

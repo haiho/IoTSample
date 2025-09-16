@@ -46,17 +46,9 @@ struct HomeView: View {
                             }
                             VStack {
                                 CustomText("Activity").color(.green)
-                                CustomText("\(homeViewModel.activity)")
+                                CustomText("\(homeViewModel.excersiceTime)")
                             }
-                            VStack {
-                                CustomText("Steps").color(.blue)
-                                CustomText("\(homeViewModel.steps)")
-                            }
-
-                            VStack {
-                                CustomText("Heart Rate").color(.orange)
-                                CustomText("\(homeViewModel.heartRate)")
-                            }
+                    
                         }
                         .gridCellColumns(1)
                         Spacer()
@@ -74,17 +66,6 @@ struct HomeView: View {
                                 color: .green
                             ).padding(AppPadding.withProgress)
 
-                            ProgressCircleView(
-                                progress: .constant(300),
-                                goal: 600,
-                                color: .yellow
-                            ).padding(2 * AppPadding.withProgress)
-
-                            ProgressCircleView(
-                                progress: .constant(250),
-                                goal: 600,
-                                color: .orange
-                            ).padding(3 * AppPadding.withProgress)
                         }
                         .gridCellColumns(2)
 

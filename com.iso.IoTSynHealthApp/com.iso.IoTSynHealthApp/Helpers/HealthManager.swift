@@ -12,19 +12,25 @@ import SwiftUI
 // when the health type is either not authorized or has no data
 
 enum HealthDataType: CaseIterable {
-    case stepCount
     case activeEnergyBurned
+    case excerciseTime
+    case stepCount
     case oxygenSaturation
     case heartRate
 
     var quantityType: HKQuantityType {
         switch self {
-        case .stepCount:
-            return HKQuantityType.quantityType(forIdentifier: .stepCount)!
+        case .excerciseTime:
+            return HKQuantityType.quantityType(
+                forIdentifier: .appleExerciseTime
+            )!
         case .activeEnergyBurned:
             return HKQuantityType.quantityType(
                 forIdentifier: .activeEnergyBurned
             )!
+
+        case .stepCount:
+            return HKQuantityType.quantityType(forIdentifier: .stepCount)!
         case .oxygenSaturation:
             return HKQuantityType.quantityType(
                 forIdentifier: .oxygenSaturation
@@ -48,10 +54,12 @@ enum HealthDataType: CaseIterable {
 
     var unit: HKUnit {
         switch self {
-        case .stepCount:
-            return .count()
         case .activeEnergyBurned:
             return .kilocalorie()
+        case .excerciseTime:
+            return .minute()
+        case .stepCount:
+            return .count()
         case .oxygenSaturation:
             return .percent()
         case .heartRate:
@@ -60,10 +68,12 @@ enum HealthDataType: CaseIterable {
     }
     var displayName: String {
         switch self {
-        case .stepCount:
-            return "Steps"
+        case .excerciseTime:
+            return "Excersice Time"
         case .activeEnergyBurned:
             return "Calories"
+        case .stepCount:
+            return "Steps"
         case .oxygenSaturation:
             return "Oxygen Saturation"
         case .heartRate:
@@ -86,16 +96,18 @@ class HealthManager {
     func requestHealthKitAccess() async throws {
 
         let healthTypesToRead: Set<HKObjectType> = [
-            HealthDataType.stepCount.quantityType,
             HealthDataType.activeEnergyBurned.quantityType,
+            HealthDataType.excerciseTime.quantityType,
+            HealthDataType.stepCount.quantityType,
             HealthDataType.oxygenSaturation.quantityType,
             HealthDataType.heartRate.quantityType,
 
         ]
 
         let typesToWrite: Set<HKSampleType> = [
-            HealthDataType.stepCount.quantityType,
             HealthDataType.activeEnergyBurned.quantityType,
+            //    HealthDataType.excerciseTime.quantityType, //only read, can not wire
+            HealthDataType.stepCount.quantityType,
             HealthDataType.oxygenSaturation.quantityType,
             HealthDataType.heartRate.quantityType,
 

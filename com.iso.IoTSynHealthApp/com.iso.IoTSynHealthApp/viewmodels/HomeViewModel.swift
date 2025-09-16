@@ -8,8 +8,8 @@ import SwiftUI
 
 class HomeViewModel: ObservableObject {
     @Published var calories: Int = 0
+    @Published var excersiceTime: Int = 0
     @Published var steps: Int = 0
-    @Published var activity: Int = 0
     @Published var oxySaturation: Int = 0
     @Published var heartRate: Int = 0
 
@@ -90,28 +90,37 @@ class HomeViewModel: ObservableObject {
             print("\(type.displayName): \(value)")
 
         case .failure(let error):
-            let nsError = error as NSError
-            switch nsError.code {
-            case 2, 3:  // bị từ chối quyền truy cập => open setting
-                print("Health data not available for \(type.displayName).")
-                if !self.hasShownPermissionAlert {
-                    self.hasShownPermissionAlert = true
-                    DispatchQueue.main.async {
-                        print(" ===showPermissionAlert")
-                        self.showPermissionAlert = true
-                    }
-                }
-
-            default:
+            if type == HealthDataType.excerciseTime {
                 print(
-                    "\(type.displayName): lỗi - \(error.localizedDescription)"
+                    "\(type.displayName): - \(error.localizedDescription)"
                 )
+            } else {
+                let nsError = error as NSError
+                switch nsError.code {
+                case 2, 3:  // bị từ chối quyền truy cập => open setting
+                    print("Health data not available for \(type.displayName).")
+                    if !self.hasShownPermissionAlert {
+                        self.hasShownPermissionAlert = true
+                        DispatchQueue.main.async {
+                            print(" ===showPermissionAlert")
+                            self.showPermissionAlert = true
+                        }
+                    }
+
+                default:
+                    print(
+                        "\(type.displayName): - \(error.localizedDescription)"
+                    )
+                }
             }
+
         }
     }
 
     func updateValuesFromHealthKit(for type: HealthDataType, value: Double) {
         switch type {
+        case .excerciseTime:
+            self.excersiceTime = Int(value)
         case .stepCount:
             self.steps = Int(value)
         case .activeEnergyBurned:
