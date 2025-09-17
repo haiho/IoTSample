@@ -22,81 +22,111 @@ class ActivityDetailViewModel: ObservableObject {
 
     func loadData() {
         isLoading = true
+
         healthManager.fetchStepData(type: activity.type, filter: selectedFilter)
         { [weak self] data in
             guard let self = self else { return }
 
             DispatchQueue.main.async {
-                self.chartData = data
+                // 🧠 Điền các cột trống bằng 0 nếu thiếu
+                self.chartData = self.fillMissingData(for: data)
                 self.isLoading = false
                 self.generateChartModel()
             }
         }
     }
 
-    private func generateChartModel() {
-        // ✅ Lọc bỏ các giá trị có value == 0
-        let filteredData = chartData.filter { $0.1 > 0 }
+    // ✅ Bổ sung cột có giá trị = 0 nếu thiếu để không bị cột quá to
+    private func fillMissingData(for original: [(Date, Double)]) -> [(
+        Date, Double
+    )] {
+        var result: [(Date, Double)] = []
+        let calendar = Calendar.current
+        let now = Date()
 
-        guard !filteredData.isEmpty else {
-            self.chartModel = nil
-            return
+        var unit: Calendar.Component
+        var total: Int
+
+        switch selectedFilter {
+        case .hour:
+            unit = .hour
+            total = 24
+        case .day:
+            unit = .hour
+            total = 24
+        case .month:
+            unit = .day
+            total = numberOfDaysIn(month: now)
+        case .year:
+            unit = .month
+            total = 12
         }
 
-        let categories = filteredData.map { formatLabel(for: $0.0) }
-        let values = filteredData.map { $0.1 }
+        let startDate: Date
+        switch selectedFilter {
+        case .hour, .day:
+            startDate = calendar.startOfDay(for: now)
+        case .month:
+            startDate = calendar.date(
+                from: calendar.dateComponents([.year, .month], from: now)
+            )!
+        case .year:
+            startDate = calendar.date(
+                from: calendar.dateComponents([.year], from: now)
+            )!
+        }
 
-        let aaOptions = AAOptions()
+        for i in 0..<total {
+            if let date = calendar.date(byAdding: unit, value: i, to: startDate)
+            {
+                let value =
+                    original.first(where: {
+                        calendar.isDate(
+                            $0.0,
+                            equalTo: date,
+                            toGranularity: unit
+                        )
+                    })?.1 ?? 0
+                result.append((date, value))
+            }
+        }
 
-        aaOptions.chart = AAChart()
-            .type(.column)
+        return result
+    }
 
-        aaOptions.title = AATitle()
-            .text(activity.type.displayName)
+    private func generateChartModel() {
+        // 🧹 Lọc để không hiển thị label nếu giá trị = 0 (vẫn hiển thị cột)
+        let categories = chartData.map { formatLabel(for: $0.0) }
+        let values = chartData.map { $0.1 }
+        // Kiểm tra nếu tất cả đều bằng 0
+        let allZero = values.allSatisfy { $0 == 0 }
+        let subtitleText = allZero ? "Không có dữ liệu" : ""
 
-        aaOptions.subtitle = AASubtitle()
-            .text(selectedFilter.rawValue)
-
-        aaOptions.xAxis = AAXAxis()
-            .categories(categories)
-
-        aaOptions.yAxis = AAYAxis()
-            .title(AATitle().text(""))  // Ẩn tiêu đề trục Y
-
-        aaOptions.plotOptions = AAPlotOptions()
-            .column(
-                AAColumn()
-                    .pointWidth(10)  // Chiều rộng cố định của mỗi cột (pixel)
-                    .borderWidth(0)
+        let series = AASeriesElement()
+            .name(activity.type.displayName)
+            .data(values)
+            .dataLabels(
+                AADataLabels()
+                    .enabled(true)
+                    .formatter(
+                        """
+                            function () {
+                                return this.y == 0 ? null : this.y;
+                            }
+                        """
+                    )
             )
 
-        aaOptions.series = [
-            AASeriesElement()
-                .name(activity.type.displayName)
-                .data(values)
-                .dataLabels(
-                    AADataLabels()
-                        .enabled(true)
-                        .formatter(
-                            """
-                                function () {
-                                    return this.y == 0 ? null : this.y;
-                                }
-                            """
-                        )
-                )
-        ]
-
-        // ⚠️ Lưu ý: AAChartModel chỉ là shortcut tạo AAOptions
-        // Nhưng ở đây ta dùng trực tiếp AAOptions cho linh hoạt hơn
         let chartModel = AAChartModel()
             .chartType(.column)
+            .subtitle(subtitleText)
             .categories(categories)
-            .series([
-                AASeriesElement()
-                    .name(activity.type.displayName)
-                    .data(values)
-            ])
+            .dataLabelsEnabled(true)
+            .colorsTheme(["#4A90E2"])
+            .series([series])
+            .animationType(.bounce)
+            .yAxisTitle("")  // Ẩn tiêu đề trục Y
+            .backgroundColor(AAColor.clear)
 
         self.chartModel = chartModel
     }

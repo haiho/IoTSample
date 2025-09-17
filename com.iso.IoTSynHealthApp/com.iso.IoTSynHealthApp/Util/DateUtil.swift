@@ -17,6 +17,34 @@ extension Date {
         return Date()
     }
 }
+func numberOfDaysIn(month date: Date) -> Int {
+    let calendar = Calendar.current
+
+    // Lấy ngày bắt đầu của tháng
+    guard
+        let startOfMonth = calendar.date(
+            from: calendar.dateComponents([.year, .month], from: date)
+        ),
+        // Lấy ngày đầu tháng kế tiếp
+        let startOfNextMonth = calendar.date(
+            byAdding: .month,
+            value: 1,
+            to: startOfMonth
+        )
+    else {
+        return 30  // fallback
+    }
+
+    // Tính số ngày bằng số giây chia cho 86400
+    let numberOfDays =
+        calendar.dateComponents(
+            [.day],
+            from: startOfMonth,
+            to: startOfNextMonth
+        ).day ?? 30
+    return numberOfDays
+}
+
 extension DateFormatter {
     static func formatLabel(for date: Date, filter: TimeFilter) -> String {
         let formatter = DateFormatter()

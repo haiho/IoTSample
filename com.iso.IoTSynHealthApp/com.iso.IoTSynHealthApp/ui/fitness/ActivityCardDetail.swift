@@ -3,7 +3,7 @@ import SwiftUI
 
 struct ActivityCardDetail: View {
     @StateObject var viewModel: ActivityDetailViewModel
-
+    @EnvironmentObject var navManager: MainNavigationManager
     init(activity: Activity) {
         _viewModel = StateObject(
             wrappedValue: ActivityDetailViewModel(activity: activity)
@@ -11,10 +11,7 @@ struct ActivityCardDetail: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            Text("Thông tin chi tiết cho:")
-                .font(.title2).bold()
-
+        BaseScrollVStrack {
             Picker("Khoảng thời gian", selection: $viewModel.selectedFilter) {
                 ForEach(TimeFilter.allCases, id: \.self) { filter in
                     Text(filter.rawValue).tag(filter)
@@ -38,7 +35,11 @@ struct ActivityCardDetail: View {
                         .foregroundColor(.gray)
                 }
             }
-        }
-        .padding()
+        }.customNavigationBarStringValue(
+            title: viewModel.activity.title,
+            backAction: {
+                navManager.pop()
+            }
+        ).appScreenPadding()
     }
 }
