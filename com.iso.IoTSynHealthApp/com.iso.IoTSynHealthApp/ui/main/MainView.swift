@@ -1,10 +1,3 @@
-//
-//  MainView.swift
-//  com.iso.IoTSynHealthApp
-//
-//  Created by PTV on 8/8/25.
-//
-
 import SwiftUI
 
 struct MainView: View {
@@ -13,7 +6,9 @@ struct MainView: View {
     @StateObject var navManager = MainNavigationManager()
 
     var body: some View {
-        NavigationStack(path: $navManager.path) {
+        let isRoot = navManager.path.isEmpty  // 👈 kiểm tra đang ở màn chính
+
+        return NavigationStack(path: $navManager.path) {
             ZStack {
                 // Nội dung chính của màn hình
                 Group {
@@ -30,14 +25,17 @@ struct MainView: View {
                     title: titleForScreen(selectedScreen)
                 )
                 .navigationBarItems(
-                    leading: Button(action: {
-                        withAnimation {
-                            self.showSideMenu.toggle()
-                        }
-                    }) {
-                        Image(systemName: "line.horizontal.3")
-                            .imageScale(.large)
-                    }
+                    leading: isRoot
+                        ? AnyView(
+                            Button(action: {
+                                withAnimation {
+                                    self.showSideMenu.toggle()
+                                }
+                            }) {
+                                Image(systemName: "line.horizontal.3")
+                                    .imageScale(.large)
+                            }
+                        ) : AnyView(EmptyView())  // 👈 Ẩn menu button nếu không ở root
                 )
             }
             .navigationDestination(for: MainScreen.self) { route in
@@ -47,13 +45,33 @@ struct MainView: View {
                 }
             }
         }
-        .environmentObject(navManager)
-        .sideMenu(isShowing: $showSideMenu) {
-            SideMenuContent(isShowing: $showSideMenu) { screen in
-                self.selectedScreen = screen
+        .onChange(of: navManager.path) { newPath in
+            withAnimation {
+                // Đóng menu khi push
+                if !newPath.isEmpty {
+                    showSideMenu = false
+                }
             }
         }
-
+        .environmentObject(navManager)
+        .sideMenu(
+            isShowing: Binding(
+                get: {
+                    // ✅ Chỉ cho mở menu nếu đang ở root
+                    isRoot && showSideMenu
+                },
+                set: { newValue in
+                    showSideMenu = newValue
+                }
+            )
+        ) {
+            SideMenuContent(isShowing: $showSideMenu) { screen in
+                withAnimation {
+                    self.selectedScreen = screen
+                    self.showSideMenu = false  // ✅ Tắt menu sau khi chọn
+                }
+            }
+        }
     }
 
     private func titleForScreen(_ screen: MenuScreen) -> LocalizedStringKey {
