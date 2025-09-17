@@ -83,7 +83,7 @@ struct HomeView: View {
             LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
                 ForEach(homeViewModel.activities, id: \.id) { activity in
                     ActivityCard(activity: activity) {
-                        navManager.push(.carDetail)
+                        navManager.push(.carDetail(activity))
 //                        homeViewModel.handleActivityTapped(activity)
                     }
                 }

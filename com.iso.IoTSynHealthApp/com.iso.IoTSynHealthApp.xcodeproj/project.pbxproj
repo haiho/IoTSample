@@ -20,6 +20,10 @@
 		396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396B63A82E338BAE007E4014 /* CustomTextField.swift */; };
 		396B63AE2E338C85007E4014 /* IoTSynHealthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396B63AD2E338C85007E4014 /* IoTSynHealthApp.swift */; };
 		396B63B22E338DC1007E4014 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396B63B12E338DC1007E4014 /* LoginView.swift */; };
+		397C64242E7A8C5D003BD041 /* TimeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C64232E7A8C5B003BD041 /* TimeFilter.swift */; };
+		397C64272E7A9359003BD041 /* AAInfographics in Frameworks */ = {isa = PBXBuildFile; productRef = 397C64262E7A9359003BD041 /* AAInfographics */; };
+		397C64292E7A937D003BD041 /* ActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C64282E7A937B003BD041 /* ActivityDetailViewModel.swift */; };
+		397C642B2E7A9423003BD041 /* AAChartRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */; };
 		39B8CB782E4C8066005F030A /* CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB772E4C8057005F030A /* CustomText.swift */; };
 		39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB7A2E4C830B005F030A /* Toolbar.swift */; };
 		39B8CB7E2E4C8C53005F030A /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB7D2E4C8C46005F030A /* ForgotPasswordView.swift */; };
@@ -57,6 +61,9 @@
 		396B63A82E338BAE007E4014 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		396B63AD2E338C85007E4014 /* IoTSynHealthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoTSynHealthApp.swift; sourceTree = "<group>"; };
 		396B63B12E338DC1007E4014 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		397C64232E7A8C5B003BD041 /* TimeFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFilter.swift; sourceTree = "<group>"; };
+		397C64282E7A937B003BD041 /* ActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewModel.swift; sourceTree = "<group>"; };
+		397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAChartRepresentable.swift; sourceTree = "<group>"; };
 		3981AB942E616638001082F6 /* com.iso.IoTSynHealthApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = com.iso.IoTSynHealthApp.entitlements; sourceTree = "<group>"; };
 		39B8CB772E4C8057005F030A /* CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomText.swift; sourceTree = "<group>"; };
 		39B8CB7A2E4C830B005F030A /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
@@ -86,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				397C64272E7A9359003BD041 /* AAInfographics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +136,7 @@
 		396B63982E337D66007E4014 /* com.iso.IoTSynHealthApp */ = {
 			isa = PBXGroup;
 			children = (
+				397C64222E7A8C55003BD041 /* enum */,
 				3981AB942E616638001082F6 /* com.iso.IoTSynHealthApp.entitlements */,
 				39BDC9162E605E59001FC793 /* com-iso-IoTSynHealthApp-Info.plist */,
 				396B63B82E3390E6007E4014 /* app */,
@@ -231,9 +240,18 @@
 			path = app;
 			sourceTree = "<group>";
 		};
+		397C64222E7A8C55003BD041 /* enum */ = {
+			isa = PBXGroup;
+			children = (
+				397C64232E7A8C5B003BD041 /* TimeFilter.swift */,
+			);
+			path = enum;
+			sourceTree = "<group>";
+		};
 		39BDC90D2E605359001FC793 /* viewmodels */ = {
 			isa = PBXGroup;
 			children = (
+				397C64282E7A937B003BD041 /* ActivityDetailViewModel.swift */,
 				39BDC9112E6055E7001FC793 /* HomeViewModel.swift */,
 			);
 			path = viewmodels;
@@ -258,6 +276,7 @@
 		39BF90392E796A530054E652 /* fitness */ = {
 			isa = PBXGroup;
 			children = (
+				397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */,
 				39BF903A2E796A900054E652 /* ActivityCardDetail.swift */,
 			);
 			path = fitness;
@@ -339,6 +358,9 @@
 				vi,
 			);
 			mainGroup = 396B638D2E337D66007E4014;
+			packageReferences = (
+				397C64252E7A9359003BD041 /* XCRemoteSwiftPackageReference "AAChartKit-Swift" */,
+			);
 			productRefGroup = 396B63972E337D66007E4014 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -366,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				397C64242E7A8C5D003BD041 /* TimeFilter.swift in Sources */,
 				392A62C02E5F1461002DE1B0 /* ActivityCard.swift in Sources */,
 				39BDC9182E606C37001FC793 /* DateUtil.swift in Sources */,
 				39B8CB782E4C8066005F030A /* CustomText.swift in Sources */,
@@ -382,7 +405,9 @@
 				39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */,
 				39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */,
 				39FF9B622E55BFA900EC0EE8 /* SideMenuUtil.swift in Sources */,
+				397C64292E7A937D003BD041 /* ActivityDetailViewModel.swift in Sources */,
 				39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */,
+				397C642B2E7A9423003BD041 /* AAChartRepresentable.swift in Sources */,
 				396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */,
 				391013322E4B5139005DDD2C /* ErrorView.swift in Sources */,
 				39BF903B2E796A9B0054E652 /* ActivityCardDetail.swift in Sources */,
@@ -617,6 +642,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		397C64252E7A9359003BD041 /* XCRemoteSwiftPackageReference "AAChartKit-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AAChartModel/AAChartKit-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		397C64262E7A9359003BD041 /* AAInfographics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 397C64252E7A9359003BD041 /* XCRemoteSwiftPackageReference "AAChartKit-Swift" */;
+			productName = AAInfographics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 396B638E2E337D66007E4014 /* Project object */;
 }

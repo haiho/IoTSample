@@ -66,6 +66,12 @@
         }
       }
     },
+    "Khoảng thời gian" : {
+
+    },
+    "Không có dữ liệu" : {
+
+    },
     "lbl_email" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -326,6 +332,9 @@
       }
     },
     "Tài khoản" : {
+
+    },
+    "Thông tin chi tiết cho:" : {
 
     },
     "title_home_screen" : {

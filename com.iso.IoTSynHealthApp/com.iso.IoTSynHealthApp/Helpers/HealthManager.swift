@@ -296,4 +296,188 @@ class HealthManager {
             )
         }
     }
+
+    //MARK: request for month
+    func fetchStepDataThisMonth(
+        completion: @escaping ([(Date, Double)]) -> Void
+    ) {
+        let calendar = Calendar.current
+        let now = Date()
+        let range = calendar.range(of: .day, in: .month, for: now)!
+        let startOfMonth = calendar.date(
+            from: calendar.dateComponents([.year, .month], from: now)
+        )!
+
+        let endOfMonth = calendar.date(
+            byAdding: .day,
+            value: range.count,
+            to: startOfMonth
+        )!
+
+        fetchStatisticsPerDay(
+            for: .stepCount,
+            startDate: startOfMonth,
+            endDate: endOfMonth
+        ) { result in
+            switch result {
+            case .success(let data):
+                completion(data)
+            case .failure(let error):
+                print("❌ Failed to fetch monthly steps: \(error)")
+                completion([])
+            }
+        }
+    }
+
+    func fetchStatisticsPerDay(
+        for type: HealthDataType,
+        startDate: Date,
+        endDate: Date,
+        completion: @escaping (Result<[(Date, Double)], Error>) -> Void
+    ) {
+        let quantityType = type.quantityType
+
+        let predicate = HKQuery.predicateForSamples(
+            withStart: startDate,
+            end: endDate,
+            options: .strictStartDate
+        )
+
+        var interval = DateComponents()
+        interval.day = 1  // Lấy theo ngày
+
+        let query = HKStatisticsCollectionQuery(
+            quantityType: quantityType,
+            quantitySamplePredicate: predicate,
+            options: type.optionsHK,  // Sử dụng đúng option
+            anchorDate: startDate,
+            intervalComponents: interval
+        )
+
+        query.initialResultsHandler = { _, results, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            var data: [(Date, Double)] = []
+
+            results?.enumerateStatistics(from: startDate, to: endDate) {
+                statistics,
+                _ in
+                let value: Double
+                switch type.optionsHK {
+                case .discreteAverage:
+                    value =
+                        statistics.averageQuantity()?.doubleValue(
+                            for: type.unit
+                        ) ?? 0
+                case .cumulativeSum:
+                    value =
+                        statistics.sumQuantity()?.doubleValue(for: type.unit)
+                        ?? 0
+                default:
+                    value = 0
+                }
+                data.append((statistics.startDate, value))
+            }
+
+            completion(.success(data))
+        }
+
+        self.healthStore.execute(query)
+    }
+
+    func fetchStepData(
+        type: HealthDataType,
+        filter: TimeFilter,
+        completion: @escaping ([(Date, Double)]) -> Void
+    ) {
+        let calendar = Calendar.current
+        let now = Date()
+        var startDate: Date
+        var interval = DateComponents()
+
+        switch filter {
+        case .hour:
+            startDate = calendar.date(bySetting: .minute, value: 0, of: now) ?? now
+            interval.minute = 5
+        case .day:
+            startDate = calendar.startOfDay(for: now)
+            interval.hour = 1
+        case .month:
+            startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) ?? now
+            interval.day = 1
+        case .year:
+            startDate = calendar.date(from: calendar.dateComponents([.year], from: now)) ?? now
+            interval.month = 1
+        }
+
+        fetchStatistics(
+            for: type,
+            startDate: startDate,
+            endDate: now,
+            interval: interval
+        ) { result in
+            switch result {
+            case .success(let data):
+                completion(data)
+            case .failure(let error):
+                print("❌ Failed to fetch steps for \(filter): \(error)")
+                completion([])
+            }
+        }
+    }
+    
+    func fetchStatistics(
+        for type: HealthDataType,
+        startDate: Date,
+        endDate: Date,
+        interval: DateComponents,
+        completion: @escaping (Result<[(Date, Double)], Error>) -> Void
+    ) {
+        let quantityType = type.quantityType
+
+        let predicate = HKQuery.predicateForSamples(
+            withStart: startDate,
+            end: endDate,
+            options: .strictStartDate
+        )
+
+        let query = HKStatisticsCollectionQuery(
+            quantityType: quantityType,
+            quantitySamplePredicate: predicate,
+            options: type.optionsHK,
+            anchorDate: startDate,
+            intervalComponents: interval
+        )
+
+        query.initialResultsHandler = { _, results, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            var data: [(Date, Double)] = []
+
+            results?.enumerateStatistics(from: startDate, to: endDate) { stats, _ in
+                let value: Double
+                switch type.optionsHK {
+                case .discreteAverage:
+                    value = stats.averageQuantity()?.doubleValue(for: type.unit) ?? 0
+                case .cumulativeSum:
+                    value = stats.sumQuantity()?.doubleValue(for: type.unit) ?? 0
+                default:
+                    value = 0
+                }
+                data.append((stats.startDate, value))
+            }
+
+            completion(.success(data))
+        }
+
+        self.healthStore.execute(query)
+    }
+
+
 }

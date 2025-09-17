@@ -17,3 +17,21 @@ extension Date {
         return Date()
     }
 }
+extension DateFormatter {
+    static func formatLabel(for date: Date, filter: TimeFilter) -> String {
+        let formatter = DateFormatter()
+
+        switch filter {
+        case .hour:
+            formatter.dateFormat = "HH:mm"
+        case .day:
+            formatter.dateFormat = "HH'h'"
+        case .month:
+            formatter.dateFormat = "dd/MM"
+        case .year:
+            formatter.dateFormat = "MMM"
+        }
+
+        return formatter.string(from: date)
+    }
+}

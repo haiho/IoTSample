@@ -1,36 +1,44 @@
-//
-//  ActivityCardDetail.swift
-//  com.iso.IoTSynHealthApp
-//
-//  Created by PTV on 16/9/25.
-//
+import AAInfographics
 import SwiftUI
 
 struct ActivityCardDetail: View {
-    @EnvironmentObject var navManager: MainNavigationManager
-    @State var email: String = ""
+    @StateObject var viewModel: ActivityDetailViewModel
+
+    init(activity: Activity) {
+        _viewModel = StateObject(
+            wrappedValue: ActivityDetailViewModel(activity: activity)
+        )
+    }
 
     var body: some View {
-        CenteredScrollVStack {
-            CustomText("Please enter yuor email address")
-            CustomTextFieldWithLabel(
-                label: "lbl_email",
-                placeholder: "lbl_email",
-                text: $email
-            ).padding(.bottom, AppPadding.btnSpacing)
+        VStack(spacing: 16) {
+            Text("Thông tin chi tiết cho:")
+                .font(.title2).bold()
 
-            CustomButton(title: "btn_send") {
+            Picker("Khoảng thời gian", selection: $viewModel.selectedFilter) {
+                ForEach(TimeFilter.allCases, id: \.self) { filter in
+                    Text(filter.rawValue).tag(filter)
+                }
             }
+            .pickerStyle(.segmented)
 
-        }.customNavigationBar(
-            title: "lbl_forgot_pw",
-            backAction: {
-                navManager.pop()
+            ZStack {
+                Rectangle()
+                    .fill(Color(.systemGray6))
+                    .cornerRadius(10)
+                    .frame(height: 300)
+
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if let chartModel = viewModel.chartModel {
+                    AAChartRepresentable(chartModel: chartModel)
+                        .frame(height: 300)
+                } else {
+                    Text("Không có dữ liệu")
+                        .foregroundColor(.gray)
+                }
             }
-        ).appScreenPadding()
+        }
+        .padding()
     }
-}
-
-#Preview {
-    ActivityCardDetail()
 }

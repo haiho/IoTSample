@@ -42,8 +42,8 @@ struct MainView: View {
             }
             .navigationDestination(for: MainScreen.self) { route in
                 switch route {
-                case .carDetail:
-                    ActivityCardDetail()
+                case .carDetail(let activity):
+                    ActivityCardDetail(activity: activity)
                 }
             }
         }
