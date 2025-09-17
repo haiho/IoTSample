@@ -22,3 +22,4 @@ struct AAChartRepresentable: UIViewRepresentable {
         uiView.aa_drawChartWithChartModel(chartModel)
     }
 }
+

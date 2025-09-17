@@ -1,16 +1,8 @@
-//
-//  ActivityDetailViewModel.swift
-//  com.iso.IoTSynHealthApp
-//
-//  Created by PTV on 17/9/25.
-//
-
-import Foundation
 import AAInfographics
+import Foundation
 
 class ActivityDetailViewModel: ObservableObject {
     let healthManager = HealthManager.shared
-    
     @Published var chartData: [(Date, Double)] = []
     @Published var chartModel: AAChartModel? = nil
     @Published var selectedFilter: TimeFilter = .day {
@@ -30,8 +22,10 @@ class ActivityDetailViewModel: ObservableObject {
 
     func loadData() {
         isLoading = true
-        healthManager.fetchStepData(type: activity.type, filter: selectedFilter) { [weak self] data in
+        healthManager.fetchStepData(type: activity.type, filter: selectedFilter)
+        { [weak self] data in
             guard let self = self else { return }
+
             DispatchQueue.main.async {
                 self.chartData = data
                 self.isLoading = false
@@ -41,20 +35,68 @@ class ActivityDetailViewModel: ObservableObject {
     }
 
     private func generateChartModel() {
-        let categories = chartData.map { formatLabel(for: $0.0) }
-        let values = chartData.map { $0.1 }
+        // ✅ Lọc bỏ các giá trị có value == 0
+        let filteredData = chartData.filter { $0.1 > 0 }
 
-        let series = AASeriesElement()
-            .name(activity.type.displayName)
-            .data(values)
+        guard !filteredData.isEmpty else {
+            self.chartModel = nil
+            return
+        }
 
+        let categories = filteredData.map { formatLabel(for: $0.0) }
+        let values = filteredData.map { $0.1 }
+
+        let aaOptions = AAOptions()
+
+        aaOptions.chart = AAChart()
+            .type(.column)
+
+        aaOptions.title = AATitle()
+            .text(activity.type.displayName)
+
+        aaOptions.subtitle = AASubtitle()
+            .text(selectedFilter.rawValue)
+
+        aaOptions.xAxis = AAXAxis()
+            .categories(categories)
+
+        aaOptions.yAxis = AAYAxis()
+            .title(AATitle().text(""))  // Ẩn tiêu đề trục Y
+
+        aaOptions.plotOptions = AAPlotOptions()
+            .column(
+                AAColumn()
+                    .pointWidth(10)  // Chiều rộng cố định của mỗi cột (pixel)
+                    .borderWidth(0)
+            )
+
+        aaOptions.series = [
+            AASeriesElement()
+                .name(activity.type.displayName)
+                .data(values)
+                .dataLabels(
+                    AADataLabels()
+                        .enabled(true)
+                        .formatter(
+                            """
+                                function () {
+                                    return this.y == 0 ? null : this.y;
+                                }
+                            """
+                        )
+                )
+        ]
+
+        // ⚠️ Lưu ý: AAChartModel chỉ là shortcut tạo AAOptions
+        // Nhưng ở đây ta dùng trực tiếp AAOptions cho linh hoạt hơn
         let chartModel = AAChartModel()
             .chartType(.column)
-            .title(activity.type.displayName)
-            .subtitle(selectedFilter.rawValue)
             .categories(categories)
-            .dataLabelsEnabled(true)
-            .series([series])
+            .series([
+                AASeriesElement()
+                    .name(activity.type.displayName)
+                    .data(values)
+            ])
 
         self.chartModel = chartModel
     }
