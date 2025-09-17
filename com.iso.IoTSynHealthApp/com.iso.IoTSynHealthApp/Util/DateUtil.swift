@@ -45,6 +45,11 @@ func numberOfDaysIn(month date: Date) -> Int {
     return numberOfDays
 }
 
+func formattedFullDateTime(_ date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd/MM/yyyy HH:mm"
+    return formatter.string(from: date)
+}
 extension DateFormatter {
     static func formatLabel(for date: Date, filter: TimeFilter) -> String {
         let formatter = DateFormatter()
@@ -62,4 +67,6 @@ extension DateFormatter {
 
         return formatter.string(from: date)
     }
+
+    
 }

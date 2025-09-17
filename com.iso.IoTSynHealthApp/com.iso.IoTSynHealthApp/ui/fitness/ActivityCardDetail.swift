@@ -35,6 +35,13 @@ struct ActivityCardDetail: View {
                         .foregroundColor(.gray)
                 }
             }
+
+            if !viewModel.chartData.isEmpty {
+                CustomButton(title: "lbl_view_all_data") {
+                    navManager.push(.viewAllData(activity: viewModel.activity))
+                }.padding(.top)
+            }
+
         }.customNavigationBarStringValue(
             title: viewModel.activity.title,
             backAction: {

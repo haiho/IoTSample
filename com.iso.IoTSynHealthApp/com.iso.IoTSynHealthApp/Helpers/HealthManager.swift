@@ -478,6 +478,39 @@ class HealthManager {
 
         self.healthStore.execute(query)
     }
+   // MARK: for view all data
+    func fetchAllSamplesThisYear(
+        for dataType: HealthDataType,
+        completion: @escaping (Result<[HKQuantitySample], Error>) -> Void
+    ) {
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfYear = calendar.date(from: calendar.dateComponents([.year], from: now))!
 
+        let predicate = HKQuery.predicateForSamples(
+            withStart: startOfYear,
+            end: now,
+            options: .strictStartDate
+        )
+
+        let query = HKSampleQuery(
+            sampleType: dataType.quantityType,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [
+                NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+            ]
+        ) { _, samples, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            let quantitySamples = samples as? [HKQuantitySample] ?? []
+            completion(.success(quantitySamples))
+        }
+
+        healthStore.execute(query)
+    }
 
 }

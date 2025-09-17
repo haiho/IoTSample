@@ -42,6 +42,8 @@ struct MainView: View {
                 switch route {
                 case .carDetail(let activity):
                     ActivityCardDetail(activity: activity)
+                case .viewAllData(let activity):
+                    ActivityAllDataView(activity: activity)
                 }
             }
         }

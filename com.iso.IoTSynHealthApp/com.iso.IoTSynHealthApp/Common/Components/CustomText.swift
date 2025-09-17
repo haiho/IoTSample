@@ -11,17 +11,20 @@ struct CustomText: View {
     private let isLocalized: Bool
     private var font: Font
     private var color: Color
+    private var colorBGround: Color
     private var alignment: TextAlignment
 
     init(
         _ content: String,
         color: Color = .primary,
+        colorBGround: Color = Color.clear,
         font: Font = .fontTextNormal,
         alignment: TextAlignment = .leading,
         isLocalized: Bool = false
     ) {
         self.content = content
         self.color = color
+        self.colorBGround = colorBGround
         self.font = font
         self.alignment = alignment
         self.isLocalized = isLocalized
@@ -35,6 +38,7 @@ struct CustomText: View {
             text
             .font(font)
             .foregroundColor(color)
+            .background(colorBGround)
             .multilineTextAlignment(alignment)
             .frame(maxWidth: .infinity, alignment: alignmentForFrame(alignment))
     }
@@ -66,6 +70,11 @@ struct CustomText: View {
     func color(_ color: Color) -> CustomText {
         var copy = self
         copy.color = color
+        return copy
+    }
+    func colorBGround(_ colorBGround: Color) -> CustomText {
+        var copy = self
+        copy.colorBGround = colorBGround
         return copy
     }
 

@@ -24,6 +24,7 @@
 		397C64272E7A9359003BD041 /* AAInfographics in Frameworks */ = {isa = PBXBuildFile; productRef = 397C64262E7A9359003BD041 /* AAInfographics */; };
 		397C64292E7A937D003BD041 /* ActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C64282E7A937B003BD041 /* ActivityDetailViewModel.swift */; };
 		397C642B2E7A9423003BD041 /* AAChartRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */; };
+		397C642D2E7AADD1003BD041 /* ActivityAllDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C642C2E7AADCE003BD041 /* ActivityAllDataView.swift */; };
 		39B8CB782E4C8066005F030A /* CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB772E4C8057005F030A /* CustomText.swift */; };
 		39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB7A2E4C830B005F030A /* Toolbar.swift */; };
 		39B8CB7E2E4C8C53005F030A /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB7D2E4C8C46005F030A /* ForgotPasswordView.swift */; };
@@ -64,6 +65,7 @@
 		397C64232E7A8C5B003BD041 /* TimeFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFilter.swift; sourceTree = "<group>"; };
 		397C64282E7A937B003BD041 /* ActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewModel.swift; sourceTree = "<group>"; };
 		397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAChartRepresentable.swift; sourceTree = "<group>"; };
+		397C642C2E7AADCE003BD041 /* ActivityAllDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityAllDataView.swift; sourceTree = "<group>"; };
 		3981AB942E616638001082F6 /* com.iso.IoTSynHealthApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = com.iso.IoTSynHealthApp.entitlements; sourceTree = "<group>"; };
 		39B8CB772E4C8057005F030A /* CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomText.swift; sourceTree = "<group>"; };
 		39B8CB7A2E4C830B005F030A /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 		39BF90392E796A530054E652 /* fitness */ = {
 			isa = PBXGroup;
 			children = (
+				397C642C2E7AADCE003BD041 /* ActivityAllDataView.swift */,
 				397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */,
 				39BF903A2E796A900054E652 /* ActivityCardDetail.swift */,
 			);
@@ -397,6 +400,7 @@
 				396B63B22E338DC1007E4014 /* LoginView.swift in Sources */,
 				39B8CB812E4C99B8005F030A /* RegisterScreen.swift in Sources */,
 				396B639C2E337D66007E4014 /* RootView.swift in Sources */,
+				397C642D2E7AADD1003BD041 /* ActivityAllDataView.swift in Sources */,
 				39FF9B6B2E55D9EC00EC0EE8 /* AppSession.swift in Sources */,
 				39FF9B642E55C07F00EC0EE8 /* HomeView.swift in Sources */,
 				39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */,
