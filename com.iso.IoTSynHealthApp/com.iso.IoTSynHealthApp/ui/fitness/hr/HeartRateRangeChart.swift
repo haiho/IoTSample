@@ -37,15 +37,28 @@ struct HeartRateRangeChart: View {
     var body: some View {
         Chart {
             ForEach(groupedData) { dataPoint in
-                BarMark(
-                    x: .value("Time", dataPoint.date),
-                    yStart: .value("Min", dataPoint.dailyMin),
-                    yEnd: .value("Max", dataPoint.dailyMax),
-                    width: .fixed(barWidth)
-                )
-                .clipShape(Capsule())
-                .foregroundStyle(chartColor.gradient)
+//                if(dataPoint.dailyMin == 0){
+//                    re
+//                }
+                if dataPoint.dailyMin == dataPoint.dailyMax  {
+                    // min = max => vẽ 1 điẻm châm
+                    PointMark(
+                        x: .value("Time", dataPoint.date),
+                        y: .value("Heart Rate", dataPoint.dailyMin)
+                    )
+                    .foregroundStyle(chartColor)
+                } else {
+                    BarMark(
+                        x: .value("Time", dataPoint.date),
+                        yStart: .value("Min", dataPoint.dailyMin),
+                        yEnd: .value("Max", dataPoint.dailyMax),
+                        width: .fixed(barWidth)
+                    )
+                    .clipShape(Capsule())
+                    .foregroundStyle(chartColor.gradient)
+                }
             }
+
         }
         .chartXAxis {
             switch filter {
@@ -119,24 +132,28 @@ struct HeartRateRangeChart: View {
             let startOfDay = calendar.startOfDay(for: now)
 
             return (0..<totalSlots).map { index in
-                let minutesToAdd = index * interval
-                let slotDate = calendar.date(byAdding: .minute, value: minutesToAdd, to: startOfDay)!
+                let slotStart = calendar.date(byAdding: .minute, value: index * interval, to: startOfDay)!
+                let slotEnd = calendar.date(byAdding: .minute, value: interval, to: slotStart)!
 
                 let slotData = data.filter {
-                    $0.date.roundedToNearest(minutes: interval) == slotDate &&
+                    $0.date >= slotStart && $0.date < slotEnd &&
                     calendar.isDate($0.date, inSameDayAs: now)
                 }
 
                 let dailyMin = slotData.map { $0.dailyMin }.min() ?? 0
                 let dailyMax = slotData.map { $0.dailyMax }.max() ?? 0
 
+                print("Slot: \(hourFormatter.string(from: slotStart)) - count: \(slotData.count), Min: \(dailyMin), Max: \(dailyMax)")
+
                 return LabeledHeartRateData(
-                    date: slotDate,
-                    label: hourFormatter.string(from: slotDate),
+                    date: slotStart,
+                    label: hourFormatter.string(from: slotStart),
                     dailyMin: dailyMin,
                     dailyMax: dailyMax
                 )
             }
+
+
 
         case .week:
             let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now))!
