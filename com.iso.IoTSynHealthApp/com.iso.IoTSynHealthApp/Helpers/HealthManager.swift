@@ -399,9 +399,11 @@ class HealthManager {
         var interval = DateComponents()
 
         switch filter {
-        case .hour:
-            startDate = calendar.date(bySetting: .minute, value: 0, of: now) ?? now
-            interval.minute = 5
+        case .week:
+            startDate = calendar.date(
+                from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)
+            ) ?? now
+            interval.day = 1
         case .day:
             startDate = calendar.startOfDay(for: now)
             interval.hour = 1
@@ -428,6 +430,7 @@ class HealthManager {
             }
         }
     }
+
     
     func fetchStatistics(
         for type: HealthDataType,

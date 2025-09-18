@@ -36,10 +36,7 @@ class ActivityDetailViewModel: ObservableObject {
         }
     }
 
-    // ✅ Bổ sung cột có giá trị = 0 nếu thiếu để không bị cột quá to
-    private func fillMissingData(for original: [(Date, Double)]) -> [(
-        Date, Double
-    )] {
+    private func fillMissingData(for original: [(Date, Double)]) -> [(Date, Double)] {
         var result: [(Date, Double)] = []
         let calendar = Calendar.current
         let now = Date()
@@ -48,9 +45,9 @@ class ActivityDetailViewModel: ObservableObject {
         var total: Int
 
         switch selectedFilter {
-        case .hour:
-            unit = .hour
-            total = 24
+        case .week:
+            unit = .day
+            total = 7
         case .day:
             unit = .hour
             total = 24
@@ -64,7 +61,11 @@ class ActivityDetailViewModel: ObservableObject {
 
         let startDate: Date
         switch selectedFilter {
-        case .hour, .day:
+        case .week:
+            startDate = calendar.date(
+                from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)
+            )! // đầu tuần hiện tại
+        case .day:
             startDate = calendar.startOfDay(for: now)
         case .month:
             startDate = calendar.date(
@@ -77,22 +78,17 @@ class ActivityDetailViewModel: ObservableObject {
         }
 
         for i in 0..<total {
-            if let date = calendar.date(byAdding: unit, value: i, to: startDate)
-            {
-                let value =
-                    original.first(where: {
-                        calendar.isDate(
-                            $0.0,
-                            equalTo: date,
-                            toGranularity: unit
-                        )
-                    })?.1 ?? 0
+            if let date = calendar.date(byAdding: unit, value: i, to: startDate) {
+                let value = original.first(where: {
+                    calendar.isDate($0.0, equalTo: date, toGranularity: unit)
+                })?.1 ?? 0
                 result.append((date, value))
             }
         }
 
         return result
     }
+
 
     private func generateChartModel() {
         // 🧹 Lọc để không hiển thị label nếu giá trị = 0 (vẫn hiển thị cột)
@@ -134,8 +130,11 @@ class ActivityDetailViewModel: ObservableObject {
     private func formatLabel(for date: Date) -> String {
         let formatter = DateFormatter()
         switch selectedFilter {
-        case .hour:
-            formatter.dateFormat = "HH:mm"
+        case .week:
+            let weekday = Calendar.current.component(.weekday, from: date)
+            // Chuyển weekday thành tên tiếng Việt: 1 = CN, 2 = T2, ...
+            let names = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]
+            return names[(weekday - 1) % 7]
         case .day:
             formatter.dateFormat = "HH'h'"
         case .month:
@@ -145,4 +144,5 @@ class ActivityDetailViewModel: ObservableObject {
         }
         return formatter.string(from: date)
     }
+
 }
