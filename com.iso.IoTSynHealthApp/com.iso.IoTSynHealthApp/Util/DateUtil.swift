@@ -23,6 +23,25 @@ extension Date {
 
         return formatter.string(from: self)
     }
+    
+    func roundedToNearest(minutes: Int, calendar: Calendar = .current) -> Date {
+        let components = calendar.dateComponents([.hour, .minute], from: self)
+        guard let hour = components.hour, let minute = components.minute else {
+            return self
+        }
+
+        let totalMinutes = hour * 60 + minute
+        let roundedMinutes = (totalMinutes / minutes) * minutes
+
+        let roundedHour = roundedMinutes / 60
+        let roundedMinute = roundedMinutes % 60
+
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: self)
+        dateComponents.hour = roundedHour
+        dateComponents.minute = roundedMinute
+
+        return calendar.date(from: dateComponents) ?? self
+    }
 }
 func numberOfDaysIn(month date: Date) -> Int {
     let calendar = Calendar.current

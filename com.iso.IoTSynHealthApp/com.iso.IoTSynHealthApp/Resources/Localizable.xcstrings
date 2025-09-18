@@ -1,10 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "BPM Max" : {
-
-    },
-    "BPM Min" : {
+    "%lld" : {
 
     },
     "btn_cancel" : {
@@ -51,9 +48,6 @@
           }
         }
       }
-    },
-    "Day" : {
-
     },
     "email@example.com" : {
 
@@ -239,6 +233,12 @@
         }
       }
     },
+    "Max" : {
+
+    },
+    "Min" : {
+
+    },
     "msg_health_app_unknow_status" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -358,6 +358,9 @@
       }
     },
     "Tài khoản" : {
+
+    },
+    "Time" : {
 
     },
     "title_home_screen" : {

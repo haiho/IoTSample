@@ -40,6 +40,7 @@ struct ActivityAllDataView: View {
         }
         .onAppear {
             fetchSamples()
+            
         }
         .customNavigationBarStringValue(
             title: activity.title,
@@ -57,7 +58,7 @@ struct ActivityAllDataView: View {
                 switch result {
                 case .success(let samples):
                     self.samples = samples
-                    print("✅ Total samples fetched: \(samples.count)")
+                    print("✅ ActivityAllDataView fetched: \(samples)")
                 case .failure(let error):
                     print("❌ Fetch failed: \(error)")
                     self.samples = []

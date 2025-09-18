@@ -482,17 +482,46 @@ class HealthManager {
         self.healthStore.execute(query)
     }
     
+
     func fetchHeartRateSamples(from startDate: Date, to endDate: Date, completion: @escaping ([HKQuantitySample]?, Error?) -> Void) {
         guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
             completion(nil, NSError(domain: "HealthKit", code: 1, userInfo: nil))
             return
         }
-        
+
+        // đảm bảo startDate và endDate đúng timezone (ví dụ lấy startOfDay và endOfDay của ngày hiện tại)
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
-        
+
         let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { _, results, error in
             completion(results as? [HKQuantitySample], error)
+        }
+
+        healthStore.execute(query)
+    }
+
+    func fetchHeartRateDataToday(for date: Date, completion: @escaping ([HKQuantitySample]?, Error?) -> Void) {
+        let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)!
+        
+        // Xác định khoảng thời gian bắt đầu và kết thúc của ngày
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        guard let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) else {
+            completion(nil, nil)
+            return
+        }
+        
+        // Tạo predicate để lọc dữ liệu trong ngày
+        let predicate = HKQuery.predicateForSamples(withStart: startOfDay, end: endOfDay, options: .strictStartDate)
+        
+        // Tạo query để lấy dữ liệu
+        let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { query, samples, error in
+            guard let samples = samples as? [HKQuantitySample], error == nil else {
+                completion(nil, error)
+                return
+            }
+            
+            completion(samples, nil)
         }
         
         healthStore.execute(query)

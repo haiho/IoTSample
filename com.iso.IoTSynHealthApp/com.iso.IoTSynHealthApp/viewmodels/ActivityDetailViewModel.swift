@@ -25,6 +25,7 @@ class ActivityDetailViewModel: ObservableObject {
         isLoading = true
         if activity.type == .heartRate {
             let dateRange = getDateRange(for: selectedFilter)
+
             healthManager.fetchHeartRateSamples(
                 from: dateRange.startDate,
                 to: dateRange.endDate
@@ -39,8 +40,11 @@ class ActivityDetailViewModel: ObservableObject {
                                     by: HKUnit.minute()
                                 )
                             )
-                            return (sample.startDate, bpm)
+                            return (
+                                sample.startDate, bpm
+                            )
                         }
+
                         self.chartData.sort { $0.0 < $1.0 }
                         self.chartModel = nil
                     } else {
@@ -219,15 +223,54 @@ class ActivityDetailViewModel: ObservableObject {
         return formatter.string(from: date)
     }
 
+//    func heartRateDayData() -> [HeartRateDayData] {
+//        let calendar = Calendar.current
+//        // Lọc bỏ những giá trị bằng 0
+//        let filteredData = chartData.filter { $0.1 != 0 }
+//
+//        let grouped = Dictionary(
+//            grouping: filteredData,
+//            by: { calendar.startOfDay(for: $0.0) }
+//        )
+//
+//        return grouped.map { (date, values) in
+//            let bpmValues = values.map { $0.1 }
+//            return HeartRateDayData(
+//                date: date,
+//                dailyMin: bpmValues.min() ?? 0,
+//                dailyMax: bpmValues.max() ?? 0
+//            )
+//        }.sorted { $0.date < $1.date }
+//    }
     func heartRateDayData() -> [HeartRateDayData] {
         let calendar = Calendar.current
-        // Lọc bỏ những giá trị bằng 0
         let filteredData = chartData.filter { $0.1 != 0 }
 
-        let grouped = Dictionary(
-            grouping: filteredData,
-            by: { calendar.startOfDay(for: $0.0) }
-        )
+        let grouped: [Date: [(Date, Double)]]
+
+        if selectedFilter == .day {
+            // Nhóm theo block 30 phút nếu là chế độ "Ngày"
+            grouped = Dictionary(
+                grouping: filteredData,
+                by: { date in
+                    let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date.0)
+                    let minute = (components.minute ?? 0) / 30 * 30
+                    return calendar.date(from: DateComponents(
+                        year: components.year,
+                        month: components.month,
+                        day: components.day,
+                        hour: components.hour,
+                        minute: minute
+                    )) ?? date.0
+                }
+            )
+        } else {
+            // Nhóm theo ngày cho các chế độ còn lại
+            grouped = Dictionary(
+                grouping: filteredData,
+                by: { calendar.startOfDay(for: $0.0) }
+            )
+        }
 
         return grouped.map { (date, values) in
             let bpmValues = values.map { $0.1 }
@@ -236,7 +279,16 @@ class ActivityDetailViewModel: ObservableObject {
                 dailyMin: bpmValues.min() ?? 0,
                 dailyMax: bpmValues.max() ?? 0
             )
-        }.sorted { $0.date < $1.date }
+        }
+        .sorted { $0.date < $1.date }
+    }
+
+    // Hàm chuyển đổi ngày giờ sang timezone local và format thành String
+    func formatDateToLocalString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+        formatter.timeZone = TimeZone.current  // timezone local thiết bị
+        return formatter.string(from: date)
     }
 
 }

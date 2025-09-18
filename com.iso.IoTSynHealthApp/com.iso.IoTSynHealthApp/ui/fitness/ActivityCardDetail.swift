@@ -28,8 +28,7 @@ struct ActivityCardDetail: View {
                 if viewModel.isLoading {
                     ProgressView()
                 } else if viewModel.activity.type == .heartRate {
-                    
-                    HeartRateRangeChart(data: viewModel.heartRateDayData())
+                    HeartRateRangeChart(data: viewModel.heartRateDayData(), filter : viewModel.selectedFilter)
                 } else {
                     if let chartModel = viewModel.chartModel {
                         AAChartRepresentable(chartModel: chartModel)
