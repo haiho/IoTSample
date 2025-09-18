@@ -131,7 +131,7 @@ class HealthManager {
                 }
             case .success:
                 let predicate = HKQuery.predicateForSamples(
-                    withStart: .startOfDay(),
+                    withStart: .startOfDay,
                     end: .nowDate(),
                     options: .strictStartDate
                 )
@@ -183,7 +183,7 @@ class HealthManager {
                     ascending: false
                 )
                 let predicate = HKQuery.predicateForSamples(
-                    withStart: .startOfDay(),
+                    withStart: .startOfDay,
                     end: .nowDate(),
                     options: .strictStartDate
                 )
@@ -481,6 +481,24 @@ class HealthManager {
 
         self.healthStore.execute(query)
     }
+    
+    func fetchHeartRateSamples(from startDate: Date, to endDate: Date, completion: @escaping ([HKQuantitySample]?, Error?) -> Void) {
+        guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
+            completion(nil, NSError(domain: "HealthKit", code: 1, userInfo: nil))
+            return
+        }
+        
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
+        
+        let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { _, results, error in
+            completion(results as? [HKQuantitySample], error)
+        }
+        
+        healthStore.execute(query)
+    }
+
+    
    // MARK: for view all data
     func fetchAllSamplesThisYear(
         for dataType: HealthDataType,

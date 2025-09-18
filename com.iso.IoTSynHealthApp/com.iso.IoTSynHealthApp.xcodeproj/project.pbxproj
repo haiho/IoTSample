@@ -25,6 +25,7 @@
 		397C64292E7A937D003BD041 /* ActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C64282E7A937B003BD041 /* ActivityDetailViewModel.swift */; };
 		397C642B2E7A9423003BD041 /* AAChartRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */; };
 		397C642D2E7AADD1003BD041 /* ActivityAllDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C642C2E7AADCE003BD041 /* ActivityAllDataView.swift */; };
+		3989B30E2E7BBE21006E4327 /* HeartRateRangeChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3989B30D2E7BBE1E006E4327 /* HeartRateRangeChart.swift */; };
 		39B8CB782E4C8066005F030A /* CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB772E4C8057005F030A /* CustomText.swift */; };
 		39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB7A2E4C830B005F030A /* Toolbar.swift */; };
 		39B8CB7E2E4C8C53005F030A /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B8CB7D2E4C8C46005F030A /* ForgotPasswordView.swift */; };
@@ -67,6 +68,7 @@
 		397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAChartRepresentable.swift; sourceTree = "<group>"; };
 		397C642C2E7AADCE003BD041 /* ActivityAllDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityAllDataView.swift; sourceTree = "<group>"; };
 		3981AB942E616638001082F6 /* com.iso.IoTSynHealthApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = com.iso.IoTSynHealthApp.entitlements; sourceTree = "<group>"; };
+		3989B30D2E7BBE1E006E4327 /* HeartRateRangeChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateRangeChart.swift; sourceTree = "<group>"; };
 		39B8CB772E4C8057005F030A /* CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomText.swift; sourceTree = "<group>"; };
 		39B8CB7A2E4C830B005F030A /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		39B8CB7D2E4C8C46005F030A /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -250,6 +252,14 @@
 			path = enum;
 			sourceTree = "<group>";
 		};
+		3989B30C2E7BBE15006E4327 /* hr */ = {
+			isa = PBXGroup;
+			children = (
+				3989B30D2E7BBE1E006E4327 /* HeartRateRangeChart.swift */,
+			);
+			path = hr;
+			sourceTree = "<group>";
+		};
 		39BDC90D2E605359001FC793 /* viewmodels */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +288,7 @@
 		39BF90392E796A530054E652 /* fitness */ = {
 			isa = PBXGroup;
 			children = (
+				3989B30C2E7BBE15006E4327 /* hr */,
 				397C642C2E7AADCE003BD041 /* ActivityAllDataView.swift */,
 				397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */,
 				39BF903A2E796A900054E652 /* ActivityCardDetail.swift */,
@@ -413,6 +424,7 @@
 				39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */,
 				397C642B2E7A9423003BD041 /* AAChartRepresentable.swift in Sources */,
 				396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */,
+				3989B30E2E7BBE21006E4327 /* HeartRateRangeChart.swift in Sources */,
 				391013322E4B5139005DDD2C /* ErrorView.swift in Sources */,
 				39BF903B2E796A9B0054E652 /* ActivityCardDetail.swift in Sources */,
 				392A62BE2E5EC1E1002DE1B0 /* ProgressCircleview.swift in Sources */,

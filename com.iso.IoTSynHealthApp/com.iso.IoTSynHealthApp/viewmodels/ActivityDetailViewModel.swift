@@ -1,5 +1,6 @@
 import AAInfographics
 import Foundation
+import HealthKit
 
 class ActivityDetailViewModel: ObservableObject {
     let healthManager = HealthManager.shared
@@ -22,21 +23,86 @@ class ActivityDetailViewModel: ObservableObject {
 
     func loadData() {
         isLoading = true
-
-        healthManager.fetchStepData(type: activity.type, filter: selectedFilter)
-        { [weak self] data in
-            guard let self = self else { return }
-
-            DispatchQueue.main.async {
-                // 🧠 Điền các cột trống bằng 0 nếu thiếu
-                self.chartData = self.fillMissingData(for: data)
-                self.isLoading = false
-                self.generateChartModel()
+        if activity.type == .heartRate {
+            let dateRange = getDateRange(for: selectedFilter)
+            healthManager.fetchHeartRateSamples(
+                from: dateRange.startDate,
+                to: dateRange.endDate
+            ) { [weak self] samples, error in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    if let samples = samples {
+                        self.chartData = samples.map { sample in
+                            let bpm = sample.quantity.doubleValue(
+                                for: HKUnit.count().unitDivided(
+                                    by: HKUnit.minute()
+                                )
+                            )
+                            return (sample.startDate, bpm)
+                        }
+                        self.chartData.sort { $0.0 < $1.0 }
+                        self.chartModel = nil
+                    } else {
+                        self.chartData = []
+                        self.chartModel = nil
+                    }
+                }
+            }
+        } else {
+            // Các loại khác vẫn giữ nguyên
+            healthManager.fetchStepData(
+                type: activity.type,
+                filter: selectedFilter
+            ) { [weak self] data in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.chartData = self.fillMissingData(for: data)
+                    self.isLoading = false
+                    self.generateChartModel()
+                }
             }
         }
     }
 
-    private func fillMissingData(for original: [(Date, Double)]) -> [(Date, Double)] {
+    func getDateRange(for filter: TimeFilter) -> (
+        startDate: Date, endDate: Date
+    ) {
+        let calendar = Calendar.current
+        let now = Date()
+        var startDate: Date
+        var endDate: Date
+
+        switch filter {
+        case .day:
+            startDate = calendar.startOfDay(for: now)
+            endDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
+        case .week:
+            startDate = calendar.date(
+                from: calendar.dateComponents(
+                    [.yearForWeekOfYear, .weekOfYear],
+                    from: now
+                )
+            )!
+            endDate = calendar.date(byAdding: .day, value: 7, to: startDate)!
+        case .month:
+            startDate = calendar.date(
+                from: calendar.dateComponents([.year, .month], from: now)
+            )!
+            endDate = calendar.date(byAdding: .month, value: 1, to: startDate)!
+        case .year:
+            startDate = calendar.date(
+                from: calendar.dateComponents([.year], from: now)
+            )!
+            endDate = calendar.date(byAdding: .year, value: 1, to: startDate)!
+        }
+
+        return (startDate, endDate)
+    }
+
+    private func fillMissingData(for original: [(Date, Double)]) -> [(
+        Date, Double
+    )] {
         var result: [(Date, Double)] = []
         let calendar = Calendar.current
         let now = Date()
@@ -45,12 +111,12 @@ class ActivityDetailViewModel: ObservableObject {
         var total: Int
 
         switch selectedFilter {
-        case .week:
-            unit = .day
-            total = 7
         case .day:
             unit = .hour
             total = 24
+        case .week:
+            unit = .day
+            total = 7
         case .month:
             unit = .day
             total = numberOfDaysIn(month: now)
@@ -61,12 +127,15 @@ class ActivityDetailViewModel: ObservableObject {
 
         let startDate: Date
         switch selectedFilter {
-        case .week:
-            startDate = calendar.date(
-                from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)
-            )! // đầu tuần hiện tại
         case .day:
             startDate = calendar.startOfDay(for: now)
+        case .week:
+            startDate = calendar.date(
+                from: calendar.dateComponents(
+                    [.yearForWeekOfYear, .weekOfYear],
+                    from: now
+                )
+            )!
         case .month:
             startDate = calendar.date(
                 from: calendar.dateComponents([.year, .month], from: now)
@@ -78,17 +147,22 @@ class ActivityDetailViewModel: ObservableObject {
         }
 
         for i in 0..<total {
-            if let date = calendar.date(byAdding: unit, value: i, to: startDate) {
-                let value = original.first(where: {
-                    calendar.isDate($0.0, equalTo: date, toGranularity: unit)
-                })?.1 ?? 0
+            if let date = calendar.date(byAdding: unit, value: i, to: startDate)
+            {
+                let value =
+                    original.first(where: {
+                        calendar.isDate(
+                            $0.0,
+                            equalTo: date,
+                            toGranularity: unit
+                        )
+                    })?.1 ?? 0
                 result.append((date, value))
             }
         }
 
         return result
     }
-
 
     private func generateChartModel() {
         // 🧹 Lọc để không hiển thị label nếu giá trị = 0 (vẫn hiển thị cột)
@@ -143,6 +217,26 @@ class ActivityDetailViewModel: ObservableObject {
             formatter.dateFormat = "MMM"
         }
         return formatter.string(from: date)
+    }
+
+    func heartRateDayData() -> [HeartRateDayData] {
+        let calendar = Calendar.current
+        // Lọc bỏ những giá trị bằng 0
+        let filteredData = chartData.filter { $0.1 != 0 }
+
+        let grouped = Dictionary(
+            grouping: filteredData,
+            by: { calendar.startOfDay(for: $0.0) }
+        )
+
+        return grouped.map { (date, values) in
+            let bpmValues = values.map { $0.1 }
+            return HeartRateDayData(
+                date: date,
+                dailyMin: bpmValues.min() ?? 0,
+                dailyMax: bpmValues.max() ?? 0
+            )
+        }.sorted { $0.date < $1.date }
     }
 
 }

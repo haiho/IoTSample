@@ -27,12 +27,22 @@ struct ActivityCardDetail: View {
 
                 if viewModel.isLoading {
                     ProgressView()
-                } else if let chartModel = viewModel.chartModel {
-                    AAChartRepresentable(chartModel: chartModel)
-                        .frame(height: 300)
+                } else if viewModel.activity.type == .heartRate {
+                    
+                    HeartRateRangeChart(data: viewModel.heartRateDayData())
                 } else {
-                    Text("Không có dữ liệu")
-                        .foregroundColor(.gray)
+                    if let chartModel = viewModel.chartModel {
+                        AAChartRepresentable(chartModel: chartModel)
+                            .frame(height: 300)
+                    } else {
+                        Text("Không có dữ liệu")
+                            .foregroundColor(.gray)
+                    }
+
+                }
+
+                if viewModel.isLoading {
+                    ProgressView()
                 }
             }
 

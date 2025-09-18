@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "BPM Max" : {
+
+    },
+    "BPM Min" : {
+
+    },
     "btn_cancel" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -45,6 +51,9 @@
           }
         }
       }
+    },
+    "Day" : {
+
     },
     "email@example.com" : {
 

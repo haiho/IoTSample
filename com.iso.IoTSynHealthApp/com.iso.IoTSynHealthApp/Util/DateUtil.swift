@@ -8,13 +8,20 @@
 import SwiftUI
 
 extension Date {
-
-    static func startOfDay() -> Date {
-        let calendar = Calendar.current
-        return calendar.startOfDay(for: Date())
+    static var startOfDay: Date {
+        Calendar.current.startOfDay(for: .now)
     }
+
     static func nowDate() -> Date {
         return Date()
+    }
+    // Used for charts where the day of the week is used: visually  M/T/W etc
+    // (but we want VoiceOver to read out the full day)
+    var weekdayString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+
+        return formatter.string(from: self)
     }
 }
 func numberOfDaysIn(month date: Date) -> Int {
@@ -50,4 +57,3 @@ func formattedFullDateTime(_ date: Date) -> String {
     formatter.dateFormat = "dd/MM/yyyy HH:mm"
     return formatter.string(from: date)
 }
-
