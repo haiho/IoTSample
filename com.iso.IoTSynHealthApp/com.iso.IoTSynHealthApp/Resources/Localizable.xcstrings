@@ -239,7 +239,13 @@
     "Max" : {
 
     },
+    "Max: %lld" : {
+
+    },
     "Min" : {
+
+    },
+    "Min: %lld" : {
 
     },
     "msg_health_app_unknow_status" : {

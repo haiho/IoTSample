@@ -8,16 +8,9 @@ struct HeartRateDayData: Identifiable {
     let date: Date
     let dailyMin: Double
     let dailyMax: Double
-
-    var weekdayString: String {
-        let formatter = DateFormatter()
-        formatter.timeZone = TimeZone.current
-        formatter.dateFormat = "EEE"
-        return formatter.string(from: date)
-    }
 }
 
-struct LabeledHeartRateData: Identifiable {
+struct LabeledHeartRateData: Identifiable, Equatable {
     let id = UUID()
     let date: Date
     let label: String
@@ -34,27 +27,27 @@ struct HeartRateRangeChart: View {
     @State private var barWidth = 10.0
     @State private var chartColor: Color = .red
 
+    // -- Thêm State để lưu data được chọn và vị trí tooltip --
+    @State private var selectedData: LabeledHeartRateData? = nil
+    @State private var tooltipPosition: CGPoint = .zero
+
     var body: some View {
         Chart {
             ForEach(groupedData) { dataPoint in
-
                 if dataPoint.dailyMin == dataPoint.dailyMax {
                     if dataPoint.dailyMin == 0 {
-                        // min = max => vẽ 1 điẻm châm
                         PointMark(
                             x: .value("Time", dataPoint.date),
                             y: .value("Heart Rate", 0)
                         )
                         .foregroundStyle(Color.clear)
                     } else {
-                        // min = max => vẽ 1 điẻm châm
                         PointMark(
                             x: .value("Time", dataPoint.date),
                             y: .value("Heart Rate", dataPoint.dailyMin)
                         )
                         .foregroundStyle(chartColor)
                     }
-
                 } else {
                     BarMark(
                         x: .value("Time", dataPoint.date),
@@ -66,7 +59,6 @@ struct HeartRateRangeChart: View {
                     .foregroundStyle(chartColor.gradient)
                 }
             }
-
         }
         .chartXAxis {
             switch filter {
@@ -76,7 +68,11 @@ struct HeartRateRangeChart: View {
                     AxisTick()
                     AxisValueLabel {
                         if let date = value.as(Date.self) {
-                            Text(hourFormatter.string(from: date))
+                            Text(
+                                DateFormatter.with(
+                                    format: DateFormatter.hourOnly
+                                ).string(from: date)
+                            )
                         }
                     }
                 }
@@ -120,32 +116,97 @@ struct HeartRateRangeChart: View {
                     AxisTick()
                     AxisValueLabel {
                         if let date = value.as(Date.self) {
-                            Text(monthFormatter.string(from: date))
+                            Text(
+                                DateFormatter.with(
+                                    format: DateFormatter.monthOnly
+                                ).string(from: date)
+                            )
                         }
                     }
                 }
             }
         }
         .frame(height: 300)
-        .onAppear {
-            print("📊 HeartRateRangeChart data for filter: \(filter.rawValue)")
-            for item in groupedData {
-                print(
-                    "- Label: \(item.label), Min: \(item.dailyMin), Max: \(item.dailyMax)"
-                )
+        // -- Thêm phần chartOverlay để bắt gesture và hiển thị tooltip --
+        .chartOverlay { proxy in
+            GeometryReader { geo in
+                Rectangle()
+                    .fill(Color.clear)
+                    .contentShape(Rectangle())
+                    .gesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { value in
+                                let location = value.location
+                                tooltipPosition = location
+
+                                // Convert vị trí x -> ngày gần nhất
+                                if let date: Date = proxy.value(atX: location.x)
+                                {
+                                    // Tìm data gần nhất
+                                    if let closest = groupedData.min(by: {
+                                        abs(
+                                            $0.date.timeIntervalSince1970
+                                                - date.timeIntervalSince1970
+                                        )
+                                            < abs(
+                                                $1.date.timeIntervalSince1970
+                                                    - date.timeIntervalSince1970
+                                            )
+                                    }),
+                                        closest.dailyMin != 0
+                                            || closest.dailyMax != 0
+                                    {
+                                        // ✅ Chỉ gán nếu có giá trị thực
+                                        withAnimation {
+                                            selectedData = closest
+                                        }
+                                    } else {
+                                        // ❌ Nếu là 0, xoá tooltip
+                                        selectedData = nil
+                                    }
+                                }
+                            }
+                            .onEnded { _ in
+                                DispatchQueue.main.asyncAfter(
+                                    deadline: .now() + 3
+                                ) {
+                                    selectedData = nil
+                                }
+                            }
+                    )
+
+                // ✅ Tooltip chỉ hiển thị khi selectedData khác nil
+                if let data = selectedData {
+                    VStack(spacing: 4) {
+                        //                        Text("\(data.label)")
+                        //                            .font(.caption)
+                        Text("Min: \(Int(data.dailyMin))")
+                            .font(.caption2)
+                        Text("Max: \(Int(data.dailyMax))")
+                            .font(.caption2)
+                    }
+                    .padding(8)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .position(
+                        x: tooltipPosition.x,
+                        y: max(tooltipPosition.y - 40, 20)
+                    )
+                    .animation(.easeInOut, value: selectedData)
+                }
             }
         }
+
     }
 
     // MARK: - Grouping Data
-
     private var groupedData: [LabeledHeartRateData] {
         let calendar = Calendar.current
         let now = Date()
 
         switch filter {
         case .day:
-            let interval = 30  // 30 phút
+            let interval = 10  // 30 phút
             let totalSlots = 24 * 60 / interval
             let startOfDay = calendar.startOfDay(for: now)
 
@@ -169,13 +230,16 @@ struct HeartRateRangeChart: View {
                 let dailyMin = slotData.map { $0.dailyMin }.min() ?? 0
                 let dailyMax = slotData.map { $0.dailyMax }.max() ?? 0
 
-                print(
-                    "Slot: \(hourFormatter.string(from: slotStart)) - count: \(slotData.count), Min: \(dailyMin), Max: \(dailyMax)"
-                )
+                let lblTime = DateFormatter.with(format: DateFormatter.hourOnly)
+                    .string(from: slotStart)
+//
+//                print(
+//                    "Slot: \(lblTime) - count: \(slotData.count), Min: \(dailyMin), Max: \(dailyMax)"
+//                )
 
                 return LabeledHeartRateData(
                     date: slotStart,
-                    label: hourFormatter.string(from: slotStart),
+                    label: lblTime,
                     dailyMin: dailyMin,
                     dailyMax: dailyMax
                 )
@@ -214,7 +278,7 @@ struct HeartRateRangeChart: View {
             }
 
         case .month:
-            let numberOfDays = numberOfDaysIn2(month: now)
+            let numberOfDays = numberOfDaysIn(month: now)
             let startOfMonth = calendar.date(
                 from: calendar.dateComponents([.year, .month], from: now)
             )!
@@ -249,10 +313,13 @@ struct HeartRateRangeChart: View {
                 let value = data.first {
                     calendar.component(.month, from: $0.date) == monthOffset + 1
                 }
+                let lblTime = DateFormatter.with(
+                    format: DateFormatter.monthOnly
+                ).string(from: date)
 
                 return LabeledHeartRateData(
                     date: date,
-                    label: monthFormatter.string(from: date),
+                    label: lblTime,
                     dailyMin: value?.dailyMin ?? 0,
                     dailyMax: value?.dailyMax ?? 0
                 )
@@ -261,41 +328,6 @@ struct HeartRateRangeChart: View {
     }
 }
 
-// MARK: - Helpers
-
-extension Date {
-    func roundedToNearest(minutes: Int) -> Date {
-        let calendar = Calendar.current
-        let comps = calendar.dateComponents(
-            [.year, .month, .day, .hour, .minute],
-            from: self
-        )
-        guard let minute = comps.minute else { return self }
-        let roundedMinute = (minute / minutes) * minutes
-        var newComps = comps
-        newComps.minute = roundedMinute
-        newComps.second = 0
-        return calendar.date(from: newComps) ?? self
-    }
-}
-
-func numberOfDaysIn2(month date: Date) -> Int {
-    let calendar = Calendar.current
-    guard let range = calendar.range(of: .day, in: .month, for: date) else {
-        return 30
-    }
-    return range.count
-}
-
-// MARK: - Date Formatters
-
-private let hourFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "HH"
-    formatter.timeZone = .current
-    return formatter
-}()
-
 private var xAxisDayMarks: [Date] {
     let calendar = Calendar.current
     let startOfDay = calendar.startOfDay(for: Date())
@@ -303,11 +335,3 @@ private var xAxisDayMarks: [Date] {
         calendar.date(byAdding: .hour, value: hour, to: startOfDay)
     }
 }
-
-private let monthFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "vi_VN")
-    formatter.dateFormat = "MMM"
-    formatter.timeZone = .current
-    return formatter
-}()

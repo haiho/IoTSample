@@ -23,52 +23,37 @@ extension Date {
 
         return formatter.string(from: self)
     }
-    
-    func roundedToNearest(minutes: Int, calendar: Calendar = .current) -> Date {
-        let components = calendar.dateComponents([.hour, .minute], from: self)
-        guard let hour = components.hour, let minute = components.minute else {
-            return self
-        }
 
-        let totalMinutes = hour * 60 + minute
-        let roundedMinutes = (totalMinutes / minutes) * minutes
-
-        let roundedHour = roundedMinutes / 60
-        let roundedMinute = roundedMinutes % 60
-
-        var dateComponents = calendar.dateComponents([.year, .month, .day], from: self)
-        dateComponents.hour = roundedHour
-        dateComponents.minute = roundedMinute
-
-        return calendar.date(from: dateComponents) ?? self
-    }
 }
 func numberOfDaysIn(month date: Date) -> Int {
     let calendar = Calendar.current
-
-    // Lấy ngày bắt đầu của tháng
-    guard
-        let startOfMonth = calendar.date(
-            from: calendar.dateComponents([.year, .month], from: date)
-        ),
-        // Lấy ngày đầu tháng kế tiếp
-        let startOfNextMonth = calendar.date(
-            byAdding: .month,
-            value: 1,
-            to: startOfMonth
-        )
-    else {
-        return 30  // fallback
+    guard let range = calendar.range(of: .day, in: .month, for: date) else {
+        return 30
     }
-
-    // Tính số ngày bằng số giây chia cho 86400
-    let numberOfDays =
-        calendar.dateComponents(
-            [.day],
-            from: startOfMonth,
-            to: startOfNextMonth
-        ).day ?? 30
-    return numberOfDays
+    return range.count
+}
+// MARK: - Date Formatters
+extension DateFormatter {
+    static let hourMinute = "HH:mm"
+    static let fullDate = "dd/MM/yyyy"
+    static let monthYear = "MMM yyyy"
+    static let hourOnly = "H"
+    static let dayOnly = "dd"
+    static let monthOnly = "MMM"
+    
+    static func with(format: String) -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.timeZone = .current
+        formatter.locale = .current
+        return formatter
+    }
+    static let hourFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "H"
+        formatter.timeZone = .current
+        return formatter
+    }()
 }
 
 func formattedFullDateTime(_ date: Date) -> String {
@@ -76,3 +61,11 @@ func formattedFullDateTime(_ date: Date) -> String {
     formatter.dateFormat = "dd/MM/yyyy HH:mm"
     return formatter.string(from: date)
 }
+
+private let monthFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.locale = Locale(identifier: "vi_VN")
+    formatter.dateFormat = "MMM"
+    formatter.timeZone = .current
+    return formatter
+}()
