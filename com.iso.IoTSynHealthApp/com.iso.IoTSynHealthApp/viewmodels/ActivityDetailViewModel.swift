@@ -230,7 +230,7 @@ class ActivityDetailViewModel: ObservableObject {
         let grouped: [Date: [(Date, Double)]]
 
         if selectedFilter == .day {
-            // Nhóm theo block 30 phút nếu là chế độ "Ngày"
+            // Nhóm theo block 10 phút nếu là chế độ "Ngày"
             grouped = Dictionary(
                 grouping: filteredData,
                 by: { date in

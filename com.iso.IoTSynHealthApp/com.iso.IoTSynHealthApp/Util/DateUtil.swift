@@ -39,6 +39,7 @@ extension DateFormatter {
     static let monthYear = "MMM yyyy"
     static let hourOnly = "H"
     static let dayOnly = "dd"
+    static let weekdayOnly = "EEE" //T2, T3, CN nếu locale là vi_VN
     static let monthOnly = "MMM"
     
     static func with(format: String) -> DateFormatter {
