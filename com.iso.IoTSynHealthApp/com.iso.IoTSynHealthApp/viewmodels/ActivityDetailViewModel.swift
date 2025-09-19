@@ -223,25 +223,6 @@ class ActivityDetailViewModel: ObservableObject {
         return formatter.string(from: date)
     }
 
-//    func heartRateDayData() -> [HeartRateDayData] {
-//        let calendar = Calendar.current
-//        // Lọc bỏ những giá trị bằng 0
-//        let filteredData = chartData.filter { $0.1 != 0 }
-//
-//        let grouped = Dictionary(
-//            grouping: filteredData,
-//            by: { calendar.startOfDay(for: $0.0) }
-//        )
-//
-//        return grouped.map { (date, values) in
-//            let bpmValues = values.map { $0.1 }
-//            return HeartRateDayData(
-//                date: date,
-//                dailyMin: bpmValues.min() ?? 0,
-//                dailyMax: bpmValues.max() ?? 0
-//            )
-//        }.sorted { $0.date < $1.date }
-//    }
     func heartRateDayData() -> [HeartRateDayData] {
         let calendar = Calendar.current
         let filteredData = chartData.filter { $0.1 != 0 }
@@ -254,7 +235,7 @@ class ActivityDetailViewModel: ObservableObject {
                 grouping: filteredData,
                 by: { date in
                     let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date.0)
-                    let minute = (components.minute ?? 0) / 30 * 30
+                    let minute = (components.minute ?? 0) / 10 * 10
                     return calendar.date(from: DateComponents(
                         year: components.year,
                         month: components.month,

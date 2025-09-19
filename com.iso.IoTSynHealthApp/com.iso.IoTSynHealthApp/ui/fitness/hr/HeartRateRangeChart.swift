@@ -1,5 +1,5 @@
-import SwiftUI
 import Charts
+import SwiftUI
 
 // MARK: - Model
 
@@ -37,16 +37,24 @@ struct HeartRateRangeChart: View {
     var body: some View {
         Chart {
             ForEach(groupedData) { dataPoint in
-//                if(dataPoint.dailyMin == 0){
-//                    re
-//                }
-                if dataPoint.dailyMin == dataPoint.dailyMax  {
-                    // min = max => vẽ 1 điẻm châm
-                    PointMark(
-                        x: .value("Time", dataPoint.date),
-                        y: .value("Heart Rate", dataPoint.dailyMin)
-                    )
-                    .foregroundStyle(chartColor)
+
+                if dataPoint.dailyMin == dataPoint.dailyMax {
+                    if dataPoint.dailyMin == 0 {
+                        // min = max => vẽ 1 điẻm châm
+                        PointMark(
+                            x: .value("Time", dataPoint.date),
+                            y: .value("Heart Rate", 0)
+                        )
+                        .foregroundStyle(Color.clear)
+                    } else {
+                        // min = max => vẽ 1 điẻm châm
+                        PointMark(
+                            x: .value("Time", dataPoint.date),
+                            y: .value("Heart Rate", dataPoint.dailyMin)
+                        )
+                        .foregroundStyle(chartColor)
+                    }
+
                 } else {
                     BarMark(
                         x: .value("Time", dataPoint.date),
@@ -63,7 +71,7 @@ struct HeartRateRangeChart: View {
         .chartXAxis {
             switch filter {
             case .day:
-                AxisMarks(values: .stride(by: .hour)) { value in
+                AxisMarks(values: xAxisDayMarks) { value in
                     AxisGridLine()
                     AxisTick()
                     AxisValueLabel {
@@ -79,8 +87,13 @@ struct HeartRateRangeChart: View {
                     AxisTick()
                     AxisValueLabel {
                         if let date = value.as(Date.self) {
-                            let weekdaySymbols = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
-                            let weekday = Calendar.current.component(.weekday, from: date)
+                            let weekdaySymbols = [
+                                "T2", "T3", "T4", "T5", "T6", "T7", "CN",
+                            ]
+                            let weekday = Calendar.current.component(
+                                .weekday,
+                                from: date
+                            )
                             Text(weekdaySymbols[(weekday + 5) % 7])
                         }
                     }
@@ -92,7 +105,10 @@ struct HeartRateRangeChart: View {
                     AxisTick()
                     AxisValueLabel {
                         if let date = value.as(Date.self) {
-                            let day = Calendar.current.component(.day, from: date)
+                            let day = Calendar.current.component(
+                                .day,
+                                from: date
+                            )
                             Text("\(day)")
                         }
                     }
@@ -114,7 +130,9 @@ struct HeartRateRangeChart: View {
         .onAppear {
             print("📊 HeartRateRangeChart data for filter: \(filter.rawValue)")
             for item in groupedData {
-                print("- Label: \(item.label), Min: \(item.dailyMin), Max: \(item.dailyMax)")
+                print(
+                    "- Label: \(item.label), Min: \(item.dailyMin), Max: \(item.dailyMax)"
+                )
             }
         }
     }
@@ -127,23 +145,33 @@ struct HeartRateRangeChart: View {
 
         switch filter {
         case .day:
-            let interval = 60  // 60 phút
+            let interval = 30  // 30 phút
             let totalSlots = 24 * 60 / interval
             let startOfDay = calendar.startOfDay(for: now)
 
             return (0..<totalSlots).map { index in
-                let slotStart = calendar.date(byAdding: .minute, value: index * interval, to: startOfDay)!
-                let slotEnd = calendar.date(byAdding: .minute, value: interval, to: slotStart)!
+                let slotStart = calendar.date(
+                    byAdding: .minute,
+                    value: index * interval,
+                    to: startOfDay
+                )!
+                let slotEnd = calendar.date(
+                    byAdding: .minute,
+                    value: interval,
+                    to: slotStart
+                )!
 
                 let slotData = data.filter {
-                    $0.date >= slotStart && $0.date < slotEnd &&
-                    calendar.isDate($0.date, inSameDayAs: now)
+                    $0.date >= slotStart && $0.date < slotEnd
+                        && calendar.isDate($0.date, inSameDayAs: now)
                 }
 
                 let dailyMin = slotData.map { $0.dailyMin }.min() ?? 0
                 let dailyMax = slotData.map { $0.dailyMax }.max() ?? 0
 
-                print("Slot: \(hourFormatter.string(from: slotStart)) - count: \(slotData.count), Min: \(dailyMin), Max: \(dailyMax)")
+                print(
+                    "Slot: \(hourFormatter.string(from: slotStart)) - count: \(slotData.count), Min: \(dailyMin), Max: \(dailyMax)"
+                )
 
                 return LabeledHeartRateData(
                     date: slotStart,
@@ -153,14 +181,21 @@ struct HeartRateRangeChart: View {
                 )
             }
 
-
-
         case .week:
-            let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now))!
+            let startOfWeek = calendar.date(
+                from: calendar.dateComponents(
+                    [.yearForWeekOfYear, .weekOfYear],
+                    from: now
+                )
+            )!
             let weekdaySymbols = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
 
             return (0..<7).map { offset in
-                let date = calendar.date(byAdding: .day, value: offset, to: startOfWeek)!
+                let date = calendar.date(
+                    byAdding: .day,
+                    value: offset,
+                    to: startOfWeek
+                )!
                 let label = weekdaySymbols[offset]
 
                 let dayData = data.filter {
@@ -180,10 +215,16 @@ struct HeartRateRangeChart: View {
 
         case .month:
             let numberOfDays = numberOfDaysIn2(month: now)
-            let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
+            let startOfMonth = calendar.date(
+                from: calendar.dateComponents([.year, .month], from: now)
+            )!
 
             return (0..<numberOfDays).map { dayOffset in
-                let date = calendar.date(byAdding: .day, value: dayOffset, to: startOfMonth)!
+                let date = calendar.date(
+                    byAdding: .day,
+                    value: dayOffset,
+                    to: startOfMonth
+                )!
                 let label = "\(dayOffset + 1)"
 
                 let value = data.first {
@@ -199,8 +240,6 @@ struct HeartRateRangeChart: View {
             }
 
         case .year:
-            let startOfYear = calendar.date(from: calendar.dateComponents([.year], from: now))!
-
             return (0..<12).map { monthOffset in
                 var comps = calendar.dateComponents([.year], from: now)
                 comps.month = monthOffset + 1
@@ -227,7 +266,10 @@ struct HeartRateRangeChart: View {
 extension Date {
     func roundedToNearest(minutes: Int) -> Date {
         let calendar = Calendar.current
-        let comps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: self)
+        let comps = calendar.dateComponents(
+            [.year, .month, .day, .hour, .minute],
+            from: self
+        )
         guard let minute = comps.minute else { return self }
         let roundedMinute = (minute / minutes) * minutes
         var newComps = comps
@@ -249,10 +291,18 @@ func numberOfDaysIn2(month date: Date) -> Int {
 
 private let hourFormatter: DateFormatter = {
     let formatter = DateFormatter()
-    formatter.dateFormat = "HH:mm"
+    formatter.dateFormat = "HH"
     formatter.timeZone = .current
     return formatter
 }()
+
+private var xAxisDayMarks: [Date] {
+    let calendar = Calendar.current
+    let startOfDay = calendar.startOfDay(for: Date())
+    return stride(from: 0, through: 24, by: 4).compactMap { hour in
+        calendar.date(byAdding: .hour, value: hour, to: startOfDay)
+    }
+}
 
 private let monthFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -261,4 +311,3 @@ private let monthFormatter: DateFormatter = {
     formatter.timeZone = .current
     return formatter
 }()
-
