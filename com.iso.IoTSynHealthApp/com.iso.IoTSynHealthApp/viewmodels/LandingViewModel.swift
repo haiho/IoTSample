@@ -28,10 +28,6 @@ class LandingViewModel: ObservableObject {
         
         
         let loginRequest = LoginRequest(
-            token: "71f2108b8030b79c83668c33a4491a81",
-            reqTime: 1758474000000,
-            email: "duyendm@doctella.com",
-            password: "ca016d4abefe189f0eddd5786e34e688b484c89f24b46036a9c235a032f4a902"
         )
 
         let endpoint = APIEndpoint(
