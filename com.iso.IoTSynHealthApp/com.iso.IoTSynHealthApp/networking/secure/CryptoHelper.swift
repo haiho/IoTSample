@@ -35,11 +35,11 @@ func getSecureSalt(algorithm: String, password: String, saltInput: String)
     }
     return salt ?? ""
 }
-
 extension String {
-    func sha256() -> String {
+    func md5() -> String {
         let inputData = Data(self.utf8)
-        let hashed = SHA256.hash(data: inputData)
+        let hashed = Insecure.MD5.hash(data: inputData)
         return hashed.map { String(format: "%02x", $0) }.joined()
     }
 }
+

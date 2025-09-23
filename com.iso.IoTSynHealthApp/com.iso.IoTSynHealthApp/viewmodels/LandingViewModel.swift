@@ -4,7 +4,7 @@
 //
 //  Created by PTV on 19/9/25.
 //
-
+// app token : fdce1e74ed5125589d66c80bfc02162c
 import SwiftUI
 
 @MainActor
@@ -23,12 +23,17 @@ class LandingViewModel: ObservableObject {
         errorMessage = nil
 
         // Tạo body request đúng định dạng server yêu cầu
-   
-   
-        
-        
+        let reqTimeStr = Int64(Date().timeIntervalSince1970 * 1000)
+        let tokenRequestAPI = "fdce1e74ed5125589d66c80bfc02162c"
+        let signMd5 = "\(reqTimeStr)\(tokenRequestAPI)"
+        let tokenMd5 = signMd5.md5()
         let loginRequest = LoginRequest(
+            token: tokenMd5,
+            reqTime: reqTimeStr,
+            email: email,
+            password: sha256(password)
         )
+
 
         let endpoint = APIEndpoint(
             path: "/signin",

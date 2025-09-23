@@ -175,7 +175,7 @@ final class APIService: APIServiceProtocol {
         [
             "User-Agent": UserAgent.toString(),
             "x-timezone": TimeZone.current.identifier,
-            "x-timestamp": "\(1659459600000)",
+            "x-timestamp": "\(Int64(Date().timeIntervalSince1970 * 1000))",
             "accept-language": Locale.current.language.languageCode?.identifier ?? "en",
             "x-doctella-app-id": "26c301b1ebe247e6bc5f49b15c159571",
             "x-doctella-app-key": "26cb713e-a350-4139-962d-b3b75958d0d1"
