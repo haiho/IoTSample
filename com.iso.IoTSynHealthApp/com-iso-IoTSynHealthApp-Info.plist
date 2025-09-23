@@ -2,11 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSHealthShareUsageDescription</key>
-    <string>Please allow access to enjoy all features of the app</string>
-    
-    <key>NSHealthUpdateUsageDescription</key>
-    <string>Ứng dụng cần ghi dữ liệu sức khỏe như bước chân để đồng bộ với thiết bị.</string>
-
+	<key>NSHealthShareUsageDescription</key>
+	<string>Please allow access to enjoy all features of the app</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Ứng dụng cần ghi dữ liệu sức khỏe như bước chân để đồng bộ với thiết bị.</string>
+	<key>CFBundleIdentifier</key>
+	<string>clang: error: no such file or directory: &apos;/Users/ptv/Library/Developer/Xcode/DerivedData/com.iso.IoTSynHealthApp-cukayyzyhdhvxgfflgsroxohwvxl/Build/Products/Debug-iphonesimulator/PackageFrameworks/AlamofireDynamic.framework/AlamofireDynamic&apos;</string>
 </dict>
 </plist>

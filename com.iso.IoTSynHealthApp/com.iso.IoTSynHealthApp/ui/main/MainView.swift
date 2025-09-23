@@ -47,7 +47,7 @@ struct MainView: View {
                 }
             }
         }
-        .onChange(of: navManager.path) { newPath in
+        .onChange(of: navManager.path) { oldPath, newPath in
             withAnimation {
                 // Đóng menu khi push
                 if !newPath.isEmpty {

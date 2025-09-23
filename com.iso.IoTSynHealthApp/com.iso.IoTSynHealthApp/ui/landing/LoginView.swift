@@ -10,9 +10,10 @@ import SwiftUI
 struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
-    
+
     @EnvironmentObject var navManager: AuthNavigationManager
     @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var viewModel: LandingViewModel
 
     var body: some View {
 
@@ -36,10 +37,16 @@ struct LoginView: View {
             Spacer().frame(height: 16)
 
             CustomButton(title: "lbl_login") {
-                // Xử lý login
-                navManager.resetToRoot()  // cần khi xoá hết cách stack
-                //                navManager.push(.main)
-                appSession.login()
+                Task {
+               
+                    let pw = sha256("Doctella@2020")
+                    print(pw)
+                    await viewModel.login(
+                        email: "duyendm@doctella.com",
+                        password: pw
+                    )
+                }
+        
             }
 
             HStack {

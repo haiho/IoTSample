@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LandingView: View {
     @StateObject var navManager = AuthNavigationManager()
+    @StateObject var landingVM = LandingViewModel()
 
     var body: some View {
         NavigationStack(path: $navManager.path) {
@@ -25,6 +26,7 @@ struct LandingView: View {
             }
         }
         .environmentObject(navManager)
+        .environmentObject(landingVM)
     }
 }
 
