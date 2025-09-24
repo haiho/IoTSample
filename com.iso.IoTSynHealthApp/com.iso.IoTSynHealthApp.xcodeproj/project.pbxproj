@@ -31,6 +31,12 @@
 		397C64292E7A937D003BD041 /* ActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C64282E7A937B003BD041 /* ActivityDetailViewModel.swift */; };
 		397C642B2E7A9423003BD041 /* AAChartRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */; };
 		397C642D2E7AADD1003BD041 /* ActivityAllDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397C642C2E7AADCE003BD041 /* ActivityAllDataView.swift */; };
+		39804AE12E829C4D0064836A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39804AE02E829C4B0064836A /* UserDefaultsManager.swift */; };
+		39804AE52E82A2570064836A /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39804AE42E82A2550064836A /* LoginUseCase.swift */; };
+		39804AE92E82A31A0064836A /* AuthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39804AE82E82A3180064836A /* AuthRepositoryImpl.swift */; };
+		39804AEB2E82A3480064836A /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39804AEA2E82A3470064836A /* AuthRepository.swift */; };
+		39804AF02E82AE8C0064836A /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39804AEF2E82AE8A0064836A /* ToastView.swift */; };
+		39804AF22E82B0D60064836A /* TopBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39804AF12E82B0D40064836A /* TopBannerView.swift */; };
 		3989B30E2E7BBE21006E4327 /* HeartRateRangeChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3989B30D2E7BBE1E006E4327 /* HeartRateRangeChart.swift */; };
 		39994B022E80E2AC0066C558 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 39994B012E80E2AC0066C558 /* Alamofire */; };
 		39994B072E80F8C50066C558 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 39994B062E80F8C50066C558 /* Alamofire */; };
@@ -82,6 +88,12 @@
 		397C64282E7A937B003BD041 /* ActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewModel.swift; sourceTree = "<group>"; };
 		397C642A2E7A9420003BD041 /* AAChartRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAChartRepresentable.swift; sourceTree = "<group>"; };
 		397C642C2E7AADCE003BD041 /* ActivityAllDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityAllDataView.swift; sourceTree = "<group>"; };
+		39804AE02E829C4B0064836A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		39804AE42E82A2550064836A /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		39804AE82E82A3180064836A /* AuthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryImpl.swift; sourceTree = "<group>"; };
+		39804AEA2E82A3470064836A /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		39804AEF2E82AE8A0064836A /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		39804AF12E82B0D40064836A /* TopBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBannerView.swift; sourceTree = "<group>"; };
 		3981AB942E616638001082F6 /* com.iso.IoTSynHealthApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = com.iso.IoTSynHealthApp.entitlements; sourceTree = "<group>"; };
 		3989B30D2E7BBE1E006E4327 /* HeartRateRangeChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateRangeChart.swift; sourceTree = "<group>"; };
 		39B8CB772E4C8057005F030A /* CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomText.swift; sourceTree = "<group>"; };
@@ -182,19 +194,13 @@
 		396B63982E337D66007E4014 /* com.iso.IoTSynHealthApp */ = {
 			isa = PBXGroup;
 			children = (
-				397C64222E7A8C55003BD041 /* enum */,
+				396B63B82E3390E6007E4014 /* App */,
+				39804AE62E82A28D0064836A /* Data */,
+				39804AE22E82A2380064836A /* Domain */,
+				39804AED2E82A9D20064836A /* Presentation */,
+				39EB5DAD2E4607D200D8E02A /* Utils */,
 				3981AB942E616638001082F6 /* com.iso.IoTSynHealthApp.entitlements */,
 				39BDC9162E605E59001FC793 /* com-iso-IoTSynHealthApp-Info.plist */,
-				396B63B82E3390E6007E4014 /* app */,
-				396B63B72E3390BC007E4014 /* services */,
-				396B63B62E3390A6007E4014 /* networking */,
-				39BDC90E2E605388001FC793 /* views */,
-				39BDC9132E6057F5001FC793 /* Helpers */,
-				39BDC90D2E605359001FC793 /* viewmodels */,
-				396B63B52E339096007E4014 /* models */,
-				396B63AF2E338DA5007E4014 /* ui */,
-				396B63AA2E338BE5007E4014 /* Common */,
-				39EB5DAD2E4607D200D8E02A /* Util */,
 				391013282E4B3F7C005DDD2C /* Resources */,
 				396B639F2E337D67007E4014 /* Preview Content */,
 			);
@@ -212,8 +218,6 @@
 		396B63AA2E338BE5007E4014 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				392A62BD2E5EC1B4002DE1B0 /* ProgressCircleview.swift */,
-				391013312E4B5136005DDD2C /* ErrorView.swift */,
 				396B63B32E33905C007E4014 /* Components */,
 			);
 			path = Common;
@@ -267,7 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				3952D24D2E7D6E2700EBFC8B /* secure */,
-				3952D2442E7D59A100EBFC8B /* responses */,
 				3952D2432E7D599300EBFC8B /* requests */,
 				3952D23F2E7D57BA00EBFC8B /* APIConfig.swift */,
 				3952D2392E7D559C00EBFC8B /* APIService.swift */,
@@ -275,20 +278,13 @@
 			path = networking;
 			sourceTree = "<group>";
 		};
-		396B63B72E3390BC007E4014 /* services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = services;
-			sourceTree = "<group>";
-		};
-		396B63B82E3390E6007E4014 /* app */ = {
+		396B63B82E3390E6007E4014 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				396B639B2E337D66007E4014 /* RootView.swift */,
 				396B63AD2E338C85007E4014 /* IoTSynHealthApp.swift */,
 			);
-			path = app;
+			path = App;
 			sourceTree = "<group>";
 		};
 		397C64222E7A8C55003BD041 /* enum */ = {
@@ -297,6 +293,74 @@
 				397C64232E7A8C5B003BD041 /* TimeFilter.swift */,
 			);
 			path = enum;
+			sourceTree = "<group>";
+		};
+		39804AE22E82A2380064836A /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				39804AEC2E82A9AD0064836A /* Repositories */,
+				39804AE32E82A2440064836A /* usercase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		39804AE32E82A2440064836A /* usercase */ = {
+			isa = PBXGroup;
+			children = (
+				39804AE42E82A2550064836A /* LoginUseCase.swift */,
+			);
+			path = usercase;
+			sourceTree = "<group>";
+		};
+		39804AE62E82A28D0064836A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				3952D2442E7D59A100EBFC8B /* responses */,
+				39804AE72E82A2B90064836A /* repositoriesImpl */,
+				396B63B62E3390A6007E4014 /* networking */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		39804AE72E82A2B90064836A /* repositoriesImpl */ = {
+			isa = PBXGroup;
+			children = (
+				39804AE82E82A3180064836A /* AuthRepositoryImpl.swift */,
+			);
+			path = repositoriesImpl;
+			sourceTree = "<group>";
+		};
+		39804AEC2E82A9AD0064836A /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				39804AEA2E82A3470064836A /* AuthRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		39804AED2E82A9D20064836A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				39804AEE2E82AC2D0064836A /* Subviews */,
+				397C64222E7A8C55003BD041 /* enum */,
+				396B63B52E339096007E4014 /* models */,
+				39BDC90D2E605359001FC793 /* viewmodels */,
+				396B63AF2E338DA5007E4014 /* ui */,
+				396B63AA2E338BE5007E4014 /* Common */,
+				39BDC90E2E605388001FC793 /* views */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		39804AEE2E82AC2D0064836A /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				39804AF12E82B0D40064836A /* TopBannerView.swift */,
+				39804AEF2E82AE8A0064836A /* ToastView.swift */,
+				392A62BD2E5EC1B4002DE1B0 /* ProgressCircleview.swift */,
+				391013312E4B5136005DDD2C /* ErrorView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		3989B30C2E7BBE15006E4327 /* hr */ = {
@@ -328,6 +392,7 @@
 		39BDC9132E6057F5001FC793 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				39804AE02E829C4B0064836A /* UserDefaultsManager.swift */,
 				39BDC9142E605806001FC793 /* HealthManager.swift */,
 			);
 			path = Helpers;
@@ -344,7 +409,7 @@
 			path = fitness;
 			sourceTree = "<group>";
 		};
-		39EB5DAD2E4607D200D8E02A /* Util */ = {
+		39EB5DAD2E4607D200D8E02A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				39BDC9172E606C31001FC793 /* DateUtil.swift */,
@@ -353,8 +418,9 @@
 				39555BAE2E4F336E00710F1C /* AppUtils.swift */,
 				39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */,
 				39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */,
+				39BDC9132E6057F5001FC793 /* Helpers */,
 			);
-			path = Util;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		39EB5DB02E46085000D8E02A /* main */ = {
@@ -458,6 +524,7 @@
 				39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */,
 				39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */,
 				396B63B22E338DC1007E4014 /* LoginView.swift in Sources */,
+				39804AF22E82B0D60064836A /* TopBannerView.swift in Sources */,
 				39B8CB812E4C99B8005F030A /* RegisterScreen.swift in Sources */,
 				3952D2402E7D57BB00EBFC8B /* APIConfig.swift in Sources */,
 				396B639C2E337D66007E4014 /* RootView.swift in Sources */,
@@ -466,7 +533,9 @@
 				39FF9B642E55C07F00EC0EE8 /* HomeView.swift in Sources */,
 				39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */,
 				39BDC9122E6055F8001FC793 /* HomeViewModel.swift in Sources */,
+				39804AE92E82A31A0064836A /* AuthRepositoryImpl.swift in Sources */,
 				396B63AE2E338C85007E4014 /* IoTSynHealthApp.swift in Sources */,
+				39804AE52E82A2570064836A /* LoginUseCase.swift in Sources */,
 				39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */,
 				39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */,
 				39FF9B622E55BFA900EC0EE8 /* SideMenuUtil.swift in Sources */,
@@ -477,11 +546,13 @@
 				3989B30E2E7BBE21006E4327 /* HeartRateRangeChart.swift in Sources */,
 				391013322E4B5139005DDD2C /* ErrorView.swift in Sources */,
 				3952D2422E7D589100EBFC8B /* LandingViewModel.swift in Sources */,
+				39804AF02E82AE8C0064836A /* ToastView.swift in Sources */,
 				3952D24F2E7D6E3E00EBFC8B /* CryptoHelper.swift in Sources */,
 				39BF903B2E796A9B0054E652 /* ActivityCardDetail.swift in Sources */,
 				392A62BE2E5EC1E1002DE1B0 /* ProgressCircleview.swift in Sources */,
 				39555BAF2E4F337600710F1C /* AppUtils.swift in Sources */,
 				3952D24A2E7D5A9B00EBFC8B /* LoginResponse.swift in Sources */,
+				39804AEB2E82A3480064836A /* AuthRepository.swift in Sources */,
 				39B8CB7E2E4C8C53005F030A /* ForgotPasswordView.swift in Sources */,
 				3952D2482E7D5A8B00EBFC8B /* LoginRequest.swift in Sources */,
 				39FF9B692E55D26C00EC0EE8 /* SideMenuContent.swift in Sources */,
@@ -489,6 +560,7 @@
 				390660582E5865DD0068157E /* SettingsView.swift in Sources */,
 				39CF53902E4DE18300B45BEE /* CustomTextFieldWithLabel.swift in Sources */,
 				39BDC9102E6053DA001FC793 /* Activity.swift in Sources */,
+				39804AE12E829C4D0064836A /* UserDefaultsManager.swift in Sources */,
 				39EEB94F2E378B5A00AD2F26 /* CustomButton.swift in Sources */,
 				3952D23A2E7D55A400EBFC8B /* APIService.swift in Sources */,
 				39BDC9152E605813001FC793 /* HealthManager.swift in Sources */,

@@ -8,6 +8,7 @@ import SwiftUI
 
 struct APIConfig {
     static let baseURL = "https://vnmsnapi.ptvltd.com/api/mobile"
+    static let secretKey = "fdce1e74ed5125589d66c80bfc02162c"
 }
 
 struct UserAgent {

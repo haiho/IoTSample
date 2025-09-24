@@ -6,18 +6,12 @@
 //
 import SwiftUI
 
-struct LoginRequest: NonAuthorizedAPIRequest {
-    let token: String
-    let reqTime: Int64 
+struct LoginRequest: APIRequest {
     let email: String
     let password: String
-  
 
     enum CodingKeys: String, CodingKey {
-        case token
-        case reqTime = "req_time"
         case email = "account"
         case password = "pwd"
-    
     }
 }

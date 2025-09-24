@@ -19,6 +19,37 @@ import SwiftUI
 //    }
 //}
 
+struct CustomNavigationBarView: View {
+    let title: LocalizedStringKey
+    var showBackButton: Bool = true
+    var backAction: (() -> Void)? = nil
+
+    var body: some View {
+        HStack {
+            if showBackButton, let action = backAction {
+                Button(action: action) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.blue)
+                        .imageScale(.large)
+                }
+            }
+            Spacer()
+            Text(title)
+                .font(.fontTitle)
+                .foregroundColor(.black)
+            Spacer()
+            // Để title luôn giữa, ta thêm 1 view vô hình
+            if showBackButton {
+                Color.clear
+                    .frame(width: 24, height: 24)
+            }
+        }
+        .padding()
+        .background(Color.white)
+    }
+}
+
+
 extension View {
     func customNavigationBar(
         title: LocalizedStringKey,
