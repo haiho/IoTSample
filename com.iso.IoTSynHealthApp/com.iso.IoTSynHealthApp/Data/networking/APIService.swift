@@ -73,12 +73,12 @@ enum APIError: Error, LocalizedError {
         switch self {
         case .invalidURL: return "URL không hợp lệ."
         case .encodingError(let e):
-            return "Lỗi mã hoá: \(e.localizedDescription)"
+            return "\(e.localizedDescription)"
         case .decodingError(let e):
-            return "Lỗi giải mã: \(e.localizedDescription)"
+            return "\(e.localizedDescription)"
         case .statusCodeError(let code):
-            return "Lỗi server - Status code: \(code)"
-        case .underlying(let e): return "Lỗi khác: \(e.localizedDescription)"
+            return "Status code: \(code)"
+        case .underlying(let e): return "\(e.localizedDescription)"
         }
     }
 }

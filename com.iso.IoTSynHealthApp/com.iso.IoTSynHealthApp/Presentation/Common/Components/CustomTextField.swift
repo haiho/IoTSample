@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomTextField: View {
     var placeholder: LocalizedStringKey
     @Binding var text: String
-    var icon: String? = nil // SF Symbol
+    var icon: String? = nil  // SF Symbol
     var isSecure: Bool = false
     var keyboardType: UIKeyboardType = .default
 
@@ -26,10 +26,12 @@ struct CustomTextField: View {
             if isSecure && !isSecureVisible {
                 SecureField(placeholder, text: $text)
                     .keyboardType(keyboardType)
+                    .textInputAutocapitalization(.never)
                     .font(.fontTextNormal)
             } else {
                 TextField(placeholder, text: $text)
                     .keyboardType(keyboardType)
+                    .textInputAutocapitalization(.never)
                     .font(.fontTextNormal)
             }
 
@@ -40,7 +42,7 @@ struct CustomTextField: View {
                 }) {
                     Image(systemName: isSecureVisible ? "eye.slash" : "eye")
                         .foregroundColor(.gray)
-//                        .font(.system(size: 20))
+                    //                        .font(.system(size: 20))
                 }
             }
         }

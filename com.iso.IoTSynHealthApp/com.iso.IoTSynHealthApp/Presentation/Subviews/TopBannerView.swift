@@ -14,9 +14,7 @@ struct TopBannerView: View {
         if isShowing {
             Text(message)
                 .foregroundColor(.white)
-                .padding(.top, 12)
-                .padding(.horizontal, 16)
-                .padding(.bottom, 24)  // 👈 tăng padding bottom tại đây
+                .padding()
                 .frame(maxWidth: .infinity)
                 .background(Color.red)
                 .transition(.move(edge: .top).combined(with: .opacity))

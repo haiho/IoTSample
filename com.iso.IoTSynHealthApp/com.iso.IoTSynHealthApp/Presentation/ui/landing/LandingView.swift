@@ -15,6 +15,8 @@ struct LandingView: View {
         NavigationStack(path: $navManager.path) {
             LoginView().navigationDestination(for: AuthScreen.self) { screen in
                 switch screen {
+                case .main:
+                    MainView()
                 case .login:
                     LoginView()
                 case .forgotPW:

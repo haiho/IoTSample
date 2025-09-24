@@ -10,7 +10,7 @@ import SwiftUI
 protocol AppScreen: Hashable {}  // Marker protocol
 
 enum AuthScreen: AppScreen {
-    case login, register, forgotPW
+    case login, register, forgotPW , main
 }
 
 enum MainScreen: AppScreen {

@@ -52,6 +52,8 @@
 		39BF903B2E796A9B0054E652 /* ActivityCardDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF903A2E796A900054E652 /* ActivityCardDetail.swift */; };
 		39CF53902E4DE18300B45BEE /* CustomTextFieldWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF538F2E4DE18300B45BEE /* CustomTextFieldWithLabel.swift */; };
 		39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */; };
+		39DDD92E2E83C3800071B649 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDD92D2E83C37F0071B649 /* LoadingView.swift */; };
+		39DDD9302E83CF610071B649 /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDD92F2E83CF590071B649 /* StringUtil.swift */; };
 		39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */; };
 		39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */; };
 		39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DB12E46087D00D8E02A /* MainView.swift */; };
@@ -108,6 +110,8 @@
 		39BF903A2E796A900054E652 /* ActivityCardDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCardDetail.swift; sourceTree = "<group>"; };
 		39CF538F2E4DE18300B45BEE /* CustomTextFieldWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldWithLabel.swift; sourceTree = "<group>"; };
 		39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVStrack.swift; sourceTree = "<group>"; };
+		39DDD92D2E83C37F0071B649 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		39DDD92F2E83CF590071B649 /* StringUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		39EB5DB12E46087D00D8E02A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -355,6 +359,7 @@
 		39804AEE2E82AC2D0064836A /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				39DDD92D2E83C37F0071B649 /* LoadingView.swift */,
 				39804AF12E82B0D40064836A /* TopBannerView.swift */,
 				39804AEF2E82AE8A0064836A /* ToastView.swift */,
 				392A62BD2E5EC1B4002DE1B0 /* ProgressCircleview.swift */,
@@ -412,13 +417,14 @@
 		39EB5DAD2E4607D200D8E02A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				39DDD92F2E83CF590071B649 /* StringUtil.swift */,
+				39BDC9132E6057F5001FC793 /* Helpers */,
 				39BDC9172E606C31001FC793 /* DateUtil.swift */,
 				39FF9B612E55BFA900EC0EE8 /* SideMenuUtil.swift */,
 				39FF9B6A2E55D9EA00EC0EE8 /* AppSession.swift */,
 				39555BAE2E4F336E00710F1C /* AppUtils.swift */,
 				39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */,
 				39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */,
-				39BDC9132E6057F5001FC793 /* Helpers */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -519,9 +525,11 @@
 			files = (
 				397C64242E7A8C5D003BD041 /* TimeFilter.swift in Sources */,
 				392A62C02E5F1461002DE1B0 /* ActivityCard.swift in Sources */,
+				39DDD9302E83CF610071B649 /* StringUtil.swift in Sources */,
 				39BDC9182E606C37001FC793 /* DateUtil.swift in Sources */,
 				39B8CB782E4C8066005F030A /* CustomText.swift in Sources */,
 				39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */,
+				39DDD92E2E83C3800071B649 /* LoadingView.swift in Sources */,
 				39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */,
 				396B63B22E338DC1007E4014 /* LoginView.swift in Sources */,
 				39804AF22E82B0D60064836A /* TopBannerView.swift in Sources */,

@@ -248,6 +248,23 @@
     "Min: %lld" : {
 
     },
+    "msg_email_blank" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your email can not be blank."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email của bạn không được để trống."
+          }
+        }
+      }
+    },
     "msg_health_app_unknow_status" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -310,6 +327,23 @@
         }
       }
     },
+    "msg_pw_blank" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your password cannot be blank."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mật khẩu của bạn không được để trống."
+          }
+        }
+      }
+    },
     "msg_user_denied_health_app" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -327,7 +361,44 @@
         }
       }
     },
+    "msg_valid_email" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your email is invalid"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email của bạn không hợp lệ"
+          }
+        }
+      }
+    },
+    "msg_valid_pw" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, one number, and one special character."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mật khẩu phải có ít nhất 8 ký tự và bao gồm ít nhất một chữ cái viết hoa, một chữ cái viết thường, một số và một ký tự đặc biệt."
+          }
+        }
+      }
+    },
     "Nguyễn Văn A" : {
+
+    },
+    "OK" : {
 
     },
     "per_request_syn_health_app" : {
@@ -371,6 +442,23 @@
     },
     "Time" : {
 
+    },
+    "title_alert_error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lỗi"
+          }
+        }
+      }
     },
     "title_home_screen" : {
       "extractionState" : "manual",
