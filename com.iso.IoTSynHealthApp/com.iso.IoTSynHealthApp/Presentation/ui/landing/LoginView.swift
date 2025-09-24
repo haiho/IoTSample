@@ -62,8 +62,9 @@ struct LoginView: View {
                         ) {
                             errorMessage = "Login thành công \(response)"
                             withAnimation { showErrorBanner = true }
+                            // Xử lý login
                             navManager.resetToRoot()  // cần khi xoá hết cách stack
-                            navManager.push(.main)
+                            appSession.login()
                         } else {
                             errorMessage =
                                 viewModel.errorMessage ?? "Unknown error"
@@ -96,8 +97,6 @@ struct LoginView: View {
                     message: Text(errorMessage),
                     dismissButton: .default(Text("OK")) {
                         showErrorBanner = false
-                        //                        navManager.resetToRoot()  // cần khi xoá hết cách stack
-                        //                        navManager.push(.main)
                     }
                 )
             }
