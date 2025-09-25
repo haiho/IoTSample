@@ -12,9 +12,9 @@ class LandingViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    private let loginUseCase: LoginUseCase
+    private let loginUseCase: AuthUseCase
 
-    init(loginUseCase: LoginUseCase = DefaultLoginUseCase()) {
+    init(loginUseCase: AuthUseCase = DefaultLoginUseCase()) {
         self.loginUseCase = loginUseCase
     }
 
@@ -23,9 +23,32 @@ class LandingViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            let response = try await loginUseCase.execute(
+            let response = try await loginUseCase.login(
                 email: email,
                 password: password
+            )
+            return response
+        } catch {
+            errorMessage = error.localizedDescription
+            return nil
+        }
+    }
+
+    func register(
+        email: String,
+        password: String,
+        firstName: String,
+        lastName: String
+    ) async -> RegisterResponse? {
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            let response = try await loginUseCase.register(
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName
             )
             return response
         } catch {

@@ -8,7 +8,7 @@ struct LoginView: View {
     @EnvironmentObject var appSession: AppSession
     @EnvironmentObject var viewModel: LandingViewModel
 
-    @State private var showErrorBanner = false
+    @State private var showError = false
     @State private var errorMessage = ""
     @State private var isLoading = false
 
@@ -36,12 +36,12 @@ struct LoginView: View {
                 CustomButton(title: "lbl_login") {
                     Task {
                         if !validateAccount() {
-                            withAnimation { showErrorBanner = true }
-                            DispatchQueue.main.asyncAfter(
-                                deadline: .now() + 4
-                            ) {
-                                withAnimation { showErrorBanner = false }
-                            }
+                            withAnimation { showError = true }
+//                            DispatchQueue.main.asyncAfter(
+//                                deadline: .now() + 4
+//                            ) {
+//                                withAnimation { showError = false }
+//                            }
                             return
                         }
                         isLoading = true
@@ -61,7 +61,7 @@ struct LoginView: View {
                             password: password
                         ) {
                             errorMessage = "Login thành công \(response)"
-                            withAnimation { showErrorBanner = true }
+                            withAnimation { showError = true }
                             // Xử lý login
                             navManager.resetToRoot()  // cần khi xoá hết cách stack
                             appSession.login(token: response.token)
@@ -70,7 +70,7 @@ struct LoginView: View {
                         } else {
                             errorMessage =
                                 viewModel.errorMessage ?? "Unknown error"
-                            withAnimation { showErrorBanner = true }
+                            withAnimation { showError = true }
                         }
                     }
                 }
@@ -93,12 +93,12 @@ struct LoginView: View {
             .customNavigationBar(title: "title_login_screen")
             .appScreenPadding()
             .disabled(isLoading)  // Chặn tương tác khi loading
-            .alert(isPresented: $showErrorBanner) {
+            .alert(isPresented: $showError) {
                 Alert(
                     title: Text("title_alert_error".localized),
                     message: Text(errorMessage),
                     dismissButton: .default(Text("OK")) {
-                        showErrorBanner = false
+                        showError = false
                     }
                 )
             }
@@ -125,7 +125,7 @@ struct LoginView: View {
             return false
         }
 
-        if password.count < 6 {
+        if password.count < 8 {
             errorMessage = "msg_valid_pw".localized
             return false
         }

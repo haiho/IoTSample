@@ -265,6 +265,23 @@
         }
       }
     },
+    "msg_first_name_blank" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First name can not be blank."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tên của bạn không được để trống"
+          }
+        }
+      }
+    },
     "msg_health_app_unknow_status" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -278,6 +295,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trạng thái quyền truy cập không xác định."
+          }
+        }
+      }
+    },
+    "msg_last_name_blank" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last name can not be blank."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tên của bạn không được để trống"
           }
         }
       }
@@ -340,6 +374,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mật khẩu của bạn không được để trống."
+          }
+        }
+      }
+    },
+    "msg_pw_not_match" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The re-entered password does not match."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mật khẩu nhập lại không khớp"
+          }
+        }
+      }
+    },
+    "msg_register_success" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have successfully registered. Please log in to continue."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bạn đã đăng ký thành công. Vui lòng đăng nhập để tiếp tục."
           }
         }
       }

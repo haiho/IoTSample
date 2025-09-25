@@ -33,10 +33,12 @@ struct CustomTextFieldWithLabel: View {
                 if isSecure && !isSecureVisible {
                     SecureField(placeholder, text: $text)
                         .keyboardType(keyboardType)
+                        .textInputAutocapitalization(.never)
                         .font(.fontTextNormal)
                 } else {
                     TextField(placeholder, text: $text)
                         .keyboardType(keyboardType)
+                        .textInputAutocapitalization(.never)
                         .font(.fontTextNormal)
                 }
 

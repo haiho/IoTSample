@@ -9,11 +9,18 @@ import SwiftUI
 
 struct RegisterScreen: View {
     @EnvironmentObject var navManager: AuthNavigationManager
+    @EnvironmentObject var viewModel: LandingViewModel
+
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var email = ""
     @State private var password = ""
-    @State private var re_password = ""
+    @State private var rePassword = ""
+
+    @State private var showError = false
+    @State private var errorMessage = ""
+    @State private var isLoading = false
+    @State private var isRegisterSuccess: Bool = false
 
     var body: some View {
         BaseScrollVStrack {
@@ -53,11 +60,37 @@ struct RegisterScreen: View {
             CustomTextFieldWithLabel(
                 label: "str_confirm_pw",
                 placeholder: "str_confirm_pw",
-                text: $re_password,
+                text: $rePassword,
                 isSecure: true
             ).padding(.bottom, 30)
 
             CustomButton(title: "btn_send") {
+                Task {
+                    if validateAccount() {
+                        isLoading = true
+                        do { isLoading = false }
+
+                        if (await viewModel.register(
+                            email: email,
+                            password: password,
+                            firstName: firstName,
+                            lastName: lastName
+                        )) != nil {
+                            errorMessage = "msg_register_success".localized
+                            withAnimation {
+                                showError = true
+
+                            }
+                            isRegisterSuccess = true
+                        } else {
+                            errorMessage =
+                                viewModel.errorMessage ?? "Unknown error"
+                            withAnimation { showError = true }
+                        }
+                    } else {
+                        withAnimation { showError = true }
+                    }
+                }
             }
 
         }.customNavigationBar(
@@ -65,7 +98,68 @@ struct RegisterScreen: View {
             backAction: {
                 navManager.pop()
             }
-        ).appScreenPadding()
+        )
+        .appScreenPadding()
+        .disabled(isLoading)  // Chặn tương tác khi loading
+        .alert(isPresented: $showError) {
+            Alert(
+                title: Text(
+                    isRegisterSuccess ? "" : "title_alert_error".localized
+                ),
+                message: Text(errorMessage),
+                dismissButton: .default(Text("OK")) {
+                    showError = false
+                    if isRegisterSuccess {
+                        isRegisterSuccess = false
+                        navManager.pop()
+                    }
+
+                }
+            )
+        }
+
+        if isLoading {
+            LoadingView()
+        }
+
+    }
+
+    // MARK: - ✅ Validate Email và Password
+    func validateAccount() -> Bool {
+
+        if firstName.isEmpty {
+            errorMessage = "msg_first_name_blank".localized
+            return false
+        }
+
+        if lastName.isEmpty {
+            errorMessage = "msg_last_name_blank".localized
+            return false
+        }
+
+        if email.isEmpty {
+            errorMessage = "msg_email_blank".localized
+            return false
+        }
+        if password.isEmpty {
+            errorMessage = "msg_pw_blank".localized
+            return false
+        }
+
+        if !isValidEmail(email) {
+            errorMessage = "msg_valid_email".localized
+            return false
+        }
+
+        if password.count < 8 {
+            errorMessage = "msg_valid_pw".localized
+            return false
+        }
+        if password != rePassword {
+            errorMessage = "msg_pw_not_match".localized
+            return false
+        }
+        return true
     }
 }
 

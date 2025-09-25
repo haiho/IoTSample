@@ -21,7 +21,7 @@ class MainViewModel: ObservableObject {
         do {
             let realm = try Realm()
             user = realm.objects(LoginUser.self).first
-            print("Realm user: \(user)")
+            print("Realm user: \(String(describing: user))")
         } catch {
             print("Realm error: \(error)")
             user = nil
