@@ -14,11 +14,10 @@ class LoginUser: Object {
     @Persisted var firstName: String
     @Persisted var lastName: String
     @Persisted var isActivated: Bool
-    @Persisted var gender: String
-    @Persisted var birthdate: String
-    @Persisted var country: String
+    @Persisted var gender: String?
+    @Persisted var birthdate: String?
+    @Persisted var country: String?
     @Persisted var countryCode: String
-    @Persisted var photo: String
 
     // Optional: convenience init to map from Decodable model
     convenience init(from response: LoginResponse) {
@@ -33,7 +32,7 @@ class LoginUser: Object {
         self.birthdate = response.birthdate
         self.country = response.country
         self.countryCode = response.countryCode
-        self.photo = response.photo
+    
     }
 
     // MARK: - Computed Property

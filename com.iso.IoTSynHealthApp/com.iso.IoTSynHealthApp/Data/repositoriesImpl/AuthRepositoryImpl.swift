@@ -16,12 +16,12 @@ final class AuthRepositoryImpl: AuthRepository {
 
     func login(email: String, password: String) async throws -> LoginResponse? {
         let request = LoginRequest(email: email, password: sha256(password))
-        let response = try await apiService.request(
+        let result: LoginResponse = try await APIService().request(
             path: "/signin",
             method: .POST,
             body: request,
-            responseModel: BaseAPIResponse<LoginResponse>.self
+            responseModel: LoginResponse.self
         )
-        return response.data
+        return result
     }
 }

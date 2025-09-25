@@ -12,14 +12,14 @@ struct LoginResponse: Decodable {
     let firstName: String
     let lastName: String
     let isActivated: Bool
-    let gender: String
-    let birthdate: String
-    let country: String
+    let gender: String?
+    let birthdate: String?
+    let country: String?
     let countryCode: String
-    let photo: String
+
 
     enum CodingKeys: String, CodingKey {
-        case token, email, gender, birthdate, country ,photo
+        case token, email, gender, birthdate, country 
         case id = "_id"
         case firstName = "first_name"
         case lastName = "last_name"
