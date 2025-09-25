@@ -4,6 +4,7 @@ struct MainView: View {
     @State private var showSideMenu = false
     @State private var selectedScreen: MenuScreen = .home
     @StateObject var navManager = MainNavigationManager()
+    @StateObject var mainViewModel = MainViewModel()
 
     var body: some View {
         let isRoot = navManager.path.isEmpty  // 👈 kiểm tra đang ở màn chính
@@ -72,7 +73,7 @@ struct MainView: View {
                     self.selectedScreen = screen
                     self.showSideMenu = false  // ✅ Tắt menu sau khi chọn
                 }
-            }
+            }.environmentObject(mainViewModel)
         }
     }
 

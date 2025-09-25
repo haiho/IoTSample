@@ -64,7 +64,9 @@ struct LoginView: View {
                             withAnimation { showErrorBanner = true }
                             // Xử lý login
                             navManager.resetToRoot()  // cần khi xoá hết cách stack
-                            appSession.login()
+                            appSession.login(token: response.token)
+                            // save database
+                            RealmManager.shared.saveLoginUser(response)
                         } else {
                             errorMessage =
                                 viewModel.errorMessage ?? "Unknown error"

@@ -11,6 +11,7 @@ struct SideMenuContent: View {
     @Binding var isShowing: Bool
     var onSelect: (MenuScreen) -> Void
     @EnvironmentObject var appSession: AppSession
+    @EnvironmentObject var mainViewModel: MainViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -37,11 +38,11 @@ struct SideMenuContent: View {
                     .foregroundColor(.white)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Nguyễn Văn A")
+                    Text("\(mainViewModel.user?.fullName ?? "")")
                         .font(.headline)
                         .foregroundColor(.white)
-
-                    Text("email@example.com")
+                    
+                    Text("\(mainViewModel.user?.email ?? "")")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
