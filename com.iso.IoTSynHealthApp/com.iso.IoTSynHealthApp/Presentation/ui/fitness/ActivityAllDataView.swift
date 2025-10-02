@@ -53,7 +53,7 @@ struct ActivityAllDataView: View {
 
     private func fetchSamples() {
         isLoading = true
-        healthManager.fetchAllSamplesThisYear(for: activity.type) { result in
+        healthManager.fetchAllSamplesFromDate(from: .startOfYear,dataType : activity.type) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let samples):

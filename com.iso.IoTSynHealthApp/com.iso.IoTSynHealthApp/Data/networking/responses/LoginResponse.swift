@@ -16,8 +16,7 @@ struct LoginResponse: Decodable {
     let birthdate: String?
     let country: String?
     let countryCode: String
-
-
+    let extendedAttributes: ExtendedAttributes?
     enum CodingKeys: String, CodingKey {
         case token, email, gender, birthdate, country 
         case id = "_id"
@@ -25,5 +24,6 @@ struct LoginResponse: Decodable {
         case lastName = "last_name"
         case isActivated = "is_activated"
         case countryCode = "country_code"
+        case extendedAttributes = "extended_attributes"
     }
 }

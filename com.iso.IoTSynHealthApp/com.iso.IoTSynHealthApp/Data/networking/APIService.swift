@@ -206,16 +206,14 @@ final class APIService: APIServiceProtocol {
         switch dataResponse.result {
         case .success(let data):
             
-//            if let jsonString = String(data: data, encoding: .utf8) {
-//                print("📦 Raw JSON trả về từ server: \(jsonString)")
-//            }
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("📦 Raw JSON trả về từ server: \(jsonString)")
+            }
 
             do {
                 let decoder = JSONDecoder()
-                let baseResponse = try decoder.decode(
-                    BaseAPIResponse<T>.self,
-                    from: data
-                )
+                let baseResponse = try decoder.decode(BaseAPIResponse<T>.self, from: data)
+
                 guard baseResponse.code == "0" else {
                     throw APIError.custom(
                         baseResponse.msg ?? "Lỗi không xác định từ server"

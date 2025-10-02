@@ -6,6 +6,7 @@
 //
 
 import RealmSwift
+import SwiftUI
 
 class LoginUser: Object {
     @Persisted(primaryKey: true) var id: String
@@ -18,6 +19,7 @@ class LoginUser: Object {
     @Persisted var birthdate: String?
     @Persisted var country: String?
     @Persisted var countryCode: String
+    @Persisted var extendedAttributes: ExtendedAttributes?
 
     // Optional: convenience init to map from Decodable model
     convenience init(from response: LoginResponse) {
@@ -32,13 +34,18 @@ class LoginUser: Object {
         self.birthdate = response.birthdate
         self.country = response.country
         self.countryCode = response.countryCode
-    
+        self.extendedAttributes = response.extendedAttributes
+
     }
 
     // MARK: - Computed Property
     var fullName: String {
         let parts: [String] = [firstName, lastName].filter { !$0.isEmpty }
         return parts.joined(separator: " ")
+    }
+
+    var lastSynHDSDate: Date? {
+        return parseDate(from: extendedAttributes?.hdsLastSync)
     }
 
 }

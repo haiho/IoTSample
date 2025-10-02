@@ -58,8 +58,16 @@
 		39DDD9302E83CF610071B649 /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDD92F2E83CF590071B649 /* StringUtil.swift */; };
 		39DDD9332E83FD080071B649 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39DDD9322E83FD080071B649 /* RealmSwift */; };
 		39DDD9362E83FDA90071B649 /* LoginUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDD9352E83FDA70071B649 /* LoginUser.swift */; };
+		39E06F3E2E867B6C00C9F8C3 /* HealthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F3D2E867B4C00C9F8C3 /* HealthRepository.swift */; };
+		39E06F402E86811600C9F8C3 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F3F2E8680F300C9F8C3 /* GeneralResponse.swift */; };
+		39E06F422E86842700C9F8C3 /* HealthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F412E86840A00C9F8C3 /* HealthRepositoryImpl.swift */; };
+		39E06F442E86863A00C9F8C3 /* SyncHDSRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F432E86862400C9F8C3 /* SyncHDSRequest.swift */; };
+		39E06F462E86888500C9F8C3 /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F452E86887400C9F8C3 /* MainUseCase.swift */; };
+		39E06F4A2E869A6C00C9F8C3 /* ExtendedAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F492E869A6700C9F8C3 /* ExtendedAttributes.swift */; };
+		39E06F4E2E86A48300C9F8C3 /* HealthDataResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F4D2E86A47400C9F8C3 /* HealthDataResult.swift */; };
 		39E8E5C72E851BEC00F3BBED /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E8E5C62E851BEC00F3BBED /* RegisterResponse.swift */; };
 		39E8E5C92E852EA600F3BBED /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E8E5C82E852E9E00F3BBED /* RegisterRequest.swift */; };
+		39E8E5CB2E85484500F3BBED /* DataObjMT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E8E5CA2E85484300F3BBED /* DataObjMT.swift */; };
 		39EB5DAB2E45F94800D8E02A /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */; };
 		39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */; };
 		39EB5DB22E46087F00D8E02A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB5DB12E46087D00D8E02A /* MainView.swift */; };
@@ -121,8 +129,16 @@
 		39DDD92D2E83C37F0071B649 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		39DDD92F2E83CF590071B649 /* StringUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		39DDD9352E83FDA70071B649 /* LoginUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUser.swift; sourceTree = "<group>"; };
+		39E06F3D2E867B4C00C9F8C3 /* HealthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRepository.swift; sourceTree = "<group>"; };
+		39E06F3F2E8680F300C9F8C3 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
+		39E06F412E86840A00C9F8C3 /* HealthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRepositoryImpl.swift; sourceTree = "<group>"; };
+		39E06F432E86862400C9F8C3 /* SyncHDSRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncHDSRequest.swift; sourceTree = "<group>"; };
+		39E06F452E86887400C9F8C3 /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
+		39E06F492E869A6700C9F8C3 /* ExtendedAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedAttributes.swift; sourceTree = "<group>"; };
+		39E06F4D2E86A47400C9F8C3 /* HealthDataResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataResult.swift; sourceTree = "<group>"; };
 		39E8E5C62E851BEC00F3BBED /* RegisterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterResponse.swift; sourceTree = "<group>"; };
 		39E8E5C82E852E9E00F3BBED /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
+		39E8E5CA2E85484300F3BBED /* DataObjMT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataObjMT.swift; sourceTree = "<group>"; };
 		39EB5DAA2E45F94400D8E02A /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		39EB5DAE2E4607E200D8E02A /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		39EB5DB12E46087D00D8E02A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -170,6 +186,7 @@
 		3952D2432E7D599300EBFC8B /* requests */ = {
 			isa = PBXGroup;
 			children = (
+				39E06F432E86862400C9F8C3 /* SyncHDSRequest.swift */,
 				39E8E5C82E852E9E00F3BBED /* RegisterRequest.swift */,
 				3952D2472E7D5A8900EBFC8B /* LoginRequest.swift */,
 			);
@@ -179,6 +196,7 @@
 		3952D2442E7D59A100EBFC8B /* responses */ = {
 			isa = PBXGroup;
 			children = (
+				39E06F3F2E8680F300C9F8C3 /* GeneralResponse.swift */,
 				3952D2492E7D5A9900EBFC8B /* LoginResponse.swift */,
 				39E8E5C62E851BEC00F3BBED /* RegisterResponse.swift */,
 			);
@@ -280,6 +298,9 @@
 		396B63B52E339096007E4014 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				39E06F4D2E86A47400C9F8C3 /* HealthDataResult.swift */,
+				39E06F492E869A6700C9F8C3 /* ExtendedAttributes.swift */,
+				39E8E5CA2E85484300F3BBED /* DataObjMT.swift */,
 				39BDC90F2E6053D8001FC793 /* Activity.swift */,
 			);
 			path = models;
@@ -288,6 +309,8 @@
 		396B63B62E3390A6007E4014 /* networking */ = {
 			isa = PBXGroup;
 			children = (
+				396B63B52E339096007E4014 /* models */,
+				3952D2442E7D59A100EBFC8B /* responses */,
 				3952D24D2E7D6E2700EBFC8B /* secure */,
 				3952D2432E7D599300EBFC8B /* requests */,
 				3952D23F2E7D57BA00EBFC8B /* APIConfig.swift */,
@@ -326,6 +349,7 @@
 		39804AE32E82A2440064836A /* usercase */ = {
 			isa = PBXGroup;
 			children = (
+				39E06F452E86887400C9F8C3 /* MainUseCase.swift */,
 				39804AE42E82A2550064836A /* AuthUseCase.swift */,
 			);
 			path = usercase;
@@ -334,7 +358,6 @@
 		39804AE62E82A28D0064836A /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				3952D2442E7D59A100EBFC8B /* responses */,
 				39804AE72E82A2B90064836A /* repositoriesImpl */,
 				396B63B62E3390A6007E4014 /* networking */,
 			);
@@ -344,6 +367,7 @@
 		39804AE72E82A2B90064836A /* repositoriesImpl */ = {
 			isa = PBXGroup;
 			children = (
+				39E06F412E86840A00C9F8C3 /* HealthRepositoryImpl.swift */,
 				39804AE82E82A3180064836A /* AuthRepositoryImpl.swift */,
 			);
 			path = repositoriesImpl;
@@ -352,6 +376,7 @@
 		39804AEC2E82A9AD0064836A /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				39E06F3D2E867B4C00C9F8C3 /* HealthRepository.swift */,
 				39804AEA2E82A3470064836A /* AuthRepository.swift */,
 			);
 			path = Repositories;
@@ -362,7 +387,6 @@
 			children = (
 				39804AEE2E82AC2D0064836A /* Subviews */,
 				397C64222E7A8C55003BD041 /* enum */,
-				396B63B52E339096007E4014 /* models */,
 				39BDC90D2E605359001FC793 /* viewmodels */,
 				396B63AF2E338DA5007E4014 /* ui */,
 				396B63AA2E338BE5007E4014 /* Common */,
@@ -549,9 +573,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39E06F4A2E869A6C00C9F8C3 /* ExtendedAttributes.swift in Sources */,
 				397C64242E7A8C5D003BD041 /* TimeFilter.swift in Sources */,
 				39CA32742E83FE3900580036 /* RealmManager.swift in Sources */,
 				39E8E5C92E852EA600F3BBED /* RegisterRequest.swift in Sources */,
+				39E06F442E86863A00C9F8C3 /* SyncHDSRequest.swift in Sources */,
 				392A62C02E5F1461002DE1B0 /* ActivityCard.swift in Sources */,
 				39DDD9302E83CF610071B649 /* StringUtil.swift in Sources */,
 				39BDC9182E606C37001FC793 /* DateUtil.swift in Sources */,
@@ -566,6 +592,7 @@
 				3952D2402E7D57BB00EBFC8B /* APIConfig.swift in Sources */,
 				396B639C2E337D66007E4014 /* RootView.swift in Sources */,
 				397C642D2E7AADD1003BD041 /* ActivityAllDataView.swift in Sources */,
+				39E8E5CB2E85484500F3BBED /* DataObjMT.swift in Sources */,
 				39FF9B6B2E55D9EC00EC0EE8 /* AppSession.swift in Sources */,
 				39FF9B642E55C07F00EC0EE8 /* HomeView.swift in Sources */,
 				39B8CB7B2E4C8311005F030A /* Toolbar.swift in Sources */,
@@ -573,18 +600,22 @@
 				39804AE92E82A31A0064836A /* AuthRepositoryImpl.swift in Sources */,
 				396B63AE2E338C85007E4014 /* IoTSynHealthApp.swift in Sources */,
 				39804AE52E82A2570064836A /* AuthUseCase.swift in Sources */,
+				39E06F462E86888500C9F8C3 /* MainUseCase.swift in Sources */,
 				39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */,
 				39EB5DAF2E4607E400D8E02A /* NavigationManager.swift in Sources */,
 				39FF9B622E55BFA900EC0EE8 /* SideMenuUtil.swift in Sources */,
+				39E06F402E86811600C9F8C3 /* GeneralResponse.swift in Sources */,
 				397C64292E7A937D003BD041 /* ActivityDetailViewModel.swift in Sources */,
 				39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */,
 				39DDD9362E83FDA90071B649 /* LoginUser.swift in Sources */,
+				39E06F3E2E867B6C00C9F8C3 /* HealthRepository.swift in Sources */,
 				397C642B2E7A9423003BD041 /* AAChartRepresentable.swift in Sources */,
 				396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */,
 				3989B30E2E7BBE21006E4327 /* HeartRateRangeChart.swift in Sources */,
 				391013322E4B5139005DDD2C /* ErrorView.swift in Sources */,
 				3952D2422E7D589100EBFC8B /* LandingViewModel.swift in Sources */,
 				39804AF02E82AE8C0064836A /* ToastView.swift in Sources */,
+				39E06F422E86842700C9F8C3 /* HealthRepositoryImpl.swift in Sources */,
 				39CA32762E84035200580036 /* MainViewModel.swift in Sources */,
 				3952D24F2E7D6E3E00EBFC8B /* CryptoHelper.swift in Sources */,
 				39BF903B2E796A9B0054E652 /* ActivityCardDetail.swift in Sources */,
@@ -602,6 +633,7 @@
 				39804AE12E829C4D0064836A /* UserDefaultsManager.swift in Sources */,
 				39EEB94F2E378B5A00AD2F26 /* CustomButton.swift in Sources */,
 				3952D23A2E7D55A400EBFC8B /* APIService.swift in Sources */,
+				39E06F4E2E86A48300C9F8C3 /* HealthDataResult.swift in Sources */,
 				39BDC9152E605813001FC793 /* HealthManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

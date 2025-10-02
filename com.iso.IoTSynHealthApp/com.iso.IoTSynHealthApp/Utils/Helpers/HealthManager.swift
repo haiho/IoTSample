@@ -82,6 +82,23 @@ enum HealthDataType: CaseIterable {
         }
     }
 
+    var subsServerName: String {
+        switch self {
+        case .excerciseTime:
+            return ""
+        case .activeEnergyBurned:
+            return ""
+        case .stepCount:
+            return "step"
+        case .oxygenSaturation:
+            return "spo2"
+        case .heartRate:
+            return "hr"
+
+        }
+
+    }
+
 }
 
 class HealthManager {
@@ -165,8 +182,10 @@ class HealthManager {
     }
 
     // MARK: - Fetch Latest Heart Rate Sample
-    func fetchLatestHeartRateForToday(
-        completion: @escaping (Result<Double, Error>) -> Void
+
+    func fetchLatestValueHeartRate(
+        startDate: Date,
+        completion: @escaping (Result<HeartRateResult, Error>) -> Void
     ) {
         let dataType = HealthDataType.heartRate
 
@@ -182,13 +201,12 @@ class HealthManager {
                     key: HKSampleSortIdentifierStartDate,
                     ascending: false
                 )
+
                 let predicate = HKQuery.predicateForSamples(
-                    withStart: .startOfDay,
+                    withStart: startDate,
                     end: .nowDate(),
                     options: .strictStartDate
                 )
-                // predicate mà để nil thì return giá trị cuối cùng, không phải trong ngày hôm đó
-                // muốn lấy lastest value trong ngày cần có predicate
 
                 let query = HKSampleQuery(
                     sampleType: dataType.quantityType,
@@ -215,8 +233,7 @@ class HealthManager {
                                             NSLocalizedDescriptionKey:
                                                 "health_sampe_no_data"
                                                 .localizedFormat(
-                                                    HealthDataType.heartRate
-                                                        .displayName
+                                                    dataType.displayName
                                                 )
                                         ]
                                     )
@@ -229,9 +246,15 @@ class HealthManager {
                     let heartRateValue = sample.quantity.doubleValue(
                         for: dataType.unit
                     )
+                    let heartRateDate = sample.startDate  // hoặc .endDate nếu bạn thích
+
+                    let result = HeartRateResult(
+                        value: heartRateValue,
+                        date: heartRateDate
+                    )
 
                     DispatchQueue.main.async {
-                        completion(.success(heartRateValue))
+                        completion(.success(result))
                     }
                 }
 
@@ -400,18 +423,27 @@ class HealthManager {
 
         switch filter {
         case .week:
-            startDate = calendar.date(
-                from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)
-            ) ?? now
+            startDate =
+                calendar.date(
+                    from: calendar.dateComponents(
+                        [.yearForWeekOfYear, .weekOfYear],
+                        from: now
+                    )
+                ) ?? now
             interval.day = 1
         case .day:
             startDate = calendar.startOfDay(for: now)
             interval.hour = 1
         case .month:
-            startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) ?? now
+            startDate =
+                calendar.date(
+                    from: calendar.dateComponents([.year, .month], from: now)
+                ) ?? now
             interval.day = 1
         case .year:
-            startDate = calendar.date(from: calendar.dateComponents([.year], from: now)) ?? now
+            startDate =
+                calendar.date(from: calendar.dateComponents([.year], from: now))
+                ?? now
             interval.month = 1
         }
 
@@ -431,7 +463,6 @@ class HealthManager {
         }
     }
 
-    
     func fetchStatistics(
         for type: HealthDataType,
         startDate: Date,
@@ -463,13 +494,18 @@ class HealthManager {
 
             var data: [(Date, Double)] = []
 
-            results?.enumerateStatistics(from: startDate, to: endDate) { stats, _ in
+            results?.enumerateStatistics(from: startDate, to: endDate) {
+                stats,
+                _ in
                 let value: Double
                 switch type.optionsHK {
                 case .discreteAverage:
-                    value = stats.averageQuantity()?.doubleValue(for: type.unit) ?? 0
+                    value =
+                        stats.averageQuantity()?.doubleValue(for: type.unit)
+                        ?? 0
                 case .cumulativeSum:
-                    value = stats.sumQuantity()?.doubleValue(for: type.unit) ?? 0
+                    value =
+                        stats.sumQuantity()?.doubleValue(for: type.unit) ?? 0
                 default:
                     value = 0
                 }
@@ -481,65 +517,105 @@ class HealthManager {
 
         self.healthStore.execute(query)
     }
-    
 
-    func fetchHeartRateSamples(from startDate: Date, to endDate: Date, completion: @escaping ([HKQuantitySample]?, Error?) -> Void) {
-        guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
-            completion(nil, NSError(domain: "HealthKit", code: 1, userInfo: nil))
+    func fetchHeartRateSamples(
+        from startDate: Date,
+        to endDate: Date,
+        completion: @escaping ([HKQuantitySample]?, Error?) -> Void
+    ) {
+        guard
+            let heartRateType = HKObjectType.quantityType(
+                forIdentifier: .heartRate
+            )
+        else {
+            completion(
+                nil,
+                NSError(domain: "HealthKit", code: 1, userInfo: nil)
+            )
             return
         }
 
         // đảm bảo startDate và endDate đúng timezone (ví dụ lấy startOfDay và endOfDay của ngày hiện tại)
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
+        let predicate = HKQuery.predicateForSamples(
+            withStart: startDate,
+            end: endDate,
+            options: .strictStartDate
+        )
+        let sortDescriptor = NSSortDescriptor(
+            key: HKSampleSortIdentifierStartDate,
+            ascending: true
+        )
 
-        let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { _, results, error in
+        let query = HKSampleQuery(
+            sampleType: heartRateType,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [sortDescriptor]
+        ) { _, results, error in
             completion(results as? [HKQuantitySample], error)
         }
 
         healthStore.execute(query)
     }
 
-    func fetchHeartRateDataToday(for date: Date, completion: @escaping ([HKQuantitySample]?, Error?) -> Void) {
-        let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)!
-        
+    func fetchHeartRateDataToday(
+        for date: Date,
+        completion: @escaping ([HKQuantitySample]?, Error?) -> Void
+    ) {
+        let heartRateType = HKObjectType.quantityType(
+            forIdentifier: .heartRate
+        )!
+
         // Xác định khoảng thời gian bắt đầu và kết thúc của ngày
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
-        guard let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) else {
+        guard
+            let endOfDay = calendar.date(
+                byAdding: .day,
+                value: 1,
+                to: startOfDay
+            )
+        else {
             completion(nil, nil)
             return
         }
-        
+
         // Tạo predicate để lọc dữ liệu trong ngày
-        let predicate = HKQuery.predicateForSamples(withStart: startOfDay, end: endOfDay, options: .strictStartDate)
-        
+        let predicate = HKQuery.predicateForSamples(
+            withStart: startOfDay,
+            end: endOfDay,
+            options: .strictStartDate
+        )
+
         // Tạo query để lấy dữ liệu
-        let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { query, samples, error in
-            guard let samples = samples as? [HKQuantitySample], error == nil else {
+        let query = HKSampleQuery(
+            sampleType: heartRateType,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: nil
+        ) { query, samples, error in
+            guard let samples = samples as? [HKQuantitySample], error == nil
+            else {
                 completion(nil, error)
                 return
             }
-            
+
             completion(samples, nil)
         }
-        
+
         healthStore.execute(query)
     }
 
-    
-   // MARK: for view all data
-    func fetchAllSamplesThisYear(
-        for dataType: HealthDataType,
+    // MARK: for view all data
+    func fetchAllSamplesFromDate(
+        from fromDate: Date,
+        dataType: HealthDataType,
         completion: @escaping (Result<[HKQuantitySample], Error>) -> Void
     ) {
-        let calendar = Calendar.current
-        let now = Date()
-        let startOfYear = calendar.date(from: calendar.dateComponents([.year], from: now))!
 
         let predicate = HKQuery.predicateForSamples(
-            withStart: startOfYear,
-            end: now,
+            withStart: fromDate,
+            end: .nowDate(),
             options: .strictStartDate
         )
 
@@ -548,7 +624,10 @@ class HealthManager {
             predicate: predicate,
             limit: HKObjectQueryNoLimit,
             sortDescriptors: [
-                NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+                NSSortDescriptor(
+                    key: HKSampleSortIdentifierStartDate,
+                    ascending: false
+                )
             ]
         ) { _, samples, error in
             if let error = error {
@@ -563,4 +642,43 @@ class HealthManager {
         healthStore.execute(query)
     }
 
+    func fetchAllSamplesFromDate2(
+        from fromDate: Date,
+        dataType: HealthDataType,
+        completion: @escaping (Result<[(Date, Double)], Error>) -> Void
+    ) {
+        let predicate = HKQuery.predicateForSamples(
+            withStart: fromDate,
+            end: .nowDate(),
+            options: .strictStartDate
+        )
+
+        let query = HKSampleQuery(
+            sampleType: dataType.quantityType,
+            predicate: predicate,
+            limit: HKObjectQueryNoLimit,
+            sortDescriptors: [
+                NSSortDescriptor(
+                    key: HKSampleSortIdentifierStartDate,
+                    ascending: false
+                )
+            ]
+        ) { _, samples, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            let quantitySamples = samples as? [HKQuantitySample] ?? []
+            // Convert to [(Date, Double)]
+            let results: [(Date, Double)] = quantitySamples.map { sample in
+                let value = sample.quantity.doubleValue(for: dataType.unit)
+                return (sample.startDate, value)
+            }
+
+            completion(.success(results))
+        }
+
+        healthStore.execute(query)
+    }
 }

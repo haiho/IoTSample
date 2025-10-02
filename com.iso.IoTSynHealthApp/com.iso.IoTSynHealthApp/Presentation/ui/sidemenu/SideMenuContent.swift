@@ -41,10 +41,10 @@ struct SideMenuContent: View {
                     Text("\(mainViewModel.user?.fullName ?? "")")
                         .font(.headline)
                         .foregroundColor(.white)
-                    
+
                     Text("\(mainViewModel.user?.email ?? "")")
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.blue)
                 }
             }.padding(.top, 80)
 

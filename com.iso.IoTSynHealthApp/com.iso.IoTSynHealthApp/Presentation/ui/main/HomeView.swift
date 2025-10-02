@@ -4,11 +4,16 @@
 //
 //  Created by PTV on 20/8/25.
 //
+import HealthKit
 import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var navManager: MainNavigationManager
     @StateObject var homeViewModel = HomeViewModel()
+    @State private var samples: [HKQuantitySample] = []
+    @State private var isLoading = true
+    let healthManager = HealthManager.shared
+
     var body: some View {
         BaseScrollVStrack(backgroundColor: Color.orange) {
             VStack(spacing: 20) {
@@ -80,11 +85,13 @@ struct HomeView: View {
             CustomText("Fitness Activity")
                 .fontNormalBold
             //3. MARK:  card activity
-            LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+            LazyVGrid(
+                columns: Array(repeating: GridItem(spacing: 20), count: 2)
+            ) {
                 ForEach(homeViewModel.activities, id: \.id) { activity in
                     ActivityCard(activity: activity) {
                         navManager.push(.carDetail(activity))
-//                        homeViewModel.handleActivityTapped(activity)
+                        //                        homeViewModel.handleActivityTapped(activity)
                     }
                 }
             }.padding(.top, 20)
@@ -108,8 +115,27 @@ struct HomeView: View {
         }
 
     }  //BaseScrollVStrack
+
+    
+    private func fetchSamples(activity: Activity) {
+        isLoading = true
+        healthManager.fetchAllSamplesFromDate(from: .nowDate(), dataType: activity.type) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let samples):
+                    self.samples = samples
+                    print("✅ ActivityAllDataView fetched: \(samples)")
+                case .failure(let error):
+                    print("❌ Fetch failed: \(error)")
+                    self.samples = []
+                }
+                isLoading = false
+            }
+        }
+    }
+
 }
 
-#Preview {
-    HomeView()
-}
+//#Preview {
+//    HomeView()
+//}

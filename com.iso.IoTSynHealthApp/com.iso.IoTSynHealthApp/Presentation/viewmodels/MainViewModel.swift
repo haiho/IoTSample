@@ -12,6 +12,7 @@ import SwiftUI
 class MainViewModel: ObservableObject {
 
     @Published var user: LoginUser?
+    var lastSynHDS: Date? = nil
 
     init() {
         fetchUser()
@@ -21,6 +22,8 @@ class MainViewModel: ObservableObject {
         do {
             let realm = try Realm()
             user = realm.objects(LoginUser.self).first
+            lastSynHDS = user?.lastSynHDSDate
+
             print("Realm user: \(String(describing: user))")
         } catch {
             print("Realm error: \(error)")
