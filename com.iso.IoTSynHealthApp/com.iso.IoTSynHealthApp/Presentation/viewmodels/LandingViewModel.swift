@@ -27,7 +27,14 @@ class LandingViewModel: ObservableObject {
                 email: email,
                 password: password
             )
-            return response
+            if response.isSuccess() {
+                return response.data
+
+            } else {
+                errorMessage = response.msg
+                return nil
+            }
+
         } catch {
             errorMessage = error.localizedDescription
             return nil
@@ -50,7 +57,12 @@ class LandingViewModel: ObservableObject {
                 firstName: firstName,
                 lastName: lastName
             )
-            return response
+            if response.isSuccess() {
+                return response.data
+            } else {
+                errorMessage = response.msg
+                return nil
+            }
         } catch {
             errorMessage = error.localizedDescription
             return nil

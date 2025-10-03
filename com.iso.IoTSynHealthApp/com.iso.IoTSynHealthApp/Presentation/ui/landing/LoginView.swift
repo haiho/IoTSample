@@ -37,24 +37,10 @@ struct LoginView: View {
                     Task {
                         if !validateAccount() {
                             withAnimation { showError = true }
-//                            DispatchQueue.main.asyncAfter(
-//                                deadline: .now() + 4
-//                            ) {
-//                                withAnimation { showError = false }
-//                            }
                             return
                         }
                         isLoading = true
-                        defer { isLoading = false }  // ← Tự động gọi khi Task kết thúc
-                        //                        defer {
-                        //                            Task {
-                        //                                // Delay 10 giây trước khi tắt loading
-                        //                                try? await Task.sleep(
-                        //                                    nanoseconds: 10 * 1_000_000_000
-                        //                                )
-                        //                                isLoading = false
-                        //                            }
-                        //                        }
+                        defer { isLoading = false }
 
                         if let response = await viewModel.login(
                             email: email,

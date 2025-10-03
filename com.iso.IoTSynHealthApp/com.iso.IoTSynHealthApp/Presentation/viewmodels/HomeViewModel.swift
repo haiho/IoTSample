@@ -170,7 +170,13 @@ class HomeViewModel: ObservableObject {
             let response = try await mainUseCase.syncHDSsampleFromIoTdevices(
                 data: data
             )
-            return response
+            if response.isSuccess() {
+                return response.data
+
+            } else {
+                errorMessage = response.msg
+                return nil
+            }
         } catch {
             errorMessage = error.localizedDescription
             return nil

@@ -137,7 +137,7 @@ protocol APIServiceProtocol {
         method: HTTPMethod,
         body: APIRequest?,
         responseModel: T.Type
-    ) async throws -> T
+    ) async throws -> BaseAPIResponse<T>
 }
 
 // MARK: - Base Response Model
@@ -159,6 +159,11 @@ struct BaseAPIResponse<T: Decodable>: Decodable {
         case data
         case err
     }
+
+    func isSuccess() -> Bool {
+        guard let code = code else { return false }
+        return code == "0"
+    }
 }
 
 // MARK: - APIService
@@ -168,7 +173,7 @@ final class APIService: APIServiceProtocol {
         method: HTTPMethod,
         body: APIRequest?,
         responseModel: T.Type
-    ) async throws -> T {
+    ) async throws -> BaseAPIResponse<T> {
         let urlString = APIConfig.baseURL + path
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
@@ -205,27 +210,25 @@ final class APIService: APIServiceProtocol {
 
         switch dataResponse.result {
         case .success(let data):
-            
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("📦 Raw JSON trả về từ server: \(jsonString)")
-            }
+
+//            if let jsonString = String(data: data, encoding: .utf8) {
+//                print("📦 Raw JSON trả về từ server: \(jsonString)")
+//            }
 
             do {
                 let decoder = JSONDecoder()
-                let baseResponse = try decoder.decode(BaseAPIResponse<T>.self, from: data)
+                let baseResponse = try decoder.decode(
+                    BaseAPIResponse<T>.self,
+                    from: data
+                )
 
                 guard baseResponse.code == "0" else {
                     throw APIError.custom(
                         baseResponse.msg ?? "Lỗi không xác định từ server"
                     )
                 }
-
-                guard let result = baseResponse.data else {
-                    throw APIError.custom("Không có dữ liệu trả về từ server")
-                }
-
-                print("✅ Decode OK: \(baseResponse)")
-                return result
+                //                print("✅ Decode OK: \(baseResponse)")
+                return baseResponse
 
             } catch {
                 print("❌ Decode lỗi:", error.localizedDescription)
