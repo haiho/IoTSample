@@ -54,9 +54,10 @@ class HomeViewModel: ObservableObject {
     func requestSynHealthDataToday() {
         hasShownPermissionAlert = false
         for type in HealthDataType.allCases {
-            if type == .heartRate {
+            if type == .heartRate || type == .stepCount {
                 healthManager.fetchLatestValueHeartRate(
-                    startDate: .startOfYear
+                    startDate: .startOfYear,
+                    dataType: type
                 ) { result in
                     self.handleHealthResult2(result, for: type)
                 }
@@ -77,7 +78,7 @@ class HomeViewModel: ObservableObject {
             self.updateValuesFromHealthKit(for: type, value: data.value)
             print("\(type.displayName): \(data.value)")
             print("\(type.displayName) Recorded at: \(data.date)")
-            loadAllDataToSyn()
+            loadAllDataToSyn(dataType: type)
         case .failure(let error):
             if type == HealthDataType.excerciseTime {
                 print(
@@ -183,19 +184,18 @@ class HomeViewModel: ObservableObject {
         }
     }
 
-    private func loadAllDataToSyn() {
+    private func loadAllDataToSyn(dataType: HealthDataType) {
         //        1. Load data from lastTimeSyn -> now
-
         healthManager.fetchAllSamplesFromDate2(
             from: .startOfYear,
-            dataType: HealthDataType.heartRate
+            dataType: dataType
         ) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let samples):
                     //       2. Syn to HDS
                     print("✅ ActivityAllDataView fetched: \(samples)")
-                    self.synDataToHDS(results: samples)
+                    self.synDataToHDS(results: samples, dataType: dataType)
                 case .failure(let error):
                     print("❌ Fetch failed: \(error)")
 
@@ -205,10 +205,10 @@ class HomeViewModel: ObservableObject {
 
     }
 
-    private func synDataToHDS(results: [(Date, Double)]) {
+    private func synDataToHDS(results: [(Date, Double)], dataType: HealthDataType) {
         let data: [DataObjMT] = results.map { (date, value) in
             DataObjMT(
-                type: HealthDataType.heartRate.subsServerName,
+                type: dataType.subsServerName,
                 value: String(value),
                 timestamp: date
             )

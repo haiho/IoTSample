@@ -85,9 +85,9 @@ enum HealthDataType: CaseIterable {
     var subsServerName: String {
         switch self {
         case .excerciseTime:
-            return ""
+            return "EXERCISE_MIN"
         case .activeEnergyBurned:
-            return ""
+            return "ACTIVE_EN_BURNED"
         case .stepCount:
             return "step"
         case .oxygenSaturation:
@@ -185,10 +185,9 @@ class HealthManager {
 
     func fetchLatestValueHeartRate(
         startDate: Date,
+        dataType: HealthDataType,
         completion: @escaping (Result<HeartRateResult, Error>) -> Void
     ) {
-        let dataType = HealthDataType.heartRate
-
         checkPermission(for: dataType) { permissionResult in
             switch permissionResult {
             case .failure(let error):
@@ -641,7 +640,7 @@ class HealthManager {
 
         healthStore.execute(query)
     }
-
+    // fetch all Data to syn HDS
     func fetchAllSamplesFromDate2(
         from fromDate: Date,
         dataType: HealthDataType,

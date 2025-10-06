@@ -10,6 +10,7 @@ import SwiftUI
 class HDSSetting: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var syncDate: String
+    @Persisted var iosQueryDate: String
     @Persisted var syncNumber: Int
     @Persisted var hdsSampleType: HDSSampleType?
 
@@ -17,6 +18,7 @@ class HDSSetting: Object, Decodable {
         case id = "_id"
         case syncDate = "sync_date"
         case syncNumber = "sync_number"
+        case iosQueryDate = "ios_query_date"
         case hdsSampleType = "sample_type_id"
 
     }
@@ -26,6 +28,10 @@ class HDSSetting: Object, Decodable {
         self.id = try container.decode(String.self, forKey: .id)
         self.syncDate = try container.decode(String.self, forKey: .syncDate)
         self.syncNumber = try container.decode(Int.self, forKey: .syncNumber)
+        self.iosQueryDate = try container.decode(
+            String.self,
+            forKey: .iosQueryDate
+        )
         self.hdsSampleType = try container.decodeIfPresent(
             HDSSampleType.self,
             forKey: .hdsSampleType

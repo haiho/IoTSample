@@ -18,7 +18,7 @@ struct ActivityCard: View {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 8) {
                         CustomText(activity.title).fontNormalBold
-                        CustomText("lbl_this_week".localized)
+                        CustomText("lbl_lastest_value".localized)
                     }
                     Spacer()
                     Image(systemName: activity.image).foregroundColor(

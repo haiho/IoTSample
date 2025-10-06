@@ -8,4 +8,10 @@
 protocol HealthRepository {
     func syncHDSsampleFromIoTdevices(data: String) async throws
         -> BaseAPIResponse
+
+//    func updateHDSuserSettings(
+//        sampleTypeId: String,
+//        syncDate: String,
+//        iosQueryDate: String
+//    ) async throws -> BaseAPIResponse
 }
