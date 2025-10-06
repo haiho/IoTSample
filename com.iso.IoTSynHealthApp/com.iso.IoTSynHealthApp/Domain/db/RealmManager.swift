@@ -18,10 +18,14 @@ final class RealmManager {
             print("saveLoginUser: Không có dữ liệu user từ response.")
             return
         }
+        saveUserInfo(response!.data!)
+        saveHDSSettings(response!.hdsSettings)
+    }
 
+    func saveUserInfo(_ userData: UserLoginResponse) {
         do {
             let realm = try Realm()
-            let user = LoginUser(from: userData)
+            let user = UserInfo(from: userData)
 
             try realm.write {
                 realm.add(user, update: .modified)
@@ -33,15 +37,40 @@ final class RealmManager {
         }
     }
 
-    func getCurrentUser() -> LoginUser? {
-        let realm = try! Realm()
-        return realm.objects(LoginUser.self).first
+    func saveHDSSettings(_ settings: [HDSSetting]?) {
+        guard let settings = settings, !settings.isEmpty else {
+            print("saveHDSSettings: Không có dữ liệu HDSSetting")
+            return
+        }
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                // Xoá dữ liệu cũ (nếu cần cập nhật)
+                realm.delete(realm.objects(HDSSetting.self))
+                // Thêm mới
+                realm.add(settings, update: .modified)
+            }
+        } catch {
+            print(
+                "saveHDSSettings: Lỗi khi lưu HDSSettings vào Realm - \(error.localizedDescription)"
+            )
+        }
     }
 
+    func getCurrentUser() -> UserInfo? {
+        let realm = try! Realm()
+        return realm.objects(UserInfo.self).first
+    }
+    func getHDSSettings() -> [HDSSetting] {
+        let realm = try! Realm()
+        return Array(realm.objects(HDSSetting.self))
+    }
+    
     func logout() {
         let realm = try! Realm()
         try! realm.write {
-            realm.delete(realm.objects(LoginUser.self))
+            realm.delete(realm.objects(UserInfo.self))
         }
     }
 }

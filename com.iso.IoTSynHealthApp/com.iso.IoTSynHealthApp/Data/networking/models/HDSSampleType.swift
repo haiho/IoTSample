@@ -19,4 +19,13 @@ class HDSSampleType : EmbeddedObject, Decodable {
         case primaryUnit = "primary_unit"
         case name
     }
+    required convenience init(from decoder: Decoder) throws {
+           self.init()
+
+           let container = try decoder.container(keyedBy: CodingKeys.self)
+           self.id = try container.decode(String.self, forKey: .id)
+           self.sampleTypeId = try container.decode(String.self, forKey: .sampleTypeId)
+           self.primaryUnit = try container.decode(String.self, forKey: .primaryUnit)
+           self.name = try container.decode(String.self, forKey: .name)
+       }
 }

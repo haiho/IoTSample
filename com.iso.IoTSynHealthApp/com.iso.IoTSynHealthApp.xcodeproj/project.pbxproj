@@ -60,7 +60,7 @@
 		39DDD92E2E83C3800071B649 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDD92D2E83C37F0071B649 /* LoadingView.swift */; };
 		39DDD9302E83CF610071B649 /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDD92F2E83CF590071B649 /* StringUtil.swift */; };
 		39DDD9332E83FD080071B649 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39DDD9322E83FD080071B649 /* RealmSwift */; };
-		39DDD9362E83FDA90071B649 /* LoginUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDD9352E83FDA70071B649 /* LoginUser.swift */; };
+		39DDD9362E83FDA90071B649 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDD9352E83FDA70071B649 /* UserInfo.swift */; };
 		39E06F3E2E867B6C00C9F8C3 /* HealthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F3D2E867B4C00C9F8C3 /* HealthRepository.swift */; };
 		39E06F402E86811600C9F8C3 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F3F2E8680F300C9F8C3 /* GeneralResponse.swift */; };
 		39E06F422E86842700C9F8C3 /* HealthRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E06F412E86840A00C9F8C3 /* HealthRepositoryImpl.swift */; };
@@ -134,7 +134,7 @@
 		39CF53912E4DE9E700B45BEE /* BaseScrollVStrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollVStrack.swift; sourceTree = "<group>"; };
 		39DDD92D2E83C37F0071B649 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		39DDD92F2E83CF590071B649 /* StringUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
-		39DDD9352E83FDA70071B649 /* LoginUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUser.swift; sourceTree = "<group>"; };
+		39DDD9352E83FDA70071B649 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		39E06F3D2E867B4C00C9F8C3 /* HealthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRepository.swift; sourceTree = "<group>"; };
 		39E06F3F2E8680F300C9F8C3 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		39E06F412E86840A00C9F8C3 /* HealthRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -468,7 +468,7 @@
 			isa = PBXGroup;
 			children = (
 				39CA32732E83FE2F00580036 /* RealmManager.swift */,
-				39DDD9352E83FDA70071B649 /* LoginUser.swift */,
+				39DDD9352E83FDA70071B649 /* UserInfo.swift */,
 			);
 			path = db;
 			sourceTree = "<group>";
@@ -618,7 +618,7 @@
 				39E06F402E86811600C9F8C3 /* GeneralResponse.swift in Sources */,
 				397C64292E7A937D003BD041 /* ActivityDetailViewModel.swift in Sources */,
 				39CF53922E4DE9F800B45BEE /* BaseScrollVStrack.swift in Sources */,
-				39DDD9362E83FDA90071B649 /* LoginUser.swift in Sources */,
+				39DDD9362E83FDA90071B649 /* UserInfo.swift in Sources */,
 				39E06F3E2E867B6C00C9F8C3 /* HealthRepository.swift in Sources */,
 				397C642B2E7A9423003BD041 /* AAChartRepresentable.swift in Sources */,
 				396B63A92E338BAE007E4014 /* CustomTextField.swift in Sources */,

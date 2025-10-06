@@ -8,7 +8,7 @@
 import RealmSwift
 import SwiftUI
 
-class LoginUser: Object {
+class UserInfo: Object {
     @Persisted(primaryKey: true) var id: String
     //    @Persisted var token: String
     @Persisted var email: String

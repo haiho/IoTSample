@@ -11,17 +11,20 @@ import SwiftUI
 @MainActor
 class MainViewModel: ObservableObject {
 
-    @Published var user: LoginUser?
+    @Published var user: UserInfo?
+    @Published var hdsSettings: [HDSSetting] = []
+    
     var lastSynHDS: Date? = nil
 
     init() {
         fetchUser()
+        fetchHDSSettings()
     }
 
     func fetchUser() {
         do {
             let realm = try Realm()
-            user = realm.objects(LoginUser.self).first
+            user = realm.objects(UserInfo.self).first
             lastSynHDS = user?.lastSynHDSDate
 
             print("Realm user: \(String(describing: user))")
@@ -30,4 +33,17 @@ class MainViewModel: ObservableObject {
             user = nil
         }
     }
+    
+    func fetchHDSSettings() {
+         do {
+             let realm = try Realm()
+             let results = realm.objects(HDSSetting.self)
+             hdsSettings = Array(results)
+             
+             print("Fetched HDSSettings: \(hdsSettings)")
+         } catch {
+             print("Realm error (HDSSetting): \(error)")
+             hdsSettings = []
+         }
+     }
 }
