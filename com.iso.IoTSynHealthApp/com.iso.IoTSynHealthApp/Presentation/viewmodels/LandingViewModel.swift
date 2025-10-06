@@ -27,13 +27,7 @@ class LandingViewModel: ObservableObject {
                 email: email,
                 password: password
             )
-            if response.isSuccess() {
-                return response.data
-
-            } else {
-                errorMessage = response.msg
-                return nil
-            }
+            return response
 
         } catch {
             errorMessage = error.localizedDescription
@@ -57,12 +51,7 @@ class LandingViewModel: ObservableObject {
                 firstName: firstName,
                 lastName: lastName
             )
-            if response.isSuccess() {
-                return response.data
-            } else {
-                errorMessage = response.msg
-                return nil
-            }
+            return response
         } catch {
             errorMessage = error.localizedDescription
             return nil

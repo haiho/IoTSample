@@ -7,5 +7,5 @@
 
 protocol HealthRepository {
     func syncHDSsampleFromIoTdevices(data: String) async throws
-        -> BaseAPIResponse<GeneralResponse>
+        -> BaseAPIResponse
 }

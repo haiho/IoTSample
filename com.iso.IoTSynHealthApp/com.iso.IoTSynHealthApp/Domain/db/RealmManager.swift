@@ -9,16 +9,27 @@ import RealmSwift
 final class RealmManager {
     static let shared = RealmManager()  // Singleton
     private init() {}  // Không cho tạo từ ngoài
-    
-//    let a = RealmManager.shared      // OK
-//    let b = RealmManager()           // ❌ Lỗi: 'init' is inaccessible
 
-    func saveLoginUser(_ response: LoginResponse) {
-        let realm = try! Realm()
-        let user = LoginUser(from: response)
+    //    let a = RealmManager.shared      // OK
+    //    let b = RealmManager()           // ❌ Lỗi: 'init' is inaccessible
 
-        try! realm.write {
-            realm.add(user, update: .modified)  // Cập nhật nếu đã tồn tại
+    func saveLoginUser(_ response: LoginResponse?) {
+        guard let userData = response?.data else {
+            print("saveLoginUser: Không có dữ liệu user từ response.")
+            return
+        }
+
+        do {
+            let realm = try Realm()
+            let user = LoginUser(from: userData)
+
+            try realm.write {
+                realm.add(user, update: .modified)
+            }
+        } catch {
+            print(
+                "saveLoginUser: Lỗi khi lưu user vào Realm - \(error.localizedDescription)"
+            )
         }
     }
 

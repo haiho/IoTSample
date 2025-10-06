@@ -162,7 +162,7 @@ class HomeViewModel: ObservableObject {
 
     // api syndata to HDS on Cloud
     func syncHDSsampleFromIoTdevices(data: String) async throws
-        -> GeneralResponse?
+        -> BaseAPIResponse?
     {
 
         errorMessage = nil
@@ -170,8 +170,8 @@ class HomeViewModel: ObservableObject {
             let response = try await mainUseCase.syncHDSsampleFromIoTdevices(
                 data: data
             )
-            if response.isSuccess() {
-                return response.data
+            if response.isSuccess {
+                return response
 
             } else {
                 errorMessage = response.msg

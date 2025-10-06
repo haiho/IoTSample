@@ -57,9 +57,9 @@ enum APIError: Error, LocalizedError {
         switch self {
         case .invalidURL: return "URL không hợp lệ."
         case .encodingError(let e):
-            return "Encoding error: \(e.localizedDescription)"
+            return e.localizedDescription
         case .decodingError(let e):
-            return "Decode lỗi: \(e.localizedDescription)"
+            return e.localizedDescription
         case .statusCodeError(let code): return "Lỗi status code: \(code)"
         case .underlying(let e): return e.localizedDescription
         case .custom(let msg): return msg
@@ -132,48 +132,36 @@ struct APIEndpoint {
 // MARK: - APIServiceProtocol
 
 protocol APIServiceProtocol {
-    func request<T: Decodable>(
+    func request<T: BaseAPIResponse & Decodable>(
         path: String,
         method: HTTPMethod,
         body: APIRequest?,
         responseModel: T.Type
-    ) async throws -> BaseAPIResponse<T>
+    ) async throws -> T
 }
 
 // MARK: - Base Response Model
-struct BaseAPIResponse<T: Decodable>: Decodable {
+class BaseAPIResponse: Decodable {
     let msg: String?
-    let code: String?
+    let code: String
     let loginBy: String?
-    let af: Int?
-    let sharedCp: Int?
-    let data: T?
-    let err: [String: String]?
 
     enum CodingKeys: String, CodingKey {
-        case msg
-        case code
+        case msg, code
         case loginBy = "login_by"
-        case af
-        case sharedCp = "shared_cp"
-        case data
-        case err
     }
 
-    func isSuccess() -> Bool {
-        guard let code = code else { return false }
-        return code == "0"
+    var isSuccess: Bool {
+        code == "0"
     }
 }
-
-// MARK: - APIService
 final class APIService: APIServiceProtocol {
-    func request<T: Decodable>(
+    func request<T: BaseAPIResponse & Decodable>(
         path: String,
         method: HTTPMethod,
         body: APIRequest?,
         responseModel: T.Type
-    ) async throws -> BaseAPIResponse<T> {
+    ) async throws -> T {
         let urlString = APIConfig.baseURL + path
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
@@ -210,28 +198,20 @@ final class APIService: APIServiceProtocol {
 
         switch dataResponse.result {
         case .success(let data):
-
-//            if let jsonString = String(data: data, encoding: .utf8) {
-//                print("📦 Raw JSON trả về từ server: \(jsonString)")
-//            }
-
             do {
                 let decoder = JSONDecoder()
-                let baseResponse = try decoder.decode(
-                    BaseAPIResponse<T>.self,
-                    from: data
-                )
+                let responseObj = try decoder.decode(T.self, from: data)
 
-                guard baseResponse.code == "0" else {
+                guard responseObj.code == "0" else {
                     throw APIError.custom(
-                        baseResponse.msg ?? "Lỗi không xác định từ server"
+                        responseObj.msg ?? "Lỗi không xác định từ server"
                     )
                 }
-                //                print("✅ Decode OK: \(baseResponse)")
-                return baseResponse
+
+                return responseObj
 
             } catch {
-                print("❌ Decode lỗi:", error.localizedDescription)
+                print(error.localizedDescription)
                 throw APIError.decodingError(error)
             }
 

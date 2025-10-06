@@ -50,7 +50,7 @@ struct LoginView: View {
                             withAnimation { showError = true }
                             // Xử lý login
                             navManager.resetToRoot()  // cần khi xoá hết cách stack
-                            appSession.login(token: response.token)
+                            appSession.login(token: response.data?.token)
                             // save database
                             RealmManager.shared.saveLoginUser(response)
                         } else {

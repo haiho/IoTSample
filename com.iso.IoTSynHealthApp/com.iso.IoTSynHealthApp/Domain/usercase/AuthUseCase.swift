@@ -6,15 +6,13 @@
 //
 
 protocol AuthUseCase {
-    func login(email: String, password: String) async throws -> BaseAPIResponse<
-        LoginResponse
-    >
+    func login(email: String, password: String) async throws -> LoginResponse
     func register(
         email: String,
         password: String,
         firstName: String,
         lastName: String
-    ) async throws -> BaseAPIResponse<RegisterResponse>
+    ) async throws -> RegisterResponse
 }
 
 final class DefaultLoginUseCase: AuthUseCase {
@@ -25,9 +23,7 @@ final class DefaultLoginUseCase: AuthUseCase {
         self.authRepository = authRepository
     }
 
-    func login(email: String, password: String) async throws -> BaseAPIResponse<
-        LoginResponse
-    > {
+    func login(email: String, password: String) async throws -> LoginResponse {
         try await authRepository.login(email: email, password: password)
     }
 
@@ -36,7 +32,7 @@ final class DefaultLoginUseCase: AuthUseCase {
         password: String,
         firstName: String,
         lastName: String
-    ) async throws -> BaseAPIResponse<RegisterResponse> {
+    ) async throws -> RegisterResponse {
         try await authRepository.register(
             email: email,
             password: password,

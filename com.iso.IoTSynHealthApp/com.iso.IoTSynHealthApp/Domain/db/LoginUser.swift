@@ -22,7 +22,7 @@ class LoginUser: Object {
     @Persisted var extendedAttributes: ExtendedAttributes?
 
     // Optional: convenience init to map from Decodable model
-    convenience init(from response: LoginResponse) {
+    convenience init(from response: UserLoginResponse) {
         self.init()
         self.id = response.id
         //        self.token = response.token

@@ -4,26 +4,23 @@
 //
 //  Created by PTV on 19/9/25.
 //
+import SwiftUI
 
-struct LoginResponse: Decodable {
-    let token: String
-    let id: String
-    let email: String
-    let firstName: String
-    let lastName: String
-    let isActivated: Bool
-    let gender: String?
-    let birthdate: String?
-    let country: String?
-    let countryCode: String
-    let extendedAttributes: ExtendedAttributes?
+class LoginResponse: BaseAPIResponse {
+    var data: UserLoginResponse?
+    var hdsSettings: [HDSSetting]?
+
     enum CodingKeys: String, CodingKey {
-        case token, email, gender, birthdate, country 
-        case id = "_id"
-        case firstName = "first_name"
-        case lastName = "last_name"
-        case isActivated = "is_activated"
-        case countryCode = "country_code"
-        case extendedAttributes = "extended_attributes"
+        case data
+        case hdsSettings = "hds_settings"
+    }
+
+    required init(from decoder: Decoder) throws {
+        // Gán xong mới gọi super.init
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.data = try container.decodeIfPresent(UserLoginResponse.self, forKey: .data)
+        self.hdsSettings = try container.decodeIfPresent([HDSSetting].self, forKey: .hdsSettings)
+
+        try super.init(from: decoder)
     }
 }

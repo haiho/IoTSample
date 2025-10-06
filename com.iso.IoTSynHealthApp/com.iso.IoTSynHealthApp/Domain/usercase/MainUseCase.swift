@@ -7,7 +7,7 @@
 
 protocol MainUseCase {
     func syncHDSsampleFromIoTdevices(data: String) async throws
-        -> BaseAPIResponse<GeneralResponse>
+        -> BaseAPIResponse
 }
 final class DefaultMainUseCase: MainUseCase {
     private let healthRepository: HealthRepository
@@ -17,7 +17,7 @@ final class DefaultMainUseCase: MainUseCase {
     }
 
     func syncHDSsampleFromIoTdevices(data: String) async throws
-        -> BaseAPIResponse<GeneralResponse>
+        -> BaseAPIResponse
     {
         try await healthRepository.syncHDSsampleFromIoTdevices(data: data)
     }

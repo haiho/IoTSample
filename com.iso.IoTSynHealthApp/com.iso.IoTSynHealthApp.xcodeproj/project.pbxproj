@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		390165232E8FDF08000C1C43 /* UserLoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390165222E8FDF07000C1C43 /* UserLoginResponse.swift */; };
+		390165252E8FDF1C000C1C43 /* HDSSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390165242E8FDF1A000C1C43 /* HDSSetting.swift */; };
+		390165272E8FDF2C000C1C43 /* HDSSampleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390165262E8FDF2A000C1C43 /* HDSSampleType.swift */; };
 		390660582E5865DD0068157E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390660572E5865D80068157E /* SettingsView.swift */; };
 		391013302E4B465E005DDD2C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3910132F2E4B465E005DDD2C /* Localizable.xcstrings */; };
 		391013322E4B5139005DDD2C /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391013312E4B5136005DDD2C /* ErrorView.swift */; };
@@ -80,6 +83,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		390165222E8FDF07000C1C43 /* UserLoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginResponse.swift; sourceTree = "<group>"; };
+		390165242E8FDF1A000C1C43 /* HDSSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDSSetting.swift; sourceTree = "<group>"; };
+		390165262E8FDF2A000C1C43 /* HDSSampleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDSSampleType.swift; sourceTree = "<group>"; };
 		390660572E5865D80068157E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3910132F2E4B465E005DDD2C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		391013312E4B5136005DDD2C /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -298,6 +304,9 @@
 		396B63B52E339096007E4014 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				390165262E8FDF2A000C1C43 /* HDSSampleType.swift */,
+				390165242E8FDF1A000C1C43 /* HDSSetting.swift */,
+				390165222E8FDF07000C1C43 /* UserLoginResponse.swift */,
 				39E06F4D2E86A47400C9F8C3 /* HealthDataResult.swift */,
 				39E06F492E869A6700C9F8C3 /* ExtendedAttributes.swift */,
 				39E8E5CA2E85484300F3BBED /* DataObjMT.swift */,
@@ -575,6 +584,7 @@
 			files = (
 				39E06F4A2E869A6C00C9F8C3 /* ExtendedAttributes.swift in Sources */,
 				397C64242E7A8C5D003BD041 /* TimeFilter.swift in Sources */,
+				390165232E8FDF08000C1C43 /* UserLoginResponse.swift in Sources */,
 				39CA32742E83FE3900580036 /* RealmManager.swift in Sources */,
 				39E8E5C92E852EA600F3BBED /* RegisterRequest.swift in Sources */,
 				39E06F442E86863A00C9F8C3 /* SyncHDSRequest.swift in Sources */,
@@ -599,6 +609,7 @@
 				39BDC9122E6055F8001FC793 /* HomeViewModel.swift in Sources */,
 				39804AE92E82A31A0064836A /* AuthRepositoryImpl.swift in Sources */,
 				396B63AE2E338C85007E4014 /* IoTSynHealthApp.swift in Sources */,
+				390165252E8FDF1C000C1C43 /* HDSSetting.swift in Sources */,
 				39804AE52E82A2570064836A /* AuthUseCase.swift in Sources */,
 				39E06F462E86888500C9F8C3 /* MainUseCase.swift in Sources */,
 				39169EFA2E4A042E00BB44B5 /* LandingView.swift in Sources */,
@@ -615,6 +626,7 @@
 				391013322E4B5139005DDD2C /* ErrorView.swift in Sources */,
 				3952D2422E7D589100EBFC8B /* LandingViewModel.swift in Sources */,
 				39804AF02E82AE8C0064836A /* ToastView.swift in Sources */,
+				390165272E8FDF2C000C1C43 /* HDSSampleType.swift in Sources */,
 				39E06F422E86842700C9F8C3 /* HealthRepositoryImpl.swift in Sources */,
 				39CA32762E84035200580036 /* MainViewModel.swift in Sources */,
 				3952D24F2E7D6E3E00EBFC8B /* CryptoHelper.swift in Sources */,

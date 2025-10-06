@@ -39,10 +39,13 @@ class AppSession: ObservableObject {
         self.isLoggedIn = UserDefaultsManager.shared.isLoggedIn
     }
 
-    func login(token: String) {
+    func login(token: String?) {
+        guard let token = token, !token.isEmpty else { return }
+        
         UserDefaultsManager.shared.authToken = token
         isLoggedIn = true
     }
+
 
     func logout() {
         UserDefaultsManager.shared.clearAll()
