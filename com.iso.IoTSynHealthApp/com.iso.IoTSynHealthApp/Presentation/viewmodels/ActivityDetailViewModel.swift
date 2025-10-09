@@ -8,6 +8,7 @@ class ActivityDetailViewModel: ObservableObject {
     @Published var chartModel: AAChartModel? = nil
     @Published var isLoading = false
     let calendar = Calendar.current
+    var startDate: Date = Date()
     @Published var lblTimeFilter: String = ""
     let activity: Activity
 
@@ -35,6 +36,7 @@ class ActivityDetailViewModel: ObservableObject {
             using: calendar,
             offset: dateOffset
         )
+        startDate = range.startDate
         lblTimeFilter = selectedFilter.displayLabel(
             using: calendar,
             offset: dateOffset
@@ -73,7 +75,7 @@ class ActivityDetailViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.chartData = self.fillMissingData(
                         for: data,
-                        from : range.startDate
+                        from: range.startDate
                     )
                     self.generateChartModel()
                     self.isLoading = false
@@ -88,41 +90,6 @@ class ActivityDetailViewModel: ObservableObject {
 
     func goToNextFilter() {
         dateOffset += 1
-    }
-
-    func getDateRange(for filter: TimeFilter) -> (
-        startDate: Date, endDate: Date
-    ) {
-        let calendar = Calendar.current
-        let now = Date()
-        var startDate: Date
-        var endDate: Date
-
-        switch filter {
-        case .day:
-            startDate = calendar.startOfDay(for: now)
-            endDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
-        case .week:
-            startDate = calendar.date(
-                from: calendar.dateComponents(
-                    [.yearForWeekOfYear, .weekOfYear],
-                    from: now
-                )
-            )!
-            endDate = calendar.date(byAdding: .day, value: 7, to: startDate)!
-        case .month:
-            startDate = calendar.date(
-                from: calendar.dateComponents([.year, .month], from: now)
-            )!
-            endDate = calendar.date(byAdding: .month, value: 1, to: startDate)!
-        case .year:
-            startDate = calendar.date(
-                from: calendar.dateComponents([.year], from: now)
-            )!
-            endDate = calendar.date(byAdding: .year, value: 1, to: startDate)!
-        }
-
-        return (startDate, endDate)
     }
 
     private func fillMissingData(

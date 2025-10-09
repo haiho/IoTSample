@@ -21,6 +21,7 @@ struct LabeledHeartRateData: Identifiable, Equatable {
 // MARK: - Main View
 
 struct HeartRateRangeChart: View {
+    let startDate: Date
     let data: [HeartRateDayData]
     let filter: TimeFilter
 
@@ -212,13 +213,11 @@ struct HeartRateRangeChart: View {
     // Note :  viewModel.heartRateDayData() => group data by time
     private var groupedData: [LabeledHeartRateData] {
         let calendar = Calendar.current
-        let now = Date()
-
         switch filter {
         case .day:
             let interval = 10  // 30 phút
             let totalSlots = 24 * 60 / interval
-            let startOfDay = calendar.startOfDay(for: now)
+            let startOfDay = calendar.startOfDay(for: startDate)
 
             return (0..<totalSlots).map { index in
                 let slotStart = calendar.date(
@@ -234,7 +233,7 @@ struct HeartRateRangeChart: View {
 
                 let slotData = data.filter {
                     $0.date >= slotStart && $0.date < slotEnd
-                        && calendar.isDate($0.date, inSameDayAs: now)
+                        && calendar.isDate($0.date, inSameDayAs: startDate)
                 }
 
                 let dailyMin = slotData.map { $0.dailyMin }.min() ?? 0
@@ -259,7 +258,7 @@ struct HeartRateRangeChart: View {
             let startOfWeek = calendar.date(
                 from: calendar.dateComponents(
                     [.yearForWeekOfYear, .weekOfYear],
-                    from: now
+                    from: startDate
                 )
             )!
             let weekdaySymbols = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
@@ -288,9 +287,9 @@ struct HeartRateRangeChart: View {
             }
 
         case .month:
-            let numberOfDays = numberOfDaysIn(month: now)
+            let numberOfDays = numberOfDaysIn(month: startDate)
             let startOfMonth = calendar.date(
-                from: calendar.dateComponents([.year, .month], from: now)
+                from: calendar.dateComponents([.year, .month], from: startDate)
             )!
 
             return (0..<numberOfDays).map { dayOffset in
@@ -315,7 +314,7 @@ struct HeartRateRangeChart: View {
 
         case .year:
             return (0..<12).map { monthOffset in
-                var comps = calendar.dateComponents([.year], from: now)
+                var comps = calendar.dateComponents([.year], from: startDate)
                 comps.month = monthOffset + 1
                 comps.day = 1
                 let date = calendar.date(from: comps)!
