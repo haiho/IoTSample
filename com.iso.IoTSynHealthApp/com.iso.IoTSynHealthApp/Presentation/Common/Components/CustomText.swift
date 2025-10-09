@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct CustomText: View {
-    private let content: String
+    private let textValue: String
     private let isLocalized: Bool
     private var font: Font
     private var color: Color
@@ -15,14 +15,14 @@ struct CustomText: View {
     private var alignment: TextAlignment
 
     init(
-        _ content: String,
+        _ textValue: String,
         color: Color = .primary,
         colorBGround: Color = Color.clear,
         font: Font = .fontTextNormal,
         alignment: TextAlignment = .leading,
         isLocalized: Bool = false
     ) {
-        self.content = content
+        self.textValue = textValue
         self.color = color
         self.colorBGround = colorBGround
         self.font = font
@@ -32,7 +32,7 @@ struct CustomText: View {
 
     var body: some View {
         let text: Text =
-            isLocalized ? Text(LocalizedStringKey(content)) : Text(content)
+            isLocalized ? Text(LocalizedStringKey(textValue)) : Text(textValue)
 
         return
             text

@@ -6,15 +6,23 @@ class ActivityDetailViewModel: ObservableObject {
     let healthManager = HealthManager.shared
     @Published var chartData: [(Date, Double)] = []
     @Published var chartModel: AAChartModel? = nil
+    @Published var isLoading = false
+    let calendar = Calendar.current
+    @Published var lblTimeFilter: String = ""
+    let activity: Activity
+
     @Published var selectedFilter: TimeFilter = .day {
         didSet {
+            dateOffset = 0
             loadData()
         }
     }
 
-    @Published var isLoading = false
-
-    let activity: Activity
+    @Published var dateOffset: Int = 0 {
+        didSet {
+            loadData()
+        }
+    }
 
     init(activity: Activity) {
         self.activity = activity
@@ -23,29 +31,30 @@ class ActivityDetailViewModel: ObservableObject {
 
     func loadData() {
         isLoading = true
-        if activity.type == .heartRate {
-            let dateRange = getDateRange(for: selectedFilter)
+        let range = selectedFilter.dateRange(
+            using: calendar,
+            offset: dateOffset
+        )
+        lblTimeFilter = selectedFilter.displayLabel(
+            using: calendar,
+            offset: dateOffset
+        )
 
+        if activity.type == .heartRate {
             healthManager.fetchHeartRateSamples(
-                from: dateRange.startDate,
-                to: dateRange.endDate
-            ) { [weak self] samples, error in
+                from: range.startDate,
+                to: range.endDate
+            ) { [weak self] samples, _ in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
                     self.isLoading = false
                     if let samples = samples {
                         self.chartData = samples.map { sample in
                             let bpm = sample.quantity.doubleValue(
-                                for: HKUnit.count().unitDivided(
-                                    by: HKUnit.minute()
-                                )
+                                for: HKUnit.count().unitDivided(by: .minute())
                             )
-                            return (
-                                sample.startDate, bpm
-                            )
-                        }
-
-                        self.chartData.sort { $0.0 < $1.0 }
+                            return (sample.startDate, bpm)
+                        }.sorted(by: { $0.0 < $1.0 })
                         self.chartModel = nil
                     } else {
                         self.chartData = []
@@ -54,19 +63,31 @@ class ActivityDetailViewModel: ObservableObject {
                 }
             }
         } else {
-            // Các loại khác vẫn giữ nguyên
             healthManager.fetchStepData(
                 type: activity.type,
-                filter: selectedFilter
+                filter: selectedFilter,
+                from: range.startDate,
+                to: range.endDate
             ) { [weak self] data in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
-                    self.chartData = self.fillMissingData(for: data)
-                    self.isLoading = false
+                    self.chartData = self.fillMissingData(
+                        for: data,
+                        from : range.startDate
+                    )
                     self.generateChartModel()
+                    self.isLoading = false
                 }
             }
         }
+    }
+
+    func goToPreviousFilter() {
+        dateOffset -= 1
+    }
+
+    func goToNextFilter() {
+        dateOffset += 1
     }
 
     func getDateRange(for filter: TimeFilter) -> (
@@ -104,13 +125,13 @@ class ActivityDetailViewModel: ObservableObject {
         return (startDate, endDate)
     }
 
-    private func fillMissingData(for original: [(Date, Double)]) -> [(
+    private func fillMissingData(
+        for original: [(Date, Double)],
+        from startDate: Date
+    ) -> [(
         Date, Double
     )] {
         var result: [(Date, Double)] = []
-        let calendar = Calendar.current
-        let now = Date()
-
         var unit: Calendar.Component
         var total: Int
 
@@ -123,31 +144,10 @@ class ActivityDetailViewModel: ObservableObject {
             total = 7
         case .month:
             unit = .day
-            total = numberOfDaysIn(month: now)
+            total = numberOfDaysIn(month: startDate)
         case .year:
             unit = .month
             total = 12
-        }
-
-        let startDate: Date
-        switch selectedFilter {
-        case .day:
-            startDate = calendar.startOfDay(for: now)
-        case .week:
-            startDate = calendar.date(
-                from: calendar.dateComponents(
-                    [.yearForWeekOfYear, .weekOfYear],
-                    from: now
-                )
-            )!
-        case .month:
-            startDate = calendar.date(
-                from: calendar.dateComponents([.year, .month], from: now)
-            )!
-        case .year:
-            startDate = calendar.date(
-                from: calendar.dateComponents([.year], from: now)
-            )!
         }
 
         for i in 0..<total {
@@ -234,15 +234,20 @@ class ActivityDetailViewModel: ObservableObject {
             grouped = Dictionary(
                 grouping: filteredData,
                 by: { date in
-                    let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date.0)
+                    let components = calendar.dateComponents(
+                        [.year, .month, .day, .hour, .minute],
+                        from: date.0
+                    )
                     let minute = (components.minute ?? 0) / 10 * 10
-                    return calendar.date(from: DateComponents(
-                        year: components.year,
-                        month: components.month,
-                        day: components.day,
-                        hour: components.hour,
-                        minute: minute
-                    )) ?? date.0
+                    return calendar.date(
+                        from: DateComponents(
+                            year: components.year,
+                            month: components.month,
+                            day: components.day,
+                            hour: components.hour,
+                            minute: minute
+                        )
+                    ) ?? date.0
                 }
             )
         } else {

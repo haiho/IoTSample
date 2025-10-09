@@ -195,7 +195,7 @@ class HomeViewModel: ObservableObject {
                 case .success(let samples):
                     //       2. Syn to HDS
                     print("✅ ActivityAllDataView fetched: \(samples)")
-                    self.synDataToHDS(results: samples, dataType: dataType)
+//                    self.synDataToHDS(results: samples, dataType: dataType)
                 case .failure(let error):
                     print("❌ Fetch failed: \(error)")
 

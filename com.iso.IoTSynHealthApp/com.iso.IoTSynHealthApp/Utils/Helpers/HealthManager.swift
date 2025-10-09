@@ -413,43 +413,26 @@ class HealthManager {
     func fetchStepData(
         type: HealthDataType,
         filter: TimeFilter,
+        from startDate: Date,
+        to endDate: Date,
         completion: @escaping ([(Date, Double)]) -> Void
     ) {
-        let calendar = Calendar.current
-        let now = Date()
-        var startDate: Date
         var interval = DateComponents()
-
         switch filter {
         case .week:
-            startDate =
-                calendar.date(
-                    from: calendar.dateComponents(
-                        [.yearForWeekOfYear, .weekOfYear],
-                        from: now
-                    )
-                ) ?? now
             interval.day = 1
         case .day:
-            startDate = calendar.startOfDay(for: now)
             interval.hour = 1
         case .month:
-            startDate =
-                calendar.date(
-                    from: calendar.dateComponents([.year, .month], from: now)
-                ) ?? now
             interval.day = 1
         case .year:
-            startDate =
-                calendar.date(from: calendar.dateComponents([.year], from: now))
-                ?? now
             interval.month = 1
         }
 
         fetchStatistics(
             for: type,
             startDate: startDate,
-            endDate: now,
+            endDate: endDate,
             interval: interval
         ) { result in
             switch result {
