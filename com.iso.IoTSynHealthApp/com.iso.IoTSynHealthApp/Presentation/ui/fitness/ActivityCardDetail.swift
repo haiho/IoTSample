@@ -58,6 +58,7 @@ struct ActivityCardDetail: View {
                 } else if viewModel.activity.type == .heartRate {
                     HeartRateRangeChart(
                         startDate: viewModel.startDate,
+                        endDate: viewModel.endDate,
                         data: viewModel.heartRateDayData(),
                         filter: viewModel.selectedFilter
                     )

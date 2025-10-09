@@ -22,6 +22,7 @@ struct LabeledHeartRateData: Identifiable, Equatable {
 
 struct HeartRateRangeChart: View {
     let startDate: Date
+    let endDate: Date
     let data: [HeartRateDayData]
     let filter: TimeFilter
 
@@ -64,6 +65,7 @@ struct HeartRateRangeChart: View {
         .chartXAxis {
             chartXAxisView()
         }
+        .chartXScale(domain: startDate...computedEndDate)
         .frame(height: 300)
         .chartOverlay { proxy in
             // -- Thêm phần chartOverlay để bắt gesture và hiển thị tooltip --
@@ -103,8 +105,9 @@ struct HeartRateRangeChart: View {
 
                 }
             }
+
         case .month:
-            AxisMarks(values: .automatic) { value in
+            AxisMarks(values: xAxisMonthMarks) { value in
                 AxisGridLine()
                 AxisTick()
                 AxisValueLabel {
@@ -115,7 +118,7 @@ struct HeartRateRangeChart: View {
                 }
             }
         case .year:
-            AxisMarks(values: .automatic) { value in
+            AxisMarks(values: xAxisYearMarks) { value in
                 AxisGridLine()
                 AxisTick()
                 AxisValueLabel {
@@ -183,8 +186,6 @@ struct HeartRateRangeChart: View {
             // ✅ Tooltip chỉ hiển thị khi selectedData khác nil
             if let data = selectedData {
                 VStack(spacing: 4) {
-                    //                        Text("\(data.label)")
-                    //                            .font(.caption)
                     if data.dailyMin == data.dailyMax {
                         Text("\(Int(data.dailyMin))")
                             .font(.caption2)
@@ -210,12 +211,11 @@ struct HeartRateRangeChart: View {
     }
 
     // MARK: - Grouping Data
-    // Note :  viewModel.heartRateDayData() => group data by time
     private var groupedData: [LabeledHeartRateData] {
         let calendar = Calendar.current
         switch filter {
         case .day:
-            let interval = 10  // 30 phút
+            let interval = 10  // 10 phút
             let totalSlots = 24 * 60 / interval
             let startOfDay = calendar.startOfDay(for: startDate)
 
@@ -241,10 +241,6 @@ struct HeartRateRangeChart: View {
 
                 let lblTime = DateFormatter.with(format: DateFormatter.hourOnly)
                     .string(from: slotStart)
-                //
-                //                print(
-                //                    "Slot: \(lblTime) - count: \(slotData.count), Min: \(dailyMin), Max: \(dailyMax)"
-                //                )
 
                 return LabeledHeartRateData(
                     date: slotStart,
@@ -335,31 +331,98 @@ struct HeartRateRangeChart: View {
             }
         }
     }
-}
 
-private var xAxisDayMarks: [Date] {
-    let calendar = Calendar.current
-    let startOfDay = calendar.startOfDay(for: Date())
-    //Trả về 24h trong ngày
-    return stride(from: 0, through: 24, by: 5).compactMap { hour in
-        calendar.date(byAdding: .hour, value: hour, to: startOfDay)
+    // MARK: - Computed properties for X Axis Marks
+
+    private var xAxisDayMarks: [Date] {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: startDate)
+        // 24h, mỗi 5 giờ 1 mốc để tránh quá dày
+        return stride(from: 0, through: 24, by: 5).compactMap { hour in
+            calendar.date(byAdding: .hour, value: hour, to: startOfDay)
+        }
     }
-}
 
-private var xAxisWeekMarks: [Date] {
-    let calendar = Calendar.current
-    let now = Date()
+    private var xAxisWeekMarks: [Date] {
+        let calendar = Calendar.current
+        let startOfWeek = calendar.date(
+            from: calendar.dateComponents(
+                [.yearForWeekOfYear, .weekOfYear],
+                from: startDate
+            )
+        )!
+        // 7 ngày trong tuần
+        return (0..<7).compactMap { offset in
+            calendar.date(byAdding: .day, value: offset, to: startOfWeek)
+        }
+    }
 
-    // Lấy ngày đầu tuần (thứ 2)
-    let startOfWeek = calendar.date(
-        from: calendar.dateComponents(
-            [.yearForWeekOfYear, .weekOfYear],
-            from: now
-        )
-    )!
+    private var xAxisMonthMarks: [Date] {
+        let calendar = Calendar.current
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: startDate))!
+        let numberOfDays = numberOfDaysIn(month: startDate)
+        // Tạo các điểm mỗi 3 ngày một
+        return stride(from: 0, to: numberOfDays, by: 3).compactMap { dayOffset in
+            calendar.date(byAdding: .day, value: dayOffset, to: startOfMonth)
+        }
+    }
 
-    // Trả về 7 ngày trong tuần
-    return (0..<8).compactMap { offset in
-        calendar.date(byAdding: .day, value: offset, to: startOfWeek)
+    private var xAxisYearMarks: [Date] {
+        let calendar = Calendar.current
+        let startOfYear = calendar.date(from: calendar.dateComponents([.year], from: startDate))!
+        // Tạo các điểm mỗi 2 tháng một
+        return stride(from: 0, to: 12, by: 2).compactMap { monthOffset in
+            calendar.date(byAdding: .month, value: monthOffset, to: startOfYear)
+        }
+    }
+
+
+    private var computedEndDate: Date {
+        let calendar = Calendar.current
+        switch filter {
+        case .day:
+            return calendar.date(
+                byAdding: .day,
+                value: 1,
+                to: calendar.startOfDay(for: startDate)
+            )!
+        case .week:
+            guard
+                let startOfWeek = calendar.date(
+                    from: calendar.dateComponents(
+                        [.yearForWeekOfYear, .weekOfYear],
+                        from: startDate
+                    )
+                )
+            else { return startDate }
+            return calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
+        case .month:
+            guard
+                let startOfMonth = calendar.date(
+                    from: calendar.dateComponents(
+                        [.year, .month],
+                        from: startDate
+                    )
+                )
+            else { return startDate }
+            return calendar.date(byAdding: .month, value: 1, to: startOfMonth)!
+        case .year:
+            guard
+                let startOfYear = calendar.date(
+                    from: calendar.dateComponents([.year], from: startDate)
+                )
+            else { return startDate }
+            return calendar.date(byAdding: .year, value: 1, to: startOfYear)!
+        }
+    }
+
+    // MARK: - Helper function
+
+    private func numberOfDaysIn(month date: Date) -> Int {
+        let calendar = Calendar.current
+        guard let range = calendar.range(of: .day, in: .month, for: date) else {
+            return 0
+        }
+        return range.count
     }
 }

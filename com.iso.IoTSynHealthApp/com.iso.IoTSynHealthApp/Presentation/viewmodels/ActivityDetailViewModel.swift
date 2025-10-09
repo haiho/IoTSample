@@ -9,6 +9,7 @@ class ActivityDetailViewModel: ObservableObject {
     @Published var isLoading = false
     let calendar = Calendar.current
     var startDate: Date = Date()
+    var endDate: Date = Date()
     @Published var lblTimeFilter: String = ""
     let activity: Activity
 
@@ -37,6 +38,7 @@ class ActivityDetailViewModel: ObservableObject {
             offset: dateOffset
         )
         startDate = range.startDate
+        endDate = range.endDate
         lblTimeFilter = selectedFilter.displayLabel(
             using: calendar,
             offset: dateOffset
